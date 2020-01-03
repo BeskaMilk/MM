@@ -6,11 +6,11 @@ const Supplier = require('../models/supplier')
 // All Suppliers Route
 router.get('/', async (req, res) => {
     let searchOptions = {}
-    if(req.query.name != null && req.query.name !== '') {
+    if (req.query.name != null && req.query.name !== '') {
         searchOptions.name = new RegExp(req.query.name, 'i')
     }
     try {
-        const suppliers = await Supplier.find({searchOptions})
+        const suppliers = await Supplier.find(searchOptions)
         res.render('suppliers/index', { 
             suppliers: suppliers, 
             searchOptions: req.query 
@@ -34,13 +34,13 @@ router.post('/', async (req, res) => { // - we use 'post' for creation. to creat
         name: req.body.name
     })
     try {
-        const newSupplier = await supplier.save()
-        // res.redirect(`suppliers/${newSupplier.id}`)
-        res.redirect(`suppliers`)
+       const newSupplier = await supplier.save()
+       // res.redirect(`authors/${newSupplier.id}`)
+       res.redirect(`suppliers`)
     } catch {
         res.render('suppliers/new', {
-            supplier: supplier,
-            errorMessage: 'Error creating Supplier'
+        supplier: supplier,
+        errorMessage: 'Error creating Supplier'
         })
     }
 })
@@ -49,8 +49,6 @@ router.post('/', async (req, res) => { // - we use 'post' for creation. to creat
 // About the index.ejs, and new.ejs inside the suppliers folder in the view folder:
 // we're nesting this index.ejs, and new.ejs files inside the suppliers folder, because each one of the routes should be inside their own folder. except for the index route. 
 // so when we create a books route, it'll be inside the books folder in the views that'll create views for that. 
-
-
 
 
 module.exports = router 
