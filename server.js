@@ -23,6 +23,9 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, {
+    useUnifiedTopology: false, // - tried for so long time and finally fixed this problem. 
+    // - mongoose.connect should always include this 'useUnifiedTopoloty: false' it should be false!!!!! 
+    // - (don't worry about the deprecation warning.
     useNewUrlParser: true //may or may not need this part according to the version (mongoose)
 }) //set up a connection with our mongoDB database. here, we're going to put the url for the mongoDB connection later on.
 //when our web is deployed, this should be connected to a mongodb that's on the web somewhere.
@@ -30,6 +33,8 @@ mongoose.connect(process.env.DATABASE_URL, {
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
+
+
 
 
 app.use('/', indexRouter) //now the index.js (in the routes folder) is connected to this server.js file.

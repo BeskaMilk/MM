@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
             searchOptions: req.query 
         }) // - we're going to render suppliers/index, instead of rendering all the index for entire application.
     } catch {
-        res.redirect('/')
+        //res.redirect('/')
     }
 })
 
@@ -38,10 +38,10 @@ router.post('/', async (req, res) => { // - we use 'post' for creation. to creat
        // res.redirect(`authors/${newSupplier.id}`)
        res.redirect(`suppliers`)
     } catch {
-        res.render('suppliers/new', {
-        supplier: supplier,
-        errorMessage: 'Error creating Supplier'
-        })
+        // res.render('suppliers/new', {
+        // supplier: supplier,
+        // errorMessage: 'Error creating Supplier'
+        // })
     }
 })
 
