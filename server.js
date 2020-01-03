@@ -5,8 +5,11 @@ if(process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
+const bodyParser = require('body-parser')
 
 const indexRouter = require('./routes/index') //dot means the location of the file is 'relative' to where we are now. (server.js file)
+const supplierRouter = require('./routes/suppliers') 
+
 
 
 //configure express app
@@ -16,7 +19,7 @@ app.set('layout', 'layouts/layout') // hookup expresslayouts, where our layoutfi
 //don't need to add the head part and bottom part
 app.use(expressLayouts) //we want to use expresslayouts
 app.use(express.static('public')) //where our public files are going to be : public files are: our style sheets etc. this is just going to be a folder.
-
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, {
@@ -29,9 +32,8 @@ db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
 
-
-
-
 app.use('/', indexRouter) //now the index.js (in the routes folder) is connected to this server.js file.
+app.use('/suppliers', supplierRouter) //
+
 
 app.listen(process.env.PORT || 3000)
