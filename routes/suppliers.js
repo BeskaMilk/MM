@@ -49,8 +49,8 @@ router.post('/', async (req, res) => { // - we use 'post' for creation. to creat
 router.get('/:id', async (req, res) => {
     try {
         const supplier = await Supplier.findById(req.params.id)
-        // const materials = await Material.find({ supplier: supplier.id }).limit(6).exec() // .limit(6) this limits the search result in the show page, to 6 pictures at a time.
-        const materials = await Material.find({ supplier: supplier.id }).exec() // .limit(6) this limits the search result in the show page, to 6 pictures at a time.
+        const materials = await Material.find({ supplier: supplier.id }).limit(6).exec() // .limit(6) this limits the search result in the show page, to 6 pictures at a time.
+        // const materials = await Material.find({ supplier: supplier.id }).exec() // .limit(6) this limits the search result in the show page, to 6 pictures at a time.
         // - ? if I want to view all the materials that this suppliers uploaded, it's gonna take forever to upload all the photos at one time.
         // - ? Can i put the infinite scroll challenge code right here to view the search result?
         res.render('suppliers/show', {
