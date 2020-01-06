@@ -1,7 +1,4 @@
 const mongoose = require('mongoose') // - a library that we use to connect to mongoDB (mongoose library)
-const path = require('path')
-
-const thumbnailImageBasePath = 'uploads/materialThumbnails'
 
 const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in a normal SQL database. 
     title: {
@@ -24,22 +21,26 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
         required: true,
         default: Date.now
     },
-    thumbnailImageName: {
-        type: String,  
+    thumbnailImage: {
+        type: Buffer,  
         required: true
+    },
+    thumbnailImageType: {
+        type: String,
+        requried: true,
     },
     supplier: {
         type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
         required: true,
         ref: 'Supplier' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
     },
-})
+}) 
 
 materialSchema.virtual('thumbnailImagePath').get(function() {
-    if(this.thumbnailImageName != null) {
-        return path.join('/', thumbnailImageBasePath, this.thumbnailImageName)
+    if (this.thumbnailImage != null && this.thumbnailImageType != null) {
+      return `data:${this.thumbnailImageType};charset=utf-8;base64,${this.thumbnailImage.toString('base64')}`
     }
-})
+  })
 
 module.exports = mongoose.model('Material', materialSchema) // - exprot this schema, give a name as 'Supplier' of this table.
-module.exports.thumbnailImageBasePath = thumbnailImageBasePath
+
