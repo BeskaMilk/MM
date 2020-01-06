@@ -4,8 +4,6 @@ const Material = require('../models/material')
 const Supplier = require('../models/supplier')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 
-
-
 // All Materials Route
 router.get('/', async (req, res) => {
     let query = Material.find()

@@ -6,6 +6,7 @@ const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 const indexRouter = require('./routes/index') //dot means the location of the file is 'relative' to where we are now. (server.js file)
 const supplierRouter = require('./routes/suppliers') 
@@ -20,6 +21,7 @@ app.set('views', __dirname + '/views') // __dirname means our current directory 
 app.set('layout', 'layouts/layout') // hookup expresslayouts, where our layoutfile is going to be, every single file is going to be put inside the layoutfile.
 //don't need to add the head part and bottom part
 app.use(expressLayouts) //we want to use expresslayouts
+app.use(methodOverride('_method'))
 app.use(express.static('public')) //where our public files are going to be : public files are: our style sheets etc. this is just going to be a folder.
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 

@@ -1,10 +1,4 @@
-const rootStyles = window.getComputedStyle(document.documentElement)
 
-if (rootStyles.getPropertyValue('--material-thumbnail-width-large') != null && rootStyles.getPropertyValue('--material-thumbnail-width-large') !== '') {
-  ready()
-} else {
-  document.getElementById('main-css').addEventListener('load', ready)
-}
 
 FilePond.registerPlugin(
     FilePondPluginImagePreview,
@@ -13,9 +7,9 @@ FilePond.registerPlugin(
 )
 
 FilePond.setOptions({
-    stylePanelAspectRatio: 1 / thumbnailAspectRatio,
-    imageResizeTargetWidth: thumbnailWidth,
-    imageResizeTargetHeight: thumbnailHeight
+    stylePanelAspectRatio: 150 / 100,
+    imageResizeTargetWidth: 100,
+    imageResizeTargetHeight: 150
 })
 
 FilePond.parse(document.body);
