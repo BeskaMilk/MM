@@ -9,6 +9,8 @@ const bodyParser = require('body-parser')
 
 const indexRouter = require('./routes/index') //dot means the location of the file is 'relative' to where we are now. (server.js file)
 const supplierRouter = require('./routes/suppliers') 
+const materialRouter = require('./routes/materials') //let's use materials routes .
+
 
 
 
@@ -39,6 +41,8 @@ db.once('open', () => console.log('Connected to Mongoose'))
 
 app.use('/', indexRouter) //now the index.js (in the routes folder) is connected to this server.js file.
 app.use('/suppliers', supplierRouter) //
+app.use('/materials', materialRouter) //
+
 
 
 app.listen(process.env.PORT || 3000)

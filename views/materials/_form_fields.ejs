@@ -1,0 +1,40 @@
+<div>
+    <label>Title<label>
+    <input type="text" name="title" value="<%= material.title %>">
+</div>
+
+<div>
+<label>Supplier</label>
+<select name="supplier">
+    <% suppliers.forEach(supplier => { %>
+        <% if (supplier.id === material.supplier) { %>
+            <option selected label="<%= supplier.name %>" value="<%= supplier.id %>">
+        <% } else { %>
+            <option label="<%= supplier.name %>" value="<%= supplier.id %>">
+        <% } %>
+    <% }) %>
+</select>
+</div>
+
+<div>
+    <label>Publish Date</label>
+    <input type="date" name="publishDate" 
+            value="<%= material.publishDate == null ? '' :
+            material.publishDate.toISOString().split('T')[0] %>">
+</div>
+
+<div>
+    <lable>Cost</lable>
+    <input type="number" name="cost" min="1" value="<%= material.cost %>">
+</div>
+
+<div>
+    <label>Thumbnail</label>
+    <input type="file" name="thumbnail" >
+</div>
+
+<div>
+    <label>Description</label>
+    <textarea name="description" > <% material.description %> </textarea>
+
+</div>

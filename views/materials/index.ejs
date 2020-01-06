@@ -1,0 +1,26 @@
+<h2>Search Material</h2>
+<form action="/materials" method="GET">
+<div>
+    <label>Title</label>
+    <input type="text" name="title" value="<%= searchOptions.title %>" >
+</div>
+
+<div>
+    <label>Published After</label>
+    <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>" >
+</div>
+
+<div>
+    <label>Published Before</label>
+    <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>" >
+</div>
+
+    <button type="submit">Search</button>
+
+</form>
+
+<div>
+<% materials.forEach(material => { %>
+    <img height="150" width="100" src="<%= material.thumbnailImagePath %>">
+<% }) %>
+</div>
