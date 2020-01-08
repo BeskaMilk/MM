@@ -7,13 +7,13 @@ const passport = require('passport');
 const User = require('../models/User.js');
 
 // Login / Register Page (Welcome Page)
-router.get('/welcome', (req, res) => res.render('Welcome'));
+router.get('/welcome', (req, res) => res.render('welcome'));
 
 // Login Page
-router.get('/login', (req, res) => res.render('Login'));
+router.get('/login', (req, res) => res.render('login'));
 
 // Register Page
-router.get('/register', (req, res) => res.render('Register'));
+router.get('/register', (req, res) => res.render('register'));
 
 // Register Handle
 router.post('/register', (req, res) => {
