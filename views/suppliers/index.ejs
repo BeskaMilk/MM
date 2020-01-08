@@ -9,7 +9,7 @@
         <div> <%= supplier.name %> </div>
         <a href="/suppliers/<%= supplier.id %>">View</a>
         <a href="/suppliers/<%= supplier.id %>/edit">Edit</a>
-        <%- include('../partials/deleteform', 
+        <%- include('../partials/deleteForm', 
                         { url: `/suppliers/${supplier.id}` }) %>
         <br>
     <% }) %>
