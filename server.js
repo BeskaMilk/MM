@@ -7,12 +7,19 @@ const app = express()
 const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
 
 const indexRouter = require('./routes/index') //dot means the location of the file is 'relative' to where we are now. (server.js file)
 const supplierRouter = require('./routes/suppliers') 
 const materialRouter = require('./routes/materials') //let's use materials routes .
+const userRouter = require('./routes/users') //let's use materials routes .
 
 
+
+// Passport config
+require('./config/passport')(passport);
 
 
 //configure express app
@@ -38,12 +45,39 @@ const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
+// Bodyparser
+app.use(express.urlencoded({ extended: false }));
+
+// Express Session (middleware for express-session)
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true,
+}));
+
+// Middleware for Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect flash (middleware for connect-flash)
+app.use(flash());
+
+// Global Vars (custom middleware to colour msgs in green/yello)
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error'); 
+    next();
+});
 
 
-
+// Routes
+//app.use('/', require('./routes/index'));
 app.use('/', indexRouter) //now the index.js (in the routes folder) is connected to this server.js file.
 app.use('/suppliers', supplierRouter) //
 app.use('/materials', materialRouter) //
+app.use('/users', userRouter);
+
 
 
 
