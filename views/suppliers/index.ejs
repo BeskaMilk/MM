@@ -1,14 +1,15 @@
 <h2>Search Suppliers</h2>
-<form action="/suppliers" method="GET">
-    <label>Name</label>
-    <input type="text" name="name" value="<%= searchOptions.name %>" >
-    <button type="submit">Search</button>
-</form>
-<br>
-<% suppliers.forEach(supplier => { %>
-    <div> <%= supplier.name %> </div>
-    <a href="/suppliers/<%= supplier.id %>">View</a>
-    <a href="/suppliers/<%= supplier.id %>/edit">Edit</a>
-    <%- include('../partials/deleteform', 
-                    { url: `/suppliers/${supplier.id}` }) %>
-<% }) %>
+    <form action="/suppliers" method="GET">
+        <label>Name</label>
+        <input type="text" name="name" value="<%= searchOptions.name %>" >
+        <button type="submit">Search</button>
+    </form>
+    <br>
+    <% suppliers.forEach(supplier => { %>
+        <div> <%= supplier.name %> </div>
+        <a href="/suppliers/<%= supplier.id %>">View</a>
+        <a href="/suppliers/<%= supplier.id %>/edit">Edit</a>
+        <%- include('../partials/deleteform', 
+                        { url: `/suppliers/${supplier.id}` }) %>
+        <br>
+    <% }) %>

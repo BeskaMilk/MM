@@ -1,1 +1,8 @@
-Middle
+<h2>Feed (Recently Added)</h2>
+<div>
+    <% materials.forEach(material => { %>
+        <a href="/materials/<%= material.id %>">
+            <img height="150" width="100" src="<%= material.thumbnailImagePath %>">
+        </a>
+    <% }) %>
+</div>

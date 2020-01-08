@@ -3,9 +3,10 @@
 <%- include('../partials/deleteForm', 
             { url: `suppliers/${supplier.id}` }) %>
 <% if (materialsBySupplier.length > 0) { %>
-
 <h2>Materials By Supplier</h2>
 <% materialsBySupplier.forEach(material => { %>
+    <a href="/materials/<%= material.id %>">
         <img height="150" width="100" src="<%= material.thumbnailImagePath %>">
+    </a>
     <% }) %>
 <% } %>

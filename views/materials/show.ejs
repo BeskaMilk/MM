@@ -1,0 +1,10 @@
+<h2><%= material.title %></h2>
+<img width="100" height="150" src="<%= material.thumbnailImagePath %>">
+<div>Supplier: <%= material.supplier.name %> </div>
+<div>Publish Date: <%= material.publishDate.toDateString() %> </div>
+<div>Cost: <%= material.cost %> </div>
+<div>Description: <%= material.description %> </div>
+
+<a href="/materials/<%= material.id %>/edit">Edit</a>
+<%- include('../partials/deleteForm', { url: `/materials/${material.id}` }) %>
+<a href="/suppliers/<%= material.supplier.id %>">View Supplier</a>

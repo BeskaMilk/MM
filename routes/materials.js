@@ -32,9 +32,10 @@ router.get('/new', async (req,res) => {
     renderNewPage(res, new Material())
 })
 
+
+
 // Create New Material Route
 router.post('/', async (req, res) => { 
-    const fileName = req.file != null ? req.file.filename : null
     const material = new Material({
         title: req.body.title,
         supplier: req.body.supplier,
@@ -42,7 +43,6 @@ router.post('/', async (req, res) => {
         cost: req.body.cost,
         description: req.body.description
     })
-
     saveThumbnail(material, req.body.thumbnail)
 
     try {
@@ -54,18 +54,98 @@ router.post('/', async (req, res) => {
     }
 })
 
-async function renderNewPage(res, material, hasError = false) {
-    try {
-        const suppliers = await Supplier.find({})
-        const params = {
-            suppliers: suppliers,
-            material: material
-        }
-        if (hasError) params.errorMessage = 'Error Creating Material'
-        res.render('materials/new', params) 
-    } catch {
-        res.redirect('/materials')
+// Show Material Route
+router.get('/:id', async (req, res) => {
+  try {
+    const material = await Material.findById(req.params.id)
+                                   .populate('supplier')
+                                   .exec()
+    res.render('materials/show', { material: material })
+  } catch {
+    res.redirect('/')
+  }
+})
+
+// Edit Material Route
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const material = await Material.findById(req.params.id)
+    renderEditPage(res, material)
+  } catch {
+    res.redirect('/')
+  }
+})
+
+// Update Material Route
+router.put('/:id', async (req, res) => {
+  let material
+
+  try {
+    material = await Material.findById(req.params.id)
+    material.title = req.body.title
+    material.supplier = req.body.supplier
+    material.publishDate = new Date(req.body.publishDate)
+    material.cost = req.body.cost
+    material.description = req.body.description
+    if (req.body.thumbnail != null && req.body.thumbnail !== '') {
+      saveThumbnail(material, req.body.thumbnail)
     }
+    await material.save()
+    res.redirect(`/materials/${material.id}`)
+  } catch {
+    if(material != null) {
+      renderEditPage(res,material,true)
+    } else {
+      redirect('/')
+    }
+  }
+})
+
+// Delete Material Page
+router.delete('/:id', async (req, res) => {
+  let material
+  try {
+    material = await Material.findById(req.params.id)
+    await material.remove()
+    res.redirect('/materials')
+  } catch {
+    if (material != null) {
+      res.render('materials/show', {
+        material: material,
+        errorMessage: 'Could not remove material'
+      })
+    } else {
+      res.redirect('/')
+    }
+  }
+})
+
+async function renderNewPage(res, material, hasError = false) {
+    renderFormPage(res, material, 'new', hasError)
+}
+
+async function renderEditPage(res, material, hasError = false) {
+  renderFormPage(res, material, 'edit', hasError)
+}
+
+async function renderFormPage(res, material, form, hasError = false) {
+  try {
+    const suppliers = await Supplier.find({})
+    const params = {
+      suppliers: suppliers,
+      material: material
+    }
+    if(hasError) {
+      if (form == 'edit') {
+        params.errorMessage = 'Error Updating Material'
+      } else {
+        params.errorMessage = 'Error Creating Material'
+      }
+    }
+    res.render(`materials/${form}`, params)
+  } catch {
+    res.redirect('/materials')
+  }
 }
 
 function saveThumbnail(material, thumbnailEncoded) {
