@@ -6,5 +6,5 @@
 <div>Description: <%= material.description %> </div>
 
 <a href="/materials/<%= material.id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', { url: `materials/${material.id}` }) %>
+<%- include('../partials/deleteform', { url: `/materials/${material.id}` }) %>
 <a href="/suppliers/<%= material.supplier.id %>">View Supplier</a>

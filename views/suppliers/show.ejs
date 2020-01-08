@@ -1,7 +1,7 @@
 <h2><%= supplier.name %></h2>
 <a href="/suppliers/<%= supplier.id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', 
-            { url: `suppliers/${supplier.id}` }) %>
+<%- include('../partials/deleteform', 
+            { url: `/suppliers/${supplier.id}` }) %>
 <% if (materialsBySupplier.length > 0) { %>
 <h2>Materials By Supplier</h2>
 <% materialsBySupplier.forEach(material => { %>
