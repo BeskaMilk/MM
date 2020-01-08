@@ -17,7 +17,7 @@ const { ensureAuthenticated } = require('../config/auth');
 
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) => 
-    res.render('Dashboard', {
+    res.render('dashboard', {
         name: req.user.name
     })); //after adding ensureAuthenticated, the dashboard is protected from viewing without logging in
 
