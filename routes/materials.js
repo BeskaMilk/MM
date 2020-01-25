@@ -2,7 +2,25 @@ const express = require('express')
 const router = express.Router()
 const Material = require('../models/material')
 const Supplier = require('../models/supplier')
+// const Upload = require('../public/upload')
+
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
+const OSS = require('ali-oss')
+
+
+
+// Alicloud OSS
+let client = new OSS({
+  region: 'oss-cn-beijing',
+  //云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，部署在服务端使用RAM子账号或STS，部署在客户端使用STS。
+  accessKeyId: 'LTAI4FcLp7H4hkBF6RamDeJU',
+  accessKeySecret: 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY',
+  bucket: 'material-image-list'
+});
+
+
+
+// *****---------- ROUTES ----------***** //
 
 // All Materials Route
 router.get('/', async (req, res) => {
@@ -24,7 +42,7 @@ router.get('/', async (req, res) => {
       })
     } catch {
       res.redirect('/')
-    }})
+}})
 
 
 // New Material Route
@@ -34,22 +52,44 @@ router.get('/new', async (req,res) => {
 
 
 
+// function getFileName() {
+//   if (fullPath) {
+
+//       var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+//       var fullPath = document.getElementById('upload').value;
+
+//       if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+//           filename = filename.substring(1);
+//       }
+//       alert(filename);
+//   }
+//   return filename
+// }
+
 // Create New Material Route
 router.post('/', async (req, res) => { 
     const material = new Material({
         title: req.body.title,
         supplier: req.body.supplier,
+        // thumbnailImageName: req.body.thumbnailImageName,
+        // thumbnail: req.body.thumbnail,
+        // ossFileName: req.body.supplier,
         publishDate: new Date(req.body.publishDate),
         cost: req.body.cost,
-        description: req.body.description
+        description: req.body.description,
     })
-    saveThumbnail(material, req.body.thumbnail)
+
+    // saveThumbnail(material, req.body.thumbnail)
+    // getFileName()
+    // console.log("created"+req.body.filename)
 
     try {
         const newMaterial = await material.save()
+        // let r1 = await client.put(req.body.thumbnailImageName, req.body.thumbnail); 
+        // console.log(req.body.thumbnailImageName)
         // res.redirect(`materials/${newMaterial.id}`)
         res.redirect(`materials`)
-    } catch {
+    } catch(err) {
         renderNewPage(res, material, true)
     }
 })
@@ -60,6 +100,9 @@ router.get('/:id', async (req, res) => {
     const material = await Material.findById(req.params.id)
                                    .populate('supplier')
                                    .exec()
+    // const url = concat('https://material-image-list.oss-cn-beijing.aliyuncs.com/', material.thumbnailImageName, '.', material.thumbnailImageType)
+    // material.URL = url
+    
     res.render('materials/show', { material: material })
   } catch {
     res.redirect('/')
@@ -83,12 +126,14 @@ router.put('/:id', async (req, res) => {
   try {
     material = await Material.findById(req.params.id)
     material.title = req.body.title
+    material.thumbnailImageName = req.body.thumbnailImageName
     material.supplier = req.body.supplier
     material.publishDate = new Date(req.body.publishDate)
     material.cost = req.body.cost
     material.description = req.body.description
     if (req.body.thumbnail != null && req.body.thumbnail !== '') {
-      saveThumbnail(material, req.body.thumbnail)
+      // saveThumbnail(material, req.body.thumbnail)
+      //put(material, req.body.thumbnail)
     }
     await material.save()
     res.redirect(`/materials/${material.id}`)
@@ -120,8 +165,13 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+
+
+// ----------FUNCTIONS---------- //
+
+
 async function renderNewPage(res, material, hasError = false) {
-    renderFormPage(res, material, 'new', hasError)
+  renderFormPage(res, material, 'new', hasError)
 }
 
 async function renderEditPage(res, material, hasError = false) {
@@ -148,13 +198,15 @@ async function renderFormPage(res, material, form, hasError = false) {
   }
 }
 
-function saveThumbnail(material, thumbnailEncoded) {
-    if (thumbnailEncoded == null) return
-    const thumbnail = JSON.parse(thumbnailEncoded)
-    if (thumbnail != null && imageMimeTypes.includes(thumbnail.type)) {
-        material.thumbnailImage = new Buffer.from(thumbnail.data, 'base64')
-        material.thumbnailImageType = thumbnail.type
-    }
-}
+
+
+// function saveThumbnail(material, thumbnailEncoded) {
+//     if (thumbnailEncoded == null) return
+//     const thumbnail = JSON.parse(thumbnailEncoded)
+//     if (thumbnail != null && imageMimeTypes.includes(thumbnail.type)) {
+//         material.thumbnailImage = new Buffer.from(thumbnail.data, 'base64')
+//         material.thumbnailImageType = thumbnail.type
+//     }
+// }
 
 module.exports = router 

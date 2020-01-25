@@ -1,3 +1,8 @@
+<div>
+    <%- include('../partials/header_private.ejs') %>
+</div>
+
+    
 <h2>Edit Supplier</h2>
 <form action="/suppliers/<%= supplier.id %>?_method=PUT" method="POST">
     <%- include('_form_fields') %>

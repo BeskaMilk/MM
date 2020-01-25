@@ -1,4 +1,12 @@
+<div>
+    <%- include('../partials/header_private.ejs') %>
+</div>
+
+    
 <h2><%= supplier.name %></h2>
+<h2><%= supplier.phone %></h2>
+<h2><%= supplier.weChat %></h2>
+
 <a href="/suppliers/<%= supplier.id %>/edit">Edit</a>
 <%- include('../partials/deleteform', 
             { url: `/suppliers/${supplier.id}` }) %>

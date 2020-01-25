@@ -5,6 +5,14 @@ const supplierSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
     name: {
         type: String,                        // - different columns for our schema (table), in JSON form.
         required: true                       // - there are tons of different configurations you can add. 
+    },
+    phone: {
+        type: Number,                        // - different columns for our schema (table), in JSON form.
+        required: false                       // - there are tons of different configurations you can add. 
+    },
+    weChat: {
+        type: String,                        // - different columns for our schema (table), in JSON form.
+        required: false                       // - there are tons of different configurations you can add. 
     }
 })
 

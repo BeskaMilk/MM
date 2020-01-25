@@ -1,3 +1,7 @@
+<div>
+    <%- include('../partials/header_private.ejs') %>
+</div>
+
 <h2>Edit Material</h2>
 <form action="/materials/<%= material.id %>?_method=PUT" method="POST">
     <%- include('_form_fields') %>

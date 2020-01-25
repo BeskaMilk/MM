@@ -11,11 +11,13 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 
+const OSS = require('ali-oss');
+
+
 const indexRouter = require('./routes/index') //dot means the location of the file is 'relative' to where we are now. (server.js file)
 const supplierRouter = require('./routes/suppliers') 
 const materialRouter = require('./routes/materials') //let's use materials routes .
 const userRouter = require('./routes/users') //let's use materials routes .
-
 
 
 // Passport config
@@ -34,8 +36,9 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, {
-    useUnifiedTopology: false, // - tried for so long time and finally fixed this problem. 
-    // - mongoose.connect should always include this 'useUnifiedTopoloty: false' it should be false!!!!! 
+    useUnifiedTopology: true, // - tried for so long time and finally fixed this problem. 
+    // - mongoose.connect should always include this 'useUnifiedTopoloty: false' it should be false!!!!! - seems like it's not.
+    // 'useUnifiedTopoloty: true' : this works fine.
     // - (don't worry about the deprecation warning.
     useNewUrlParser: true //may or may not need this part according to the version (mongoose)
 }) //set up a connection with our mongoDB database. here, we're going to put the url for the mongoDB connection later on.
@@ -70,6 +73,46 @@ app.use((req, res, next) => {
     next();
 });
 
+// Alicloud OSS
+let client = new OSS({
+  region: 'oss-cn-beijing',
+  //云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，部署在服务端使用RAM子账号或STS，部署在客户端使用STS。
+  accessKeyId: 'LTAI4FcLp7H4hkBF6RamDeJU',
+  accessKeySecret: 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY',
+  bucket: 'material-image-list'
+});
+
+
+// Alicloud connection test - works well but with latency
+
+// async function put () {
+//   try {
+//     // object表示上传到OSS的Object名称，localfile表示本地文件或者文件路径
+//     let r1 = await client.put('milktea.jpeg','/Users/thoare/Desktop/milktea.jpeg'); 
+//     //console.log('put success: %j', r1);
+//     let r2 = await client.get('milktea.jpeg');
+//     //console.log('get success: %j', r2);
+//   } catch(err) {
+//     //console.error('error: %j', e);
+//   }
+// }
+// put();
+
+client.useBucket('material-image-list');
+async function list () {
+  try {
+    let result = await client.list({
+      'max-keys': 5
+    })
+    //console.log('my bucket list:', result)
+    //console.log(result)
+  } catch (err) {
+    //console.log (err)
+  }
+}
+list();
+
+
 
 // Routes
 //app.use('/', require('./routes/index'));
@@ -77,8 +120,6 @@ app.use('/', indexRouter) //now the index.js (in the routes folder) is connected
 app.use('/suppliers', supplierRouter) //
 app.use('/materials', materialRouter) //
 app.use('/users', userRouter);
-
-
 
 
 app.listen(process.env.PORT || 3000)
