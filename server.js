@@ -14,6 +14,14 @@ const passport = require('passport');
 const OSS = require('ali-oss');
 
 
+
+let client = new OSS({
+  bucket: 'material-image-list',
+  region: 'oss-cn-beijing',
+  accessKeyId: 'LTAI4FcLp7H4hkBF6RamDeJU',
+  accessKeySecret: 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY'
+});
+
 const indexRouter = require('./routes/index') //dot means the location of the file is 'relative' to where we are now. (server.js file)
 const supplierRouter = require('./routes/suppliers') 
 const materialRouter = require('./routes/materials') //let's use materials routes .
@@ -73,15 +81,20 @@ app.use((req, res, next) => {
     next();
 });
 
-// Alicloud OSS
-let client = new OSS({
-  region: 'oss-cn-beijing',
-  //云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，部署在服务端使用RAM子账号或STS，部署在客户端使用STS。
-  accessKeyId: 'LTAI4FcLp7H4hkBF6RamDeJU',
-  accessKeySecret: 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY',
-  bucket: 'material-image-list'
-});
 
+async function putBucketReferer () {
+  try {
+  let result = await client.putBucketReferer('material-image-list', true, [
+    'mmatters.heroku.com',
+    '0.0.0.0/0'
+  ]);
+  console.log(result);
+  } catch (e) {
+    console.log(e);
+  }
+ }
+
+putBucketReferer();
 
 // Alicloud connection test - works well but with latency
 
