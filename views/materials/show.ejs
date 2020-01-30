@@ -3,13 +3,14 @@
 </div>
     
 <h2><%= material.title %></h2>
-<img width="150" height="150" src="<%= material.thumbnailImagePath %>">
+<img width="600" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
 <div>Image title: <%= material.title %> </div>
 <div>Supplier: <%= material.supplier.name %> </div>
 <div>Publish Date: <%= material.publishDate.toDateString() %> </div>
 <div>Cost: <%= material.cost %> </div>
 <div>Description: <%= material.description %> </div>
-<div>File Name:  </div>
+<div>Project Name: <%= material.projectName %> </div>
+<div>Image Name: <%= material.ossFileName %> </div>
 <div>File Type: </div>
 <div>File URL:  </div>
 <div>Material ID: <%= material.id %></div>

@@ -5,7 +5,7 @@
 <div>
     <% materials.forEach(material => { %>
         <a href="/materials/<%= material.id %>">
-            <img height="150" width="100" src="<%= material.thumbnailImagePath %>">
+            <img height="150" width="100" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
         </a>
     <% }) %>
 </div>

@@ -2,7 +2,7 @@
 accessid= 'LTAI4FcLp7H4hkBF6RamDeJU';
 accesskey= 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY';
 host = 'http://material-image-list.oss-accelerate.aliyuncs.com';
-// http://material-image-list.oss-accelerate.aliyuncs.com';
+
 
 g_dirname = ''
 g_object_name = ''
@@ -42,12 +42,6 @@ function get_dirname()
     }
     //alert(dir)
     g_dirname = dir
-    // console.log(toString(g_dirname))
-    // console.log(dirname)
-    // console.log('dirname')
-    // console.log(g_dirname)
-    // console.log(dir)
-
 }
 
 function random_string(len) {
@@ -80,7 +74,13 @@ function calculate_object_name(filename)
     {
         suffix = get_suffix(filename)
         g_object_name = g_dirname + random_string(10) + suffix
+        // const g_object_name_id = g_object_name + Material.id
     }
+    else if (g_object_name_type == 'user_defined')
+    {
+        g_object_name += document.getElementById("user_defined_name").value
+    }
+
     return ''
 }
 

@@ -47,10 +47,14 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
     //     type: Buffer,
     //     required: true,
     // },
-    // ossFileName: {
-    //     type: String,
-    //     requried: true,
-    // },
+    ossFileName: {
+        type: String,
+        requried: true,
+    },
+    projectName: {
+        type: String,
+        requried: true,
+    },
     supplier: {
         type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
         required: true,

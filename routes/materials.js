@@ -45,32 +45,19 @@ router.get('/', async (req, res) => {
 }})
 
 
-// New Material Route
+// New Material Route (build up MongoDB schema)
 router.get('/new', async (req,res) => { 
     renderNewPage(res, new Material())
 })
 
 
-
-// function getFileName() {
-//   if (fullPath) {
-
-//       var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-//       var fullPath = document.getElementById('upload').value;
-
-//       if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-//           filename = filename.substring(1);
-//       }
-//       alert(filename);
-//   }
-//   return filename
-// }
-
-// Create New Material Route
+// Create New Material Route 1
 router.post('/', async (req, res) => { 
     const material = new Material({
         title: req.body.title,
         supplier: req.body.supplier,
+        ossFileName: req.body.ossFileName,
+        projectName: req.body.projectName,
         // thumbnailImageName: req.body.thumbnailImageName,
         // thumbnail: req.body.thumbnail,
         // ossFileName: req.body.supplier,
@@ -80,19 +67,16 @@ router.post('/', async (req, res) => {
     })
 
     // saveThumbnail(material, req.body.thumbnail)
-    // getFileName()
-    // console.log("created"+req.body.filename)
 
     try {
         const newMaterial = await material.save()
-        // let r1 = await client.put(req.body.thumbnailImageName, req.body.thumbnail); 
-        // console.log(req.body.thumbnailImageName)
-        // res.redirect(`materials/${newMaterial.id}`)
-        res.redirect(`materials`)
+        res.redirect(`materials/${newMaterial.id}`)
+        // res.redirect(`materials`)
     } catch(err) {
         renderNewPage(res, material, true)
     }
 })
+
 
 // Show Material Route
 router.get('/:id', async (req, res) => {

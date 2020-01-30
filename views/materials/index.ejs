@@ -23,7 +23,7 @@
 <div>
     <% materials.forEach(material => { %>
         <a href="/materials/<%= material.id %>">
-        <img height="150" width="150" src="<%= material.thumbnailImagePath %>">
+        <img width="200" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
         </a>
     <% }) %>
 </div>
