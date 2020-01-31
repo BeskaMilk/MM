@@ -85,19 +85,19 @@ app.use((req, res, next) => {
 });
 
 
-async function putBucketReferer () {
-  try {
-  let result = await client.putBucketReferer('material-image-list', true, [
-    'mmatters.heroku.com',
-    '0.0.0.0/0'
-  ]);
-  console.log(result);
-  } catch (e) {
-    console.log(e);
-  }
- }
+// async function putBucketReferer () {
+//   try {
+//   let result = await client.putBucketReferer('material-image-list', true, [
+//     'mmatters.heroku.com',
+//     '0.0.0.0/0'
+//   ]);
+//   console.log(result);
+//   } catch (e) {
+//     console.log(e);
+//   }
+//  }
 
-putBucketReferer();
+// putBucketReferer();
 
 // Alicloud connection test - works well but with latency
 
