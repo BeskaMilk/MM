@@ -2,13 +2,25 @@
     <%- include('../partials/header_private.ejs') %>
 </div>    
 
-<h2>New Material MongdoDB Schema</h2>
+<div class="container">
+    <div class="row">
+            <div class="col">
+            
+            </div>
 
-<form action="/materials" method="POST">
-    <%- include('_form_fields') %>
-    <a href="/materials">Cancel</a>
-    <button type="submit">Create</button>
-</form>
+            <div class="col-5">
+                <form action="/users/materials/index" method="POST">
+                    <%- include('_form_fields') %>
+                    <a href="/users/materials/index">Cancel</a>
+                    <button type="submit">Create</button>
+                </form>
+            </div>
+            <div class="col">
+                        
+            </div>
+    </div>
+</div>
+
 
 
 

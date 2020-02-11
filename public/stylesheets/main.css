@@ -1,46 +1,3 @@
-/* @import 'shared/variables.css';
-@import 'shared/fonts.css';
-@import 'shared/header.css';
-@import 'shared/buttons.css';
-@import 'shared/form.css';
-@import 'shared/author.css';
-@import 'shared/books.css';
-
-:root {
-  font-family: 'Gotham Rounded';
-  font-size: 20px;
-  color: var(--color-text-light);
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body {
-  background: linear-gradient(to right, var(--color-background-dark), var(--color-background-light));
-}
-
-.container {
-  max-width: 1200px;
-  margin: auto;
-  margin-bottom: 3rem;
-}
-
-.inner-container {
-  margin: 0 2rem;
-}
-
-.page-header {
-  font-size: 2rem;
-  font-weight: 500;
-}
-
-.error-message {
-  color: hsl(var(--color-danger-hue), 100%, 50%);
-}
- */
-
-
 .btn{
   color: #fff;
 background-color: #337ab7;
@@ -98,4 +55,278 @@ transition-duration: 0.6s;
 transition-property: width;
 transition-timing-function: ease;
 width: 266.188px;
+}
+
+#avatar {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  position: center;
+}
+
+
+#companyLogo {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  position: center;
+}
+
+#avatar-small {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  position: center;
+  cursor: pointer;
+}
+
+
+#avatar-small:hover {
+  transform: scale(1.01, 1.01);
+  box-shadow: 2px 2px 4px 2px rgba(0,0,0,0.15), 
+    -1px -1px 5px 3px rgba(0,0,0,0.1);
+  transition: 0.2s linear;
+}
+
+
+
+
+.custom-cards-list {
+  z-index: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.custom-card {
+  margin: 30px auto;
+  border-radius: 4%;
+  width: 300px;
+  height: 300px;
+box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.15), -5px -5px 30px 7px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.custom-card .custom-card_image {
+  width: inherit;
+  height: inherit;
+  border-radius: 4%;
+}
+
+.custom-card .custom-card_image img {
+  width: inherit;
+  height: inherit;
+  border-radius: 4%;
+  object-fit: cover;
+}
+
+.custom-card .custom-card_title {
+  text-align: center;
+  border-radius: 4%;
+  font-family: Helvetica;
+  font-weight: normal;
+  font-size: 20px;
+  margin-top: -80px;
+  height: 40px;
+}
+
+.custom-card .custom-card_title .custom-card_p {
+  text-align: left;
+  border-radius: 4%;
+  font-family: Helvetica;
+  font-weight: normal;
+  font-size: 8px;
+  margin-top: -25px;
+  margin-left: 50px;
+  /* height: 40px; */
+}
+
+
+.custom-card .custom-card_title .custom-card_avatar{
+  text-align: left;
+  position: relative;
+  /* margin-top: -600px; */
+  margin-top: -250px;
+  margin-left: 15px;
+  /* height: 40px; */
+}
+
+
+#avatar-on-card{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+}
+
+/* 
+.custom-card .custom-card_avatar {
+  text-align: left;
+  //margin-left: 50px;
+} */
+
+.custom-card:hover {
+  transform: scale(1.01, 1.01);
+  box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.15), 
+    -5px -5px 30px 15px rgba(0,0,0,0.1);
+}
+
+.custom-card_title {
+  color: white;
+}
+
+.custom-card_title:hover {
+  color: white;
+}
+
+.title-black {
+  color: black;
+}
+
+@media all and (max-width: 500px) {
+  .card-list {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+}
+
+
+/* 
+.card {
+  margin: 30px auto;
+  width: 300px;
+  height: 300px;
+  border-radius: 40px;
+  background-image: url('https://i.redd.it/b3esnz5ra34y.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-repeat: no-repeat;
+box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+  transition: 0.4s;
+} */
+
+
+
+
+
+#pictureCard {
+  width: 300px;
+  margin: 20px;
+  border-radius: 5%;
+
+  /* background-image: attr(url); */
+  /* padding: 10px; */
+} 
+
+#pictureCard-bg {
+  width: 100%;
+  margin: 5px;
+  border-radius: 2.5%;
+}
+
+#pictureCard:hover {
+  opacity: 0.9;
+  scale: 2;
+  width: 350px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+  transition: 0.2s;
+  /* background-size: 110%; */
+  /* content:attr("data-text"); */
+} 
+
+#pictureCard:hover:after {
+  position: absolute;
+  top:0;
+  word-wrap: break-word;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.6);
+  content:attr(data-text);
+}
+
+.pictureCard-title {
+  font-family: Helvetica;
+  font-style: initial;
+}
+
+.footerStyle {
+  margin-top: 10em;
+  margin-bottom: 3em;
+}
+
+.websiteLogo {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+
+.hide {
+  opacity: 0;
+}
+
+
+.gallery-view-icon {
+  width:40px;
+  height:40px;
+  opacity: 0.7;
+  margin-bottom: 25px;
+}
+
+
+.list-view-icon {
+  width:35px;
+  height:35px;
+  opacity: 0.5;
+  margin-bottom: 25px;
+
+}
+
+/* ----------from now on it's about tags---------- */
+:root{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.tags-input {
+  border: 1px solid #ddd;
+  display: inline-block;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.tags-input .tag {
+  font-size: 85% ;
+  padding: 0.5em 0.75em;
+  margin: 0.25em 0.1em;
+  display: inline-block;
+  background-color: #ddd;
+  transition: all 0.1s linear;
+  cursor: pointer;
+}
+
+.tags-input .tag:hover {
+  background-color: tomato;
+  color: white;
+}
+
+.tags-input .tag .close::after {
+  content: '×';
+  font-weight: bold;
+  display: inline-block;
+  transform: scale(1.4);
+  margin-left: 0.75em;
+}
+
+.tags-input .tag .close:hover::after {
+  color: red;
+}
+
+.tags-input .main-input {
+  border: 0;
+  outline: 0;
+  padding: 0.5em 0.1em;
 }

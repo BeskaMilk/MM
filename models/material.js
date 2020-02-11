@@ -2,13 +2,13 @@ const mongoose = require('mongoose') // - a library that we use to connect to mo
 const OSS = require('ali-oss');
 
 
-// Alicloud OSS
-let client = new OSS({
-    region: 'oss-cn-beijing',
-    accessKeyId: 'LTAI4FcLp7H4hkBF6RamDeJU',
-    accessKeySecret: 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY',
-    bucket: 'material-image-list'
-  });
+// // Alicloud OSS
+// let client = new OSS({
+//     region: 'oss-cn-beijing',
+//     accessKeyId: 'LTAI4FcLp7H4hkBF6RamDeJU',
+//     accessKeySecret: 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY',
+//     bucket: 'material-image-list'
+//   });
   
 
 
@@ -35,18 +35,6 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
         required: true,
         default: Date.now
     },
-    // thumbnailImageName: {
-    //     type: String,
-    //     required:true
-    // },
-    // thumbnailImageType: {
-    //     type: String,
-    //     requried: true,
-    // },
-    // thumbnail: {
-    //     type: Buffer,
-    //     required: true,
-    // },
     ossFileName: {
         type: String,
         requried: true,
@@ -55,19 +43,27 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
         type: String,
         requried: true,
     },
+    isPublic: {
+        type: String,
+        required: true,
+    },
     supplier: {
         type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
         required: true,
         ref: 'Supplier' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
     },
+    userID: {
+        type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
+        required: false,
+        ref: 'User' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
+    },
+    userName: {
+        type: String,  // - referencing another object inside of our collections. 
+        required: false,
+        ref: 'User' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
+    },
 }) 
 
-
-// materialSchema.virtual('thumbnailImagePath').get(function() {
-//     if (this.thumbnailImage != null && this.thumbnailImageType != null) {
-//       return `data:${this.thumbnailImageType};charset=utf-8;base64,${this.thumbnailImage.toString('base64')}`
-//     }
-// })
 
 module.exports = mongoose.model('Material', materialSchema) // - exprot this schema, give a name as 'Supplier' of this table.
 

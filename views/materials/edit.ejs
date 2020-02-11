@@ -3,9 +3,9 @@
 </div>
 
 <h2>Edit Material</h2>
-<form action="/materials/<%= material.id %>?_method=PUT" method="POST">
+<form action="/users/materials/index/<%= material.id %>?_method=PUT" method="POST">
     <%- include('_form_fields') %>
-    <a href="/materials">Cancel</a>
+    <a href="/users/materials/index">Cancel</a>
     <button type="submit">Update</button>
 </form>
 

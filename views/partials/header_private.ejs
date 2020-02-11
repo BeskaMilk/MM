@@ -1,21 +1,86 @@
 
-<header>
-    <nav>
-        <a href="/">
-            <img height="150" width="100" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
-            <img height="150" width="100" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
-        </a>
-        
-        <ul>
-            <a href="/materials">Materials</a>
-            <p1> | </p1>
-            <a href="/materials/new">Add Material</a>
-            <p1> | </p1>
-            <a href="/suppliers">Suppliers</a>
-            <p1> | </p1>
-            <a href="/suppliers/new">Add Supplier</a>
-            <p1> | </p1>
-            <a href="/users/logout">Log Out</a>
-        </ul>
-    </nav>
-</header>
+<!-- <header> -->
+    <!-- <nav> -->
+        <div class="container">
+
+        <div class="row">
+                    <div class="col">
+                        <a href="/">
+                            <img height="50" class="websiteLogo" width="40" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
+                            <img height="50" class="websiteLogo" width="40" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
+                        </a>
+                    </div>
+                
+                    <div class="col-8">
+                        <div class="websiteLogo" >
+                        <a href="/users/materials/index">
+                            <span style="font-size: 2em; color: Tomato;">
+                                <i class="fas fa-cubes"></i>
+                            </span>
+                            </a>
+                        <a href="/users/suppliers/index">
+                            <span style="font-size: 2em; color: Tomato;">
+                            <i class="fas fa-industry"></i>
+                        </span>
+                        </a>
+                        <!-- <a href="/users/constructionTeam/index">
+                            <span style="font-size: 2em; color: Tomato;">
+                            <i class="fas fa-hammer"></i>
+                            </span>
+                        </a> -->
+                        <a href="/users/constructionTeam/index">
+                            <span style="font-size: 2em; color: Tomato;">
+                            <i class="fas fa-tasks"></i>
+                            </span>
+                        </a>
+
+
+                    </div>
+                    </div >
+
+                    <div class= "col">
+                        <div class="websiteLogo" href="#" data-toggle="modal" data-target="#myModal">
+                            <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>">
+                        </div>
+                    </div>
+                    <!-- <a href="#" data-toggle="modal" data-target="#myModal">Open Modal</a> -->
+
+            </div>
+        </div>
+
+    <!-- </nav> -->
+<!-- </header> -->
+
+<%- include('messages'); %>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1><%= userName %></h1>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <a href="/users/dashboard">
+                            my board
+                            <!-- <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>"> -->
+                        </a>
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/users/dashboard/logout" class="btn btn-secondary">Logout</a>
+
+                        <input class="btn btn-default" data-dismiss="modal" value="Close">
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

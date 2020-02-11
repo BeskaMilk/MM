@@ -1,21 +1,75 @@
 <div>
     <%- include('../partials/header_private.ejs') %>
 </div>
+
+
+<div class="container">
+    <div class="row">
+      
+      <div class="col">
+      </div>
+      
+      <div class="col-10">
+        <div class="card text-center">
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body">
+        
+        
+            <div class="container">
+                <div class="row">
+                <div class="col">
+                    <img id="pictureCard-bg" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+                    <div>
+                        <h2 class="card-title"><%= material.title %></h2>
+                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>  
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>    
+                    </div>
+                </div>
+                <div class="col text-left">
+                    <p class="card-text-l">Supplier: <%= material.supplier.name %></p>
+                    <p class="card-text">Publish Date: <%= material.publishDate.toDateString() %> </p>
+                    <p class="card-text">User Name: <%= material.userName %></p>
+                    <p class="card-text">User ID: <%= material.userID %></p>
+                    <p class="card-text">Who can view this data: <%= material.isPublic %></p>
+                    <p class="card-text">Cost: <%= material.cost %> </p>
+                    <p class="card-text">Description: <%= material.description %> </p>
+                    <p class="card-text">Project Name: <%= material.projectName %> </p>
+                    <p class="card-text">Image Name: <%= material.ossFileName %> </p>
+                    <p class="card-text">File Type: </p>
+                    <p class="card-text">File URL: https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %> </p>
+                    <% if ( material.userID == userID ) { %>
+                      <a href="/users/materials/index/<%= material.id %>/edit">Edit</a>
+                      <a href="/users/suppliers/index/<%= material.supplier.id %>">View Supplier</a>
+                      <%- include('../partials/deleteform', { url: `/users/materials/index/${material.id}` }) %>
+                    <% } else { %>
+                      <a href="/users/suppliers/index/<%= material.supplier.id %>">View Supplier</a>
+                    <% } %>
+
+                  </div>      
+                </div>
+            </div>
+            </div>
+      </div>
+    </div>
+      <div class="col">
+      </div>
     
-<h2><%= material.title %></h2>
-<img width="600" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
-<div>Image title: <%= material.title %> </div>
-<div>Supplier: <%= material.supplier.name %> </div>
-<div>Publish Date: <%= material.publishDate.toDateString() %> </div>
-<div>Cost: <%= material.cost %> </div>
-<div>Description: <%= material.description %> </div>
-<div>Project Name: <%= material.projectName %> </div>
-<div>Image Name: <%= material.ossFileName %> </div>
-<div>File Type: </div>
-<div>File URL:  </div>
-<div>Material ID: <%= material.id %></div>
+    </div>
+  </div>
 
+</div>
 
-<a href="/materials/<%= material.id %>/edit">Edit</a>
-<%- include('../partials/deleteform', { url: `/materials/${material.id}` }) %>
-<a href="/suppliers/<%= material.supplier.id %>">View Supplier</a>

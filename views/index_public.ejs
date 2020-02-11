@@ -1,0 +1,11 @@
+<div>
+    <%- include('partials/header_public.ejs') %>
+</div>
+
+<% if (publicMaterials.length > 0) { %>
+<% publicMaterials.forEach(material => { %>
+    <a href="/users/materials/index/<%= material.id %>">
+        <img width="200" id="pictureCard" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+    </a>
+    <% }) %>
+<% } %>

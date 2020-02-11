@@ -1,0 +1,92 @@
+
+<div class="container">
+    <div class="row">
+            <div class="col">
+            
+            </div>
+
+            <div class="col-5">
+
+            <fieldset>
+                       
+
+            
+                        <div class="form-group">
+                            <label for="name">Company Name</label>
+                            <input
+                            type="name"
+                            id="dirname"
+                            name="name"
+                            class="form-control"
+                            placeholder="Enter Name"
+                            value="<%= typeof name != 'undefined' ? name : '' %>"
+                            />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input
+                            type="description"
+                            id="description"
+                            name="description"
+                            class="form-control"
+                            placeholder="Describe your company in one sentence."
+                            value="<%= typeof description != 'undefined' ? description : '' %>"
+                            />
+                        </div>
+                    
+                            
+                    <div class="form-group">
+                        <div class="hide">
+                        <div class="custom-control custom-radio">
+                        <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled=""/> 
+                        <label class="custom-control-label" for="customRadio1"></label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled="" /> 
+                            <label class="custom-control-label" for="customRadio2"></label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio3" name="myradio" value="user_defined" class="custom-control-input" checked=true/> 
+                            <label class="custom-control-label" for="customRadio3"></label>
+                        </div>
+                        </div>
+                    </div>
+                            
+                
+                    <input type="text" name="userID" id='user_defined_name' class="hide" placeholder="<%= userID %>" value="<%= userID %>">
+
+                    <div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+                
+                    
+                    <div class="form-group" >
+                        <div class="input-group mb-3">
+                            <div id="container">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="selectfiles" >
+                                    <lable href="javascript:void(0);" class="custom-file-label" for="selectedfiles">choose</lable>
+                                </div>
+                            </div>
+                                <div class="input-group-append">
+                                    <span id="postfiles" href="javascript:void(0);" class="input-group-text">upload</span>
+                                </div>
+                        </div>
+                    </div>
+                
+                
+                    <pre id="console"></pre>
+                
+                    <p>&nbsp;</p>
+                    
+                </fieldset>
+
+
+        </div>
+        <div class="col"> 
+        </div>
+    </div> 
+</div>
+
+
+
+

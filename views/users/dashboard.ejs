@@ -1,0 +1,46 @@
+<div>
+    <%- include('../partials/header_private.ejs') %>
+</div>
+
+<div class="text-center">
+    <%- include('../partials/messages'); %>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h6 id="userID" value="<%= userID %>"></h6>
+            <h2><%= user.name %></h2>
+            <div><img id="avatar" src="<%= g_userProfPic_URL %>"></div>
+            <%- include('show') %>
+            <a href="/users/<%= userID %>/editUser" class="btn btn-secondary">update my data</a>
+        </div>
+      
+        <div class="col">
+            
+            <h2><%= companyName %></h2>
+            <% if (companyID = 0) {%>
+                <div><img id="companyLogo" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= companyName %>/<%= userID %>"></div>
+            <%- include('../companies/show.ejs') %>
+                <a href="/users/<%= userID %>/companies/edit" class="btn btn-secondary">Update Company Data</a>
+                <%- include('../partials/deleteform', { url: `/users/companies/index/${companyID}` }) %>
+
+            <% } else { %>
+                <p>Your company is not registered yet. </p>
+                <p>Please create your company data here.</p>
+                <a href="/users/<%= userID %>/companies/new" class="btn btn-secondary">Register Your Company</a>
+            <% } %>
+           
+        </div>
+    </div>
+</div>
+
+<% if (materialsByUser.length > 0) { %>
+<h2>Materials I posted</h2>
+<% materialsByUser.forEach(material => { %>
+    <a href="/users/materials/index/<%= material.id %>">
+        <img width="200" id="pictureCard" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+    </a>
+    <% }) %>
+<% } %>
+</div>

@@ -1,11 +1,36 @@
-<div>
-    <label>Title<label>
-    <input type="text" name="title" value="<%= material.title %>">
-</div>
+<fieldset>
 
-<div>
+
+<div class="form-group">
+    <legend>Post New Material</legend>
+    
+    <label class="col-form-label" for="inputDefault">Project name</label>
+    <input type="text" id='dirname' placeholder="Project Name" name="projectName" value="<%= material.projectName %>" class="form-control" placeholder="put your architectural/construction project name here" id="inputDefault">
+
+    <label class="col-form-label" for="inputDefault">Title</label>
+    <input type="text" name="title" value="<%= material.title %>" class="form-control" placeholder="put your post title here" id="inputDefault">
+    
+    <label class="col-form-label" for="inputDefault">Add tags</label>
+    <div class="tags-input" data-name="tags-input" ></div>
+
+    <label class="control-label">Cost</label>
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">元</span>
+            </div>
+            <input type="text" name="cost" class="form-control" min="1" value="<%= material.cost %>" aria-label="Amount (to the nearest dollar)">
+            <div class="input-group-append">
+              <span class="input-group-text"></span>
+            </div>
+          </div>
+        </div>
+</div >
+
+
+<div class="form-group">
 <label>Supplier</label>
-<select name="supplier">
+<select name="supplier" class="custom-select">
     <% suppliers.forEach(supplier => { %>
         <% if (supplier.id === material.supplier) { %>
             <option selected label="<%= supplier.name %>" value="<%= supplier.id %>">
@@ -16,48 +41,75 @@
 </select>
 </div>
 
-<div>
-    <label>Publish Date</label>
+<div class="form-group">
+    <label>Construction Completed at</label>
     <input type="date" name="publishDate" 
             value="<%= material.publishDate == null ? '' :
             material.publishDate.toISOString().split('T')[0] %>">
 </div>
 
-<div>
-    <lable>Cost</lable>
-    <input type="number" name="cost" min="1" value="<%= material.cost %>">
-</div>
 
-<div>
-    <label>Description</label>
-    <textarea name="description" > <% material.description %> </textarea>
+<div class="form-group">
+    <label for="exampleTextarea">Description</label>
+    <textarea name="description" class="form-control" id="exampleTextarea" rows="3"> <% material.description %> </textarea>
 </div>
 
 <br/>
 
-<div>
-</div>    
-
-	<input type="radio" name="myradio" value="local_name" checked=true/> keep the local file name
-    <input type="radio" name="myradio" value="random_name" /> give the file a random name
-    <input type="radio" name="myradio" value="user_defined" /> give the file a name you like
+<div class="form-group">
+    <div class="hide">
+        <div class="custom-control custom-radio">
+        <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled=""/> 
+        <label class="custom-control-label" for="customRadio1">keep the local file name</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled="" /> 
+            <label class="custom-control-label" for="customRadio2">give the file a random name</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="myradio" value="user_defined" class="custom-control-input" checked=true/> 
+            <label class="custom-control-label" for="customRadio3">give a image name</label>
+        </div>
+    </div>
+</div>
+     
 
 	<br/>
-	<div>Project Name:<input type="text" id='dirname' placeholder="Project Name" size=50 name="projectName" value="<%= material.projectName %>"></div>
-	<div>Image Name:<input type="text" id='user_defined_name' placeholder="what name" size=50 name="ossFileName" value="<%= material.ossFileName %>"></div>
+	<div>Image Name<input type="text" id='user_defined_name' placeholder="what name" size=50 name="ossFileName" value="<%= material.ossFileName %>"></div>
 
-<h6>Files you selected: </h6>
 	<div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
 
 	<br/>
 
-	<div id="container">
-		<a id="selectfiles" href="javascript:void(0);" class='btn'>choose</a>
-		<a id="postfiles" href="javascript:void(0);" class='btn'>upload</a>
-	</div>
+    <div class="form-group" >
+        <div class="input-group mb-3">
+            <div id="container">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="selectfiles" >
+                    <lable href="javascript:void(0);" class="custom-file-label" for="selectedfiles">choose</lable>
+                </div>
+            </div>
+                <div class="input-group-append">
+                    <span id="postfiles" href="javascript:void(0);" class="input-group-text">upload</span>
+                </div>
+        </div>
+    </div>
+
 
 	<pre id="console"></pre>
 
+    <div class="form-group">
+        <div class="form-group">
+            <label>Who can view this data</label>
+            <select name="isPublic" class="custom-select">
+                        <option selected label="private" value="private">
+                        <option label="public" value="public">
+                        <option label="alliances" value="alliances">
+            </select>
+            </div>
+    </div>
 
-	<p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+  </fieldset>
 

@@ -2,29 +2,79 @@
 <%- include('../partials/header_private.ejs') %>
 </div>
 
-<h2>Search Material</h2>
-<form action="/materials" method="GET">
-    <div>
-        <label>Title</label>
-        <input type="text" name="title" value="<%= searchOptions.title %>" >
+<div class="container">
+<div class="row">
+    <div class="col-0">
+    </div>
+    <div class="col-12 text-left">                     
+        <form action="/users/materials/index" method="GET">
+            <div>
+                <p1 class="text-left"><%= g_companyName%>'s Shared Material Library</p1>
+                <input type="text" name="title" value="<%= searchOptions.title %>" >
+                
+                <label>from</label>
+                <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>" >
+                <label>to</label>
+                <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>" >
+                <button type="submit">Search</button>
+            </div>
+        </form>
     </div>
 
-    <div>
-        <label>Published After</label>
-        <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>" >
+    <div class="col-12 text-right">
+
+        <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
+        <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
+
+        <a href="/users/materials/new">
+            <span style="font-size: 3em; color: Tomato;">
+                <i class="fas fa-plus-circle"></i>
+            </span>
+        </a> 
+
     </div>
 
-    <div>
-        <label>Published Before</label>
-        <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>" >
-    </div>
-        <button type="submit">Search</button>
-</form>
-<div>
-    <% materials.forEach(material => { %>
-        <a href="/materials/<%= material.id %>">
-        <img width="200" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
-        </a>
-    <% }) %>
 </div>
+</div>
+
+
+<div class="row">
+<div class="col">
+                
+</div>
+    
+<div class="col-8">
+    <div class="custom-cards-list">
+
+            <% materials.forEach(material => { %>
+
+                <!-- <div class="card 3">     -->
+
+                    <!-- <p3 class="pictureCard-title" value="<%= material.title %>"><%= material.title %> -->
+                    <a href="/users/materials/index/<%= material.id %>" class="custom-card 3">
+                    <div class="custom-card_image">    
+                        <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+                    </div>
+                    <div class="custom-card_title">
+                        <p><%= material.title %></p> 
+                        <div class="custom-card_avatar">
+                        <img id="avatar-on-card" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.userID %>/<%= material.userName %>">
+                        <p class="custom-card_p"><%= material.userName %></p>
+                    </div>
+
+                    </div>
+                    <!-- <div > -->
+                    <!-- </div> -->
+                    </a>
+            <% }) %>
+    </div>
+</div>
+
+
+<div class="col">              
+</div>
+
+</div>
+
+
 

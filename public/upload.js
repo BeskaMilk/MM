@@ -3,14 +3,14 @@ accessid= 'LTAI4FcLp7H4hkBF6RamDeJU';
 accesskey= 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY';
 host = 'http://material-image-list.oss-accelerate.aliyuncs.com';
 
-
 g_dirname = ''
 g_object_name = ''
 g_object_name_type = ''
+
 now = timestamp = Date.parse(new Date()) / 1000; 
 
 var policyText = {
-    "expiration": "2020-01-31T12:00:00.000Z", //设置该Policy的失效时间，超过这个失效时间之后，就没有办法通过这个policy上传文件了
+    "expiration": "2020-05-20T12:00:00.000Z", //设置该Policy的失效时间，超过这个失效时间之后，就没有办法通过这个policy上传文件了
     "conditions": [
     ["content-length-range", 0, 1048576000] // 设置上传文件的大小限制
     ]
@@ -20,6 +20,7 @@ var policyBase64 = Base64.encode(JSON.stringify(policyText))
 message = policyBase64
 var bytes = Crypto.HMAC(Crypto.SHA1, message, accesskey, { asBytes: true }) ;
 var signature = Crypto.util.bytesToBase64(bytes);
+
 
 function check_object_radio() {
     var tt = document.getElementsByName('myradio');
@@ -74,7 +75,6 @@ function calculate_object_name(filename)
     {
         suffix = get_suffix(filename)
         g_object_name = g_dirname + random_string(10) + suffix
-        // const g_object_name_id = g_object_name + Material.id
     }
     else if (g_object_name_type == 'user_defined')
     {
@@ -122,6 +122,11 @@ function set_upload_param(up, filename, ret)
 
     up.start();
 }
+
+// function getIsPublic() {
+//     document.getElementById('isThisPublic').appendChild(document.createTextNode(isThisPublic));
+
+// }
 
 var uploader = new plupload.Uploader({
 	runtimes : 'html5,flash,silverlight,html4',
@@ -178,7 +183,9 @@ var uploader = new plupload.Uploader({
 		Error: function(up, err) {
 			document.getElementById('console').appendChild(document.createTextNode("\nError xml:" + err.response));
 		}
-	}
+    }
+    
+    
 });
 
 uploader.init();

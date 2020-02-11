@@ -1,0 +1,102 @@
+<div>
+    <%- include('../partials/header_private.ejs') %>
+</div>
+
+<div class="container">
+    <div class="row">
+    
+                <div class="col">
+                
+                </div>
+    
+                <div class="col-5">
+                <fieldset>
+                    <form action="/users/<%= user.id %>?_method=PUT" method="POST">
+                    
+                    <h2>Your Personal Data</h2>
+                    <div class="form-group">
+                        <label class="col-form-label" for="inputDefault">My Name</label>
+                        <input type="text" name="name" id='user_defined_name' placeholder="<%= user.name %>" value="<%= user.name %>" class="form-control"></input>
+                    </div >
+                    <div class="form-group">
+                        <label class="col-form-label" for="inputDefault">My Phone Number</label>
+                        <input type="text" name="phone" placeholder="<%= user.phone %>" value="<%= user.phone %>"  class="form-control"></input>
+                    </div >
+                    <div class="form-group">
+                        <label class="col-form-label" for="inputDefault">My WeChat ID</label>
+                        <input type="text" name="weChat" placeholder="<%= user.weChat %>" value="<%= user.weChat %>" class="form-control"></input>
+                    </div >
+                    <div class="form-group">
+                        <label>Company</label>
+                        <select name="company" class="custom-select">
+                            <% companies.forEach(company => { %>
+                                <% if (company.id === user.company) { %>
+                                    <option selected label="<%= company.name %>"  value="<%= company.id %>">
+                                <% } else { %>
+                                    <option label="<%= company.name %>"  value="<%= company.id %>">
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    </div>
+                    
+                    <h2>Your Company Data</h2>
+                        <input type="text" id='dirname' class="hide" value="<%= user.id %>" disabled=""></input>
+                    
+                    <div class="form-group">
+                        <label for="exampleTextarea">Description</label>
+                        <textarea name="description" class="form-control" id="exampleTextarea" placeholder="<%= user.description %>" rows="3" value="<%= user.description %>"></textarea>
+                    </div>
+                                        
+                    <div class="form-group">
+                        <div class="hide">
+                        <div class="custom-control custom-radio">
+                        <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled=""/> 
+                        <label class="custom-control-label" for="customRadio1"></label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled="" /> 
+                            <label class="custom-control-label" for="customRadio2"></label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio3" name="myradio" value="user_defined" class="custom-control-input" checked=true/> 
+                            <label class="custom-control-label" for="customRadio3"></label>
+                        </div>
+                        </div>
+                    </div>
+                    
+                
+                    <div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+                
+                    <br/>
+                    <div class="col text-center">
+                        <div class="form-group" >
+                            <div class="input-group mb-3">
+                                <div id="container">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="selectfiles" >
+                                        <lable href="javascript:void(0);" class="custom-file-label" for="selectedfiles">choose</lable>
+                                    </div>
+                                </div>
+                                    <div class="input-group-append">
+                                        <span id="postfiles" href="javascript:void(0);" class="input-group-text">upload</span>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <pre id="console"></pre>
+                
+                    <p>&nbsp;</p>
+                    <a href="/users/dashboard">Cancel</a>
+                    <button type="submit">Update</button>
+                </form>
+                </fieldset>
+                </div>
+                <div class="col">
+                    
+                </div>
+    </div>
+</div>
+
+
+

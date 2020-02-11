@@ -2,18 +2,20 @@
     <%- include('../partials/header_private.ejs') %>
 </div>
 
+
+
     
 <h2><%= supplier.name %></h2>
 <h2><%= supplier.phone %></h2>
 <h2><%= supplier.weChat %></h2>
 
-<a href="/suppliers/<%= supplier.id %>/edit">Edit</a>
+<a href="/users/suppliers/index/<%= supplier.id %>/edit">Edit</a>
 <%- include('../partials/deleteform', 
-            { url: `/suppliers/${supplier.id}` }) %>
+            { url: `/users/suppliers/index/${supplier.id}` }) %>
 <% if (materialsBySupplier.length > 0) { %>
 <h2>Materials By Supplier</h2>
 <% materialsBySupplier.forEach(material => { %>
-    <a href="/materials/<%= material.id %>">
+    <a href="/users/materials/index/<%= material.id %>">
         <img width="200" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
     </a>
     <% }) %>
