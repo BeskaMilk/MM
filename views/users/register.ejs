@@ -29,6 +29,28 @@
             />
           </div>
           <div class="form-group">
+            <label for="phone">Phone</label>
+            <input
+              type="phone"
+              id="phone"
+              name="phone"
+              class="form-control"
+              placeholder="Enter your phone number"
+              value="<%= typeof phone != 'undefined' ? phone : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <label for="weChat">WeChat</label>
+            <input
+              type="weChat"
+              id="weChat"
+              name="weChat"
+              class="form-control"
+              placeholder="Enter your WeChat ID"
+              value="<%= typeof weChat != 'undefined' ? weChat : '' %>"
+            />
+          </div>
+          <div class="form-group">
             <label for="password">Password</label>
             <input
               type="password"
@@ -39,17 +61,30 @@
               value="<%= typeof password != 'undefined' ? password : '' %>"
             />
           </div>
-          <div class="form-group">
-            <label for="password2">Confirm Password</label>
-            <input
-              type="password"
-              id="password2"
-              name="password2"
-              class="form-control"
-              placeholder="Confirm Password"
-              value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
-            />
+            
+            <!-- role -->
+            <!--  master / special / standard  -->
+            <div class="form-group">
+              <label for="role">Role</label>
+              <select name="role" class="custom-select">
+                          <option selected label="master" value="master">
+                          <option label="special" value="special">
+                          <option label="standard" value="standard">
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="password2">Confirm Password</label>
+              <input
+                type="password"
+                id="password2"
+                name="password2"
+                class="form-control"
+                placeholder="Confirm Password"
+                value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+              />
+            </div>
           </div>
+          
           <button type="submit" class="btn btn-primary btn-block">
             Register
           </button>

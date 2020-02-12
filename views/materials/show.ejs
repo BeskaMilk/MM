@@ -33,31 +33,33 @@
                     <img id="pictureCard-bg" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
                     <div>
                         <h2 class="card-title"><%= material.title %></h2>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>  
-                        <h5 class="card-title">Special title treatment</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= material.tags_input %></h6>  
+                        <h5 class="card-title"><%= material.description %></h5>
                         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>    
                     </div>
                 </div>
                 <div class="col text-left">
+                    <% if ( material.userID == userID ) { %>
+                      <div class="row" style="margin: auto;">
+                        <a class="btn btn-primary" style="margin: auto;" href="/users/materials/index/<%= material.id %>/edit" >Edit</a>
+                        <a class="btn btn-primary" style="margin: auto;" href="/users/suppliers/index/<%= material.supplier.id %>">View Supplier</a>
+                      </div>
+                    <% } else { %>
+                      <a class="btn btn-primary" style="margin: auto;" href="/users/suppliers/index/<%= material.supplier.id %>">View Supplier</a>
+                    <% } %>
                     <p class="card-text-l">Supplier: <%= material.supplier.name %></p>
                     <p class="card-text">Publish Date: <%= material.publishDate.toDateString() %> </p>
                     <p class="card-text">User Name: <%= material.userName %></p>
                     <p class="card-text">User ID: <%= material.userID %></p>
                     <p class="card-text">Who can view this data: <%= material.isPublic %></p>
                     <p class="card-text">Cost: <%= material.cost %> </p>
-                    <p class="card-text">Description: <%= material.description %> </p>
+                    <!-- <p class="card-text">Description:  </p> -->
                     <p class="card-text">Project Name: <%= material.projectName %> </p>
                     <p class="card-text">Image Name: <%= material.ossFileName %> </p>
-                    <p class="card-text">File Type: </p>
+                    <!-- <p class="card-text">Tags: <%= material.tags_input %> </p> -->
+                    <!-- <p class="card-text">File Type: </p> -->
                     <p class="card-text">File URL: https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %> </p>
-                    <% if ( material.userID == userID ) { %>
-                      <a href="/users/materials/index/<%= material.id %>/edit">Edit</a>
-                      <a href="/users/suppliers/index/<%= material.supplier.id %>">View Supplier</a>
-                      <%- include('../partials/deleteform', { url: `/users/materials/index/${material.id}` }) %>
-                    <% } else { %>
-                      <a href="/users/suppliers/index/<%= material.supplier.id %>">View Supplier</a>
-                    <% } %>
+                    
 
                   </div>      
                 </div>

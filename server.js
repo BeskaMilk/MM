@@ -47,7 +47,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, {
-    useUnifiedTopology: true, // - tried for so long time and finally fixed this problem. 
+    useUnifiedTopology: false, // - tried for so long time and finally fixed this problem. 
     // - mongoose.connect should always include this 'useUnifiedTopoloty: false' it should be false!!!!! - seems like it's not.
     // 'useUnifiedTopoloty: true' : this works fine.
     // - (don't worry about the deprecation warning.

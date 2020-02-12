@@ -36,6 +36,10 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
         ref: 'Company' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
     },
+    role: {
+        type: String, // master / special / standard 
+        required: true,
+    },
 })
 
 const User = mongoose.model('User', UserSchema);

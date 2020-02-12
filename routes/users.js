@@ -14,6 +14,8 @@ g_userID = '';
 g_userName = '';
 g_companyID='';
 g_companyName='';
+const updateCompanyRoute = '/companies/index/'+ g_companyID + '/edit';
+
 
 
 
@@ -31,7 +33,7 @@ router.get('/register', (req, res) => res.render('users/register'));
 
 // Register Handle
 router.post('/register', (req, res) => {
-    const { name, email, password, password2 } = req.body;
+    const { name, email, phone, weChat, role, password, password2 } = req.body;
     let errors = [];
     
     // Check required fields
@@ -54,6 +56,9 @@ router.post('/register', (req, res) => {
             errors,
             name,
             email,
+            phone,
+            weChat,
+            role,
             password,
             password2
         });
@@ -70,6 +75,9 @@ router.post('/register', (req, res) => {
                         errors,
                         name,
                         email,
+                        phone,
+                        weChat,
+                        role,
                         password,
                         password2
                     });
@@ -77,6 +85,9 @@ router.post('/register', (req, res) => {
                     const newUser = new User({
                         name,
                         email,
+                        phone,
+                        role,
+                        weChat,
                         password
                     });
 
@@ -113,9 +124,6 @@ router.get('/:id', ensureAuthenticated, async(req, res) => {
               g_companyID = company.id
               g_companyName = company.name
 
-              // console.log(company.id);
-              // console.log(company.name);
-
             } else {
               g_companyID = "0"
               g_companyName = "You haven't registered your company yet."
@@ -128,8 +136,8 @@ router.get('/:id', ensureAuthenticated, async(req, res) => {
                 user: user,
                 userName: req.user.name,
                 userID: req.user.id,
+                userRole: req.user.role,
                 materialsByUser: materials,
-                // company: req.user.company,
                 companyID: g_companyID,
                 companyName: g_companyName,
                 g_userProfPic_URL: "https://material-image-list.oss-cn-beijing.aliyuncs.com/" + req.user.id + "/" + req.user.name,
@@ -137,6 +145,9 @@ router.get('/:id', ensureAuthenticated, async(req, res) => {
             g_userID = req.user.id
             g_userName = req.user.name
             g_userCompanyName = user.companyName
+            g_userRole = user.role
+            console.log(g_userRole)
+
             // g_userProfilePicName = user.userProfilePicName
             
             // console.log(g_userID)
@@ -144,6 +155,8 @@ router.get('/:id', ensureAuthenticated, async(req, res) => {
             // console.log(user.userProfilePicName)
             // console.log(user)
             // console.log(materials)
+            // res.redirect('/materials/index')
+
     } catch (err) {
         console.log(err)
         if(company != null) {
@@ -184,10 +197,13 @@ router.get('/:id/editUser', ensureAuthenticated, async (req,res) => {
        
         res.render('users/editUser', {
             user: user,
+            userRole: g_userRole,
             companies: companies,
             userName: g_userName,
             userID: g_userID,
-            companyName: g_userCompanyName
+            companyName: g_userCompanyName,
+            companyID: g_companyID,
+            g_userProfPic_URL: "https://material-image-list.oss-cn-beijing.aliyuncs.com/" + g_userID + "/" + g_userName,
         })
 
     } catch (err) {
@@ -199,17 +215,22 @@ router.get('/:id/editUser', ensureAuthenticated, async (req,res) => {
 // Edit User Handle (POST)
 router.put('/:id', ensureAuthenticated, async (req, res) => {
     let user 
+    
 
     try {
         user = await User.findById(g_userID).exec()
         user.name = req.body.name
         user.phone = req.body.phone
+        user.role = req.body.role
         user.weChat = req.body.weChat
         user.description = req.body.description
         user.company = req.body.company
         await user.save()
-        console.log(req.body.company.name)
 
+        g_userRole = req.body.role
+        g_userCompany = req.body.company
+
+        console.log(g_userRole)
         res.redirect('/users/dashboard')
     } catch(err) {
         console.log(err)
@@ -223,11 +244,32 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
 
 // *****---------- materials ROUTES ----------***** //
 
+// Materials Alliance (feed)
+router.get('/materials/feed', ensureAuthenticated, async(req, res) => {
+  
+  try {
+    res.render('materials/feed', {
+      
+      userID: g_userID, // just added
+      userName: g_userName, // just added
+      userRole: g_userRole,
+      companyName: g_userCompanyName,
+      companyID: g_companyID,
+    })
+  } catch {
+    res.redirect('/')
+  }
+}); //after adding ensureAuthenticated, the dashboard is protected from viewing without logging in
+
+
+
 // Materials
 router.get('/materials/index', ensureAuthenticated, async(req, res) => {
     let query = Material.find()
-    if (req.query.title != null && req.query.title != '') {
-      query = query.regex('title', new RegExp(req.query.title, 'i'))
+
+    
+    if (req.query.searchKeywords != null && req.query.searchKeywords != '') {
+      query = query.regex('searchKeywords', new RegExp(req.query.searchKeywords, 'i'))
     }
     if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
       query = query.lte('publishDate', req.query.publishedBefore)
@@ -235,16 +277,17 @@ router.get('/materials/index', ensureAuthenticated, async(req, res) => {
     if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
       query = query.gte('publishDate', req.query.publishedAfter)
     }
-    
     try {
       const materials = await query.exec()
+
       res.render('materials/index', {
         materials: materials,
         searchOptions: req.query,
         userID: g_userID, // just added
         userName: g_userName, // just added
-        companyName: g_userCompanyName
-
+        userRole: g_userRole,
+        companyName: g_userCompanyName,
+        companyID: g_companyID,
       })
     } catch {
       res.redirect('/')
@@ -261,6 +304,7 @@ router.get('/materials/new', ensureAuthenticated, async (req,res) => {
 // Create New Material Route 1
 router.post('/materials/index', ensureAuthenticated, async (req, res) => { 
       const material = new Material({
+
         title: req.body.title,
         supplier: req.body.supplier,
         userID: g_userID,
@@ -269,12 +313,17 @@ router.post('/materials/index', ensureAuthenticated, async (req, res) => {
         projectName: req.body.projectName,
         publishDate: new Date(req.body.publishDate),
         cost: req.body.cost,
+        tags_input: req.body.tags_input,
+        tags_input_string: tags_input.join(),
         description: req.body.description,
-        isPublic: req.body.isPublic
+        isPublic: req.body.isPublic,
+        searchKeywords: title+userName+tags_input_string+description,
+
     })
 
     try {
         const newMaterial = await material.save()
+        console.log(material.searchKeywords)
         // res.redirect(`/materials/${newMaterial.id}`)
                 res.redirect(`/users/materials/index`)
 
@@ -297,8 +346,9 @@ router.get('/materials/index/:id', ensureAuthenticated, async (req, res) => {
     {   material: material, 
         userID: g_userID, 
         userName: g_userName,
+        userRole: g_userRole,
+        companyID: g_companyID,
         companyName: g_userCompanyName
-
     })
     // res.redirect(`/users/materials/index`)
     }
@@ -325,13 +375,25 @@ router.put('/materials/index/:id', ensureAuthenticated, async (req, res) => {
   try {
     material = await Material.findById(req.params.id)
     material.title = req.body.title
+    material.tags_input = req.body.tags_input
+    material.tags_input_string = material.tags_input.join() 
     material.isPublic = req.body.isPublic
     material.supplier = req.body.supplier
     material.publishDate = new Date(req.body.publishDate)
     material.cost = req.body.cost
     material.description = req.body.description
+    material.searchKeywords = material.title+material.userName+material.tags_input_string+material.description,
+
+
+    
+    // let searchKeywords = [material.title, material.tags_input_string, material.description]
+
+    console.log(material.tags_input_string)
+    console.log(material.searchKeywords)
+
 
     await material.save()
+    // console.log(material.tags_input)
     res.redirect(`/users/materials/index/${material.id}`)
   } catch (err){
       console.log(err)
@@ -357,6 +419,7 @@ router.delete('/materials/index/:id', ensureAuthenticated, async (req, res) => {
     if (material != null) {
       res.render('/materials/show', {
         material: material,
+        userRole: g_userRole,
         errorMessage: 'Could not remove material'
       })
     } else {
@@ -388,11 +451,14 @@ async function renderFormPage(res, material, form, hasError = false) {
     const params = {
       suppliers: suppliers,
       material: material,
+      tags_input: material.tags_input,
       // user: user,
       userID: g_userID, // just added
       userName: g_userName, // just added
+      userRole: g_userRole,
       // userProfilePicName: g_userProfilePicName,
-      companyName: g_userCompanyName
+      companyName: g_userCompanyName,
+      companyID: g_companyID,
 
     }
     if(hasError) {
@@ -432,8 +498,11 @@ router.get('/suppliers/index', async (req, res) => {
             searchOptions: req.query,
             userID: g_userID, // just added
             userName: g_userName, // just added
+            userRole: g_userRole,
             // userProfilePicName: g_userProfilePicName,
-            companyName: g_userCompanyName
+            companyName: g_userCompanyName,
+            companyID: g_companyID,
+
 
         }) // - we're going to render suppliers/index, instead of rendering all the index for entire application.
     } catch {
@@ -448,8 +517,10 @@ router.get('/suppliers/new', async(req,res) => { // - this is going to be a new 
             { supplier: new Supplier(), 
               userID: g_userID, 
               userName: g_userName,
+              userRole: g_userRole,
               // userProfilePicName: g_userProfilePicName,
-              companyName: g_userCompanyName
+              companyName: g_userCompanyName,
+              companyID: g_companyID,
 
   
             }) // - this is just for displaying the form.
@@ -468,6 +539,7 @@ router.post('/suppliers/index', async (req, res) => { // - we use 'post' for cre
         phone: req.body.phone,
         weChat: req.body.weChat,
         userName: g_userName, // just added
+        companyID: g_companyID,
         errorMessage: 'Error creating Supplier'
     })
     try {
@@ -486,9 +558,11 @@ router.post('/suppliers/index', async (req, res) => { // - we use 'post' for cre
         supplier: supplier,
         userID: g_userID, // just added
         userName: g_userName, // just added
+        userRole: g_userRole,
         errorMessage: 'Error creating Supplier',
         // userProfilePicName: g_userProfilePicName,
-        companyName: g_userCompanyName
+        companyName: g_userCompanyName,
+        companyID: g_companyID,
 
         })
     }
@@ -509,8 +583,10 @@ router.get('/suppliers/index/:id', async (req, res) => {
             materialsBySupplier: materials,
             userID: g_userID, // just added
             userName: g_userName, // just added
+            userRole: g_userRole,
             // userProfilePicName: g_userProfilePicName,
-            companyName: g_userCompanyName
+            companyName: g_userCompanyName,
+            companyID: g_companyID,
 
 
         })
@@ -529,8 +605,10 @@ router.get('/suppliers/index/:id/edit', async (req, res) => {
         { supplier: supplier, 
             userID: g_userID, // just added
             userName: g_userName,
+            userRole: g_userRole,
             // userProfilePicName: g_userProfilePicName,
-            companyName: g_userCompanyName
+            companyName: g_userCompanyName,
+            companyID: g_companyID,
 
 
         }) // - this is just for displaying the form.
@@ -555,6 +633,9 @@ router.put('/suppliers/index/:id', async (req, res) => {
                 supplier: supplier,
                 userID: g_userID, // just added
                 userName: g_userName, // just added
+                userRole: g_userRole,
+                companyID: g_companyID,
+
                 errorMessage: 'Error updating Supplier'
             })
         }
@@ -582,9 +663,11 @@ router.delete('/suppliers/index/:id', async (req, res) => {
 // Company Route ----------------------------------------
 
 // New Company Render Route
-router.get('/:id/companies/new', (req, res) => res.render('companies/new', {
+router.get('/companies/new', (req, res) => res.render('companies/new', {
   userID: g_userID,
   userName: g_userName,
+  userRole: g_userRole,
+  companyID: g_companyID,
   g_userProfPic_URL: "https://material-image-list.oss-cn-beijing.aliyuncs.com/" + g_userID + "/" + g_userName,
 }));
 
@@ -593,6 +676,8 @@ router.post('/companies/index', (req, res) => {
     const { name, description } = req.body;
     const  userID = g_userID
     const  userName = g_userName
+    const userRole = g_userRole
+
     
     let errors = [];
     
@@ -607,6 +692,7 @@ router.post('/companies/index', (req, res) => {
             description,
             userID,
             userName,
+            userRole
         });
     } else {
         // Validation passed
@@ -619,7 +705,7 @@ router.post('/companies/index', (req, res) => {
                         errors,
                         userID,
                         userName,
-
+                        userRole,
                         name,
                         description,
                     });
@@ -653,6 +739,8 @@ router.get('/companies/index', async (req, res) => {
           searchOptions: req.query,
           userID: g_userID, // just added
           userName: g_userName, // just added
+          userRole: g_userRole,
+          companyID: g_companyID,
           // userProfilePicName: g_userProfilePicName,
           companyName: g_userCompanyName
       }) // - we're going to render suppliers/index, instead of rendering all the index for entire application.
@@ -663,9 +751,30 @@ router.get('/companies/index', async (req, res) => {
 
 // Show Company Route
 
+
+
+// Update Company Route
+router.get(updateCompanyRoute, async (req, res) => {
+  try {
+      const company = await Company.findById(g_companyID)
+      res.render('companies/edit', { 
+          company: company, 
+          searchOptions: req.query,
+          userID: g_userID, // just added
+          userName: g_userName, // just added
+          userRole: g_userRole,
+          companyID: g_companyID,
+          // userProfilePicName: g_userProfilePicName,
+          companyName: g_userCompanyName
+      }) // - we're going to render suppliers/index, instead of rendering all the index for entire application.
+  } catch {
+      res.redirect('/companies/index')
+  }
+})
+
  
 // Update Company Route
-router.put('/:id/companies/index/:id', async (req, res) => {
+router.put('companies/index/:id', async (req, res) => {
   let company
   let user 
   try {
@@ -675,17 +784,18 @@ router.put('/:id/companies/index/:id', async (req, res) => {
       console.log(g_companyID)
       supplier.name = req.body.name
       await supplier.save()
-      res.redirect(`/suppliers/index/${supplier.id}`)
+      res.redirect(`/users/dashboard`)
   } catch {
       if (supplier == null) {
           res.redirect('/')
       } else {
-          res.render('suppliers/index/edit', {
-              supplier: supplier,
-              userID: g_userID, // just added
-              userName: g_userName, // just added
-              errorMessage: 'Error updating Supplier'
-          })
+          // res.render('companies/index/edit', {
+          //     supplier: supplier,
+          //     userID: g_userID, // just added
+          //     userName: g_userName, // just added
+          //     userRole: g_userRole,
+          //     errorMessage: 'Error updating Supplier'
+          // })
       }
   }
 })
@@ -705,10 +815,12 @@ router.delete('/companies/index/:id', async (req, res) => {
         // companyID: companyID,
         userName: req.user.name,
         userID: g_userID,
+        userRole: g_userRole,
+
         materialsByUser: materials,
-        companyID: g_companyID,
+        // companyID: g_companyID,
         // usersCompanyName: user.companyName,
-        // companyID: user.companyID,
+        companyID: user.companyID,
         // userProfilePicName: user.userProfilePicName,
         companyName: "g_companyName",
         g_userProfPic_URL: "https://material-image-list.oss-cn-beijing.aliyuncs.com/" + req.user.id + "/" + req.user.name,

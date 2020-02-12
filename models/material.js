@@ -47,6 +47,14 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
         type: String,
         required: true,
     },
+    tags_input: {
+        type: Array,
+        required: true,
+    },
+    tags_input_string: {
+        type: String,
+        required: true,
+    },
     supplier: {
         type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
         required: true,
@@ -62,6 +70,10 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
         required: false,
         ref: 'User' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
     },
+    searchKeywords: {
+        type: String,
+        required: true,
+    }
 }) 
 
 

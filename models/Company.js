@@ -5,10 +5,6 @@ const CompanySchema = new mongoose.Schema({
         type: String,
         requried: true
     },
-    // admin: {
-    //     type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
-    //     ref: 'User' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
-    // },
     date: {
         type: Date,
         default: Date.now

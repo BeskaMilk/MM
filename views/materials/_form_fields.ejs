@@ -1,18 +1,21 @@
 <fieldset>
 
 
-<div class="form-group">
-    <legend>Post New Material</legend>
-    
+<div class="form-group">    
     <label class="col-form-label" for="inputDefault">Project name</label>
     <input type="text" id='dirname' placeholder="Project Name" name="projectName" value="<%= material.projectName %>" class="form-control" placeholder="put your architectural/construction project name here" id="inputDefault">
 
     <label class="col-form-label" for="inputDefault">Title</label>
     <input type="text" name="title" value="<%= material.title %>" class="form-control" placeholder="put your post title here" id="inputDefault">
-    
-    <label class="col-form-label" for="inputDefault">Add tags</label>
-    <div class="tags-input" data-name="tags-input" ></div>
+</div>
 
+<div class="form-group">
+    <label class="col-form-label" for="inputDefault">Add tags</label>
+    <div class="tags_input" name="tags_input" data-name="tags_input"></div>
+
+</div>
+
+<div class="form-group">
     <label class="control-label">Cost</label>
         <div class="form-group">
           <div class="input-group mb-3">
@@ -42,7 +45,7 @@
 </div>
 
 <div class="form-group">
-    <label>Construction Completed at</label>
+    <label>built when</label>
     <input type="date" name="publishDate" 
             value="<%= material.publishDate == null ? '' :
             material.publishDate.toISOString().split('T')[0] %>">
@@ -56,22 +59,6 @@
 
 <br/>
 
-<div class="form-group">
-    <div class="hide">
-        <div class="custom-control custom-radio">
-        <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled=""/> 
-        <label class="custom-control-label" for="customRadio1">keep the local file name</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled="" /> 
-            <label class="custom-control-label" for="customRadio2">give the file a random name</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio3" name="myradio" value="user_defined" class="custom-control-input" checked=true/> 
-            <label class="custom-control-label" for="customRadio3">give a image name</label>
-        </div>
-    </div>
-</div>
      
 
 	<br/>
@@ -96,7 +83,9 @@
     </div>
 
 
-	<pre id="console"></pre>
+    <pre id="console"></pre>
+    
+
 
     <div class="form-group">
         <div class="form-group">
@@ -107,6 +96,25 @@
                         <option label="alliances" value="alliances">
             </select>
             </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="hide">
+            <div class="custom-control custom-radio">
+            <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled=""/> 
+            <label class="custom-control-label" for="customRadio1">keep the local file name</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled="" /> 
+                <label class="custom-control-label" for="customRadio2">give the file a random name</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio3" name="myradio" value="user_defined" class="custom-control-input" checked=true/> 
+                <label class="custom-control-label" for="customRadio3">give a image name</label>
+            </div>
+            <div name="searchKeywords" value=""></div>
+        </div>
     </div>
 
     <p>&nbsp;</p>

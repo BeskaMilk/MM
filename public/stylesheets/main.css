@@ -107,7 +107,7 @@ width: 266.188px;
   border-radius: 4%;
   width: 300px;
   height: 300px;
-box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.15), -5px -5px 30px 7px rgba(0,0,0,0.1);
+  box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.15), -5px -5px 30px 7px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: 0.4s;
 }
@@ -126,33 +126,58 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.15), -5px -5px 30px 7px rgba(0,0,0,0.1
 }
 
 .custom-card .custom-card_title {
-  text-align: center;
-  border-radius: 4%;
+  width: inherit;
+  height: inherit;
+  text-align: left;
+  margin-left: 10px;
   font-family: Helvetica;
-  font-weight: normal;
-  font-size: 20px;
-  margin-top: -80px;
-  height: 40px;
+  /* font-style: normal; */
+  /* size: 12px; */
+  /* margin-top: -75px; */
+  /* height: 40px; */
 }
 
-.custom-card .custom-card_title .custom-card_p {
+.custom-card .custom-card_title .custom-card_h {
   text-align: left;
-  border-radius: 4%;
+  font-family: Helvetica;
+  font-size: 10px;
+}
+
+
+.custom-card .custom-card_title .custom-card_t {
+  text-align: left;
+  font-family: Helvetica;
+  font-weight: bold;
+  color: darkgray;
+  font-size: 8px;
+}
+
+
+.custom-card .custom-card_title .custom-card_n {
+  text-align: left;
   font-family: Helvetica;
   font-weight: normal;
-  font-size: 8px;
-  margin-top: -25px;
+  font-size: 12px;
+  margin-top: -29px;
   margin-left: 50px;
-  /* height: 40px; */
 }
 
 
 .custom-card .custom-card_title .custom-card_avatar{
   text-align: left;
-  position: relative;
+  position: absolute;
   /* margin-top: -600px; */
-  margin-top: -250px;
-  margin-left: 15px;
+  margin-top: -290px;
+  /* height: 40px; */
+}
+
+
+.custom-card .custom-card_title .custom-card_index{
+  text-align: left;
+  position: absolute;
+  /* margin-top: -600px; */
+  margin-top: -80px;
+  margin-left: 20px;
   /* height: 40px; */
 }
 
@@ -170,11 +195,91 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.15), -5px -5px 30px 7px rgba(0,0,0,0.1
   //margin-left: 50px;
 } */
 
+
 .custom-card:hover {
   transform: scale(1.01, 1.01);
   box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.15), 
     -5px -5px 30px 15px rgba(0,0,0,0.1);
 }
+
+.icon-style-alliance {
+  font-size: 2em;
+  color: darkgray;
+  cursor: pointer;
+  transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+}
+.icon-style-alliance:hover {
+  scale:1.1;
+  color: rgb(245, 52, 213);
+}
+
+
+
+.icon-style-library {
+  font-size: 2em;
+  color:rgb(255, 183, 0);
+  cursor: pointer;
+  transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+}
+.icon-style-library:hover {
+  scale:1.1;
+  color: rgb(255, 178, 95);
+}
+
+
+
+.icon-style-supplier {
+  font-size: 2em;
+  color: rgb(128, 255, 0);
+  cursor: pointer;
+  transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+}
+.icon-style-supplier:hover {
+  scale:1.1;
+  color: rgb(194, 255, 102);
+}
+
+
+.icon-style-company {
+  font-size: 2em;
+  color: rgb(56, 193, 247);
+  cursor: pointer;
+  transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+}
+.icon-style-company:hover {
+  scale:1.2;
+  color: rgb(161, 228, 255);
+}
+
+
+.icon-style4 {
+  font-size: 2em;
+  color: darkgray;
+  cursor: pointer;
+  transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+}
+.icon-style4:hover {
+  scale:1.1;
+  color: purple;
+}
+
+
+.icon-style-new {
+  font-size: 3em;
+  color: darkgray;
+  cursor: pointer;
+  transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.icon-style-new:hover {
+  scale:1.1;
+  color: rgb(255, 132, 0);
+}
+
 
 .custom-card_title {
   color: white;
@@ -196,6 +301,78 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.15), -5px -5px 30px 7px rgba(0,0,0,0.1
 }
 
 
+.dashboard-profile-edit-list {
+  z-index: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+
+.dashboard-profile-edit {
+  margin: 30px auto;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  box-shadow: 1px 1px 15px px rgba(0,0,0,0.15), -5px -5px 30px 7px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.dashboard-profile-edit .dashboard-profile-edit_image {
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+}
+
+
+.dashboard-profile-edit:before {
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  opacity:100%;
+}
+
+.dashboard-profile-edit:hover {
+  /* width: inherit;
+  height: inherit; */
+  border-radius: 50%;
+  opacity:70%;
+}
+
+.dashboard-profile-edit .dashboard-profile-edit_image img {
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dashboard-profile-edit .dashboard-profile-edit_title {
+  text-align: center;
+  /* border-radius: 4%; */
+  /* font-family: Helvetica; */
+  /* font-weight: normal; */
+  color:rgb(10, 66, 187);
+  font-size: 90px;
+  margin-top: -170px;
+  margin-left: 20px;
+  height: 40px;
+  opacity: 0%;
+
+}
+/* 
+.dashboard-profile-edit_title {
+  width: inherit;
+  height: inherit;
+} */
+
+.dashboard-profile-edit_title:hover {
+  width: inherit;
+  height: inherit;
+  opacity: 100%;
+  transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
 /* 
 .card {
   margin: 30px auto;
@@ -277,13 +454,11 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
   margin-bottom: 25px;
 }
 
-
 .list-view-icon {
   width:35px;
   height:35px;
   opacity: 0.5;
   margin-bottom: 25px;
-
 }
 
 /* ----------from now on it's about tags---------- */
@@ -291,14 +466,14 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.tags-input {
+.tags_input {
   border: 1px solid #ddd;
   display: inline-block;
   border-radius: 4px;
   margin: 10px;
 }
 
-.tags-input .tag {
+.tags_input .tag {
   font-size: 85% ;
   padding: 0.5em 0.75em;
   margin: 0.25em 0.1em;
@@ -308,12 +483,12 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
   cursor: pointer;
 }
 
-.tags-input .tag:hover {
+.tags_input .tag:hover {
   background-color: tomato;
   color: white;
 }
 
-.tags-input .tag .close::after {
+.tags_input .tag .close::after {
   content: '×';
   font-weight: bold;
   display: inline-block;
@@ -321,11 +496,11 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
   margin-left: 0.75em;
 }
 
-.tags-input .tag .close:hover::after {
+.tags_input .tag .close:hover::after {
   color: red;
 }
 
-.tags-input .main-input {
+.tags_input .main-input {
   border: 0;
   outline: 0;
   padding: 0.5em 0.1em;

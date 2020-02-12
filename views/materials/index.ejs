@@ -8,15 +8,24 @@
     </div>
     <div class="col-12 text-left">                     
         <form action="/users/materials/index" method="GET">
-            <div>
-                <p1 class="text-left"><%= g_companyName%>'s Shared Material Library</p1>
-                <input type="text" name="title" value="<%= searchOptions.title %>" >
-                
+            <div>                
+                <div class="form-group" >
+                    <div class="input-group mb-6">
+                            <input class="form-control" type="text" name="searchKeywords" placeholder="<%= g_companyName%>'s Shared Material Library " value="<%= searchOptions.searchKeywords %>" >
+                            <div class="input-group-append">
+                                <button type="submit" id="postfiles" href="javascript:void(0);" class="input-group-text">                    
+                                    <i class="fas fa-search" id="search-icon"></i>
+                                </button>
+                            </div>
+                    </div>
+                </div>
+
+                <!--                 
                 <label>from</label>
                 <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>" >
                 <label>to</label>
                 <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>" >
-                <button type="submit">Search</button>
+                <button type="submit">Search</button> -->
             </div>
         </form>
     </div>
@@ -27,8 +36,8 @@
         <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
 
         <a href="/users/materials/new">
-            <span style="font-size: 3em; color: Tomato;">
-                <i class="fas fa-plus-circle"></i>
+            <span class="icon-style-new"">
+                <i class="fas fa-cloud-upload-alt"></i>
             </span>
         </a> 
 
@@ -52,15 +61,19 @@
 
                     <!-- <p3 class="pictureCard-title" value="<%= material.title %>"><%= material.title %> -->
                     <a href="/users/materials/index/<%= material.id %>" class="custom-card 3">
-                    <div class="custom-card_image">    
-                        <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
-                    </div>
+                        <div class="custom-card_image">    
+                            <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+                        </div>
                     <div class="custom-card_title">
-                        <p><%= material.title %></p> 
+                            
                         <div class="custom-card_avatar">
-                        <img id="avatar-on-card" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.userID %>/<%= material.userName %>">
-                        <p class="custom-card_p"><%= material.userName %></p>
-                    </div>
+                            <img id="avatar-on-card" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.userID %>/<%= material.userName %>">
+                            <p class="custom-card_n"><%= material.userName %></p>
+                        </div>
+                        <div class="custom-card_index">
+                            <h5 class="custom-card_title_h"><%= material.title %></h5> 
+                            <h6 class="custom-card_title_t"><%= material.tags_input %></h6> 
+                        </div>
 
                     </div>
                     <!-- <div > -->

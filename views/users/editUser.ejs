@@ -14,9 +14,9 @@
                     <form action="/users/<%= user.id %>?_method=PUT" method="POST">
                     
                     <h2>Your Personal Data</h2>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="col-form-label" for="inputDefault">My Name</label>
-                        <input type="text" name="name" id='user_defined_name' placeholder="<%= user.name %>" value="<%= user.name %>" class="form-control"></input>
+                        <input type="text" name="name" id='user_defined_name' placeholder="<%= user.name %>" value="<%= user.name %>" class="form-control" ></input>
                     </div >
                     <div class="form-group">
                         <label class="col-form-label" for="inputDefault">My Phone Number</label>
@@ -26,21 +26,29 @@
                         <label class="col-form-label" for="inputDefault">My WeChat ID</label>
                         <input type="text" name="weChat" placeholder="<%= user.weChat %>" value="<%= user.weChat %>" class="form-control"></input>
                     </div >
-                    <div class="form-group">
-                        <label>Company</label>
-                        <select name="company" class="custom-select">
-                            <% companies.forEach(company => { %>
-                                <% if (company.id === user.company) { %>
-                                    <option selected label="<%= company.name %>"  value="<%= company.id %>">
-                                <% } else { %>
-                                    <option label="<%= company.name %>"  value="<%= company.id %>">
-                                <% } %>
-                            <% }) %>
+                    <div class="form-group" >
+                        <div>
+                        <label >Company</label>
+                            <select name="company" class="custom-select">
+                                <% companies.forEach(company => { %>
+                                    <% if (company.id === user.company) { %>
+                                        <option selected label="<%= company.name %>"  value="<%= company.id %>">
+                                    <% } else { %>
+                                        <option label="<%= company.name %>"  value="<%= company.id %>" >
+                                    <% } %>
+                                <% }) %>
+                            </select>
+
+                        <label >Role</label>
+                        <select name="role" class="custom-select">
+                            <option label="master" value="master">
+                            <option label="special" value="special">
+                            <option selected label="standard" value="standard">
                         </select>
                     </div>
                     
                     <h2>Your Company Data</h2>
-                        <input type="text" id='dirname' class="hide" value="<%= user.id %>" disabled=""></input>
+                        <input type="text" id='dirname' class="hide" value="<%= user.id %>"></input>
                     
                     <div class="form-group">
                         <label for="exampleTextarea">Description</label>

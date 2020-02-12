@@ -1,0 +1,10 @@
+<div>
+    <%- include('../partials/header_private.ejs') %>
+</div>
+
+<h2>Register Your Company</h2>
+<form action="/users/companies/index/<%= companyID %>" method="POST">
+    <%- include('_form_fields') %>
+    <a href="/users/dashboard">Cancel</a>
+    <button type="submit">Create</button>
+</form>

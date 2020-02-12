@@ -1,52 +1,93 @@
 
 <!-- <header> -->
     <!-- <nav> -->
-        <div class="container">
 
+<div class="container col-md-12">
+<div class="row">
+    
+    <div class="col-4 text-left">
+        <a href="/">
+            <img height="30" class="websiteLogo" width="20" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
+            <img height="30" class="websiteLogo" width="20" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
+        </a>
+    </div>
+
+    
+    <div class="col-4 text-center">
         <div class="row">
-                    <div class="col">
-                        <a href="/">
-                            <img height="50" class="websiteLogo" width="40" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
-                            <img height="50" class="websiteLogo" width="40" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
-                        </a>
-                    </div>
-                
-                    <div class="col-8">
-                        <div class="websiteLogo" >
-                        <a href="/users/materials/index">
-                            <span style="font-size: 2em; color: Tomato;">
-                                <i class="fas fa-cubes"></i>
-                            </span>
-                            </a>
-                        <a href="/users/suppliers/index">
-                            <span style="font-size: 2em; color: Tomato;">
-                            <i class="fas fa-industry"></i>
+                <div class="col text-center">
+                    <a href="/users/materials/feed">
+                        <span class="icon-style-alliance">
+                            <i class="fas fa-people-carry"></i>
                         </span>
-                        </a>
-                        <!-- <a href="/users/constructionTeam/index">
-                            <span style="font-size: 2em; color: Tomato;">
-                            <i class="fas fa-hammer"></i>
-                            </span>
-                        </a> -->
-                        <a href="/users/constructionTeam/index">
-                            <span style="font-size: 2em; color: Tomato;">
-                            <i class="fas fa-tasks"></i>
-                            </span>
-                        </a>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a href="/users/materials/index">
+                        <span class="icon-style-library">
+                            <i class="fas fa-cubes"></i>
+                        </span>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a href="/users/suppliers/index">
+                        <span class="icon-style-supplier">
+                            <i class="fas fa-industry"></i>
+                    </span>
+                    </a>
+                </div>
+                <!-- <div class="col-4"> -->
 
+                    <!-- <a href="/users/constructionTeam/index">
+                        <span class="icon-style">
+                        <i class="fas fa-hammer"></i>
+                        </span>
+                    </a> -->
+                <!-- </div> -->
+                <div class="col text-center">
+                    <a href="/users/companies/index">
+                        <span class="icon-style-company">
+                            <i class="fas fa-users"></i>
+                        </span>
 
-                    </div>
-                    </div >
-
-                    <div class= "col">
-                        <div class="websiteLogo" href="#" data-toggle="modal" data-target="#myModal">
-                            <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>">
-                        </div>
-                    </div>
-                    <!-- <a href="#" data-toggle="modal" data-target="#myModal">Open Modal</a> -->
+                    </a>
+                </div>
+                <% if (userRole === 'master') { %>
+                <div class="col text-center">
+                    <a href="/users/constructionTeam/index">
+                        <span class="icon-style4">
+                            <i class="fas fa-sitemap"></i>
+                        </span>
+                    </a>
+                </div>
+                <% } else if (userRole === 'standard') { %>
+                <div>    
+                </div>
+                <% } else if (userRole === 'special') { %>
+                <div>    
+                </div>
+                <% } %>
 
             </div>
         </div>
+        
+        <div class="col-4">
+            <div class="col-12 text-right">
+
+                <div class="websiteLogo" href="#" data-toggle="modal" data-target="#myModal">
+                    <%= companyName %>
+                    <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>">
+                    <!-- <a href="#" data-toggle="modal" data-target="#myModal">Open Modal</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                    <div class= "col">
+                        
+                    </div>
+
+            </div>
 
     <!-- </nav> -->
 <!-- </header> -->
@@ -62,15 +103,20 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1><%= userName %></h1>
+                        <h3><%= userName %></h3>
+                        <h3><%= companyName %></h1>
                     </div>
                     <div class="modal-body">
-                        
                         <a href="/users/dashboard">
                             my board
                             <!-- <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>"> -->
                         </a>
-
+                    </div>
+                    <div class="modal-body">
+                    <a href="/users/company/index/<%= companyID %>">
+                        my company
+                        <!-- <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>"> -->
+                    </a>
                     </div>
                     <div class="modal-footer">
                         <a href="/users/dashboard/logout" class="btn btn-secondary">Logout</a>
