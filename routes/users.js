@@ -576,6 +576,7 @@ router.post('/suppliers/index', async (req, res) => { // - we use 'post' for cre
         company: req.body.company,
         userName: g_userName, // just added
         companyID: g_companyID,
+        companyName: g_companyName,
         errorMessage: 'Error creating Supplier'
     })
     try {
@@ -645,8 +646,6 @@ router.get('/suppliers/index/:id/edit', async (req, res) => {
             // userProfilePicName: g_userProfilePicName,
             companyName: g_companyName,
             companyID: g_companyID,
-
-
         }) // - this is just for displaying the form.
     } catch {
         res.redirect('/users/suppliers')
@@ -659,19 +658,21 @@ router.put('/suppliers/index/:id', async (req, res) => {
     try {
         supplier = await Supplier.findById(req.params.id)
         supplier.name = req.body.name
+        supplier.phone = req.body.phone
+        supplier.weChat = req.body.weChat
         await supplier.save()
-        res.redirect(`/suppliers/index/${supplier.id}`)
+        res.redirect(`/users/suppliers/index/${supplier.id}`)
     } catch {
         if (supplier == null) {
-            res.redirect('/')
+            res.redirect('/users/suppliers/index')
         } else {
             res.render('suppliers/index/edit', {
                 supplier: supplier,
-                userID: g_userID, // just added
-                userName: g_userName, // just added
+                userID: g_userID, 
+                userName: g_userName,
                 userRole: g_userRole,
                 companyID: g_companyID,
-
+                companyName: g_companyName,
                 errorMessage: 'Error updating Supplier'
             })
         }

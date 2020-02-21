@@ -4,9 +4,9 @@
 
     
 <h2>Edit Supplier</h2>
-<form action="/suppliers/<%= supplier.id %>?_method=PUT" method="POST">
+<form action="/users/suppliers/index/<%= supplier.id %>?_method=PUT" method="POST">
     <%- include('_form_fields') %>
-    <a href="/suppliers/<%= supplier.id %>">Cancel</a>
+    <a href="/users/suppliers/index/<%= supplier.id %>">Cancel</a>
     <button type="submit">Update</button>
 </form>
 
