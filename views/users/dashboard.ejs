@@ -12,32 +12,32 @@
             <h6 id="userID" value="<%= userID %>"></h6>
             <div class="dashboard-profile-edit-list">
                 <% if (g_userProfPic_URL != null) { %>
-                        <!-- <a href="/users/<%= userID %>/editUser" >
-                            <img id="avatar" src="<%= g_userProfPic_URL %>">
-                        </a> -->
+                        <a href="/users/<%= userID %>/editUser" >
+                            <div class="dashboard-profile-edit">
+                                    <div class="dashboard-profile-edit_image">    
+                                        <img src="<%= g_userProfPic_URL %>">
+                                    </div>
+                                    <div class="dashboard-profile-edit_title">
+                                        <p><i class="fas fa-user-edit"></i>
+                                        </p> 
+                                    </div>
+                            </div>
+                        </a>
 
-                        <a href="/users/<%= userID %>/editUser" class="dashboard-profile-edit">
-                            <div class="dashboard-profile-edit_image">    
-                                <img src="<%= g_userProfPic_URL %>">
-                            </div>
-                            <div class="dashboard-profile-edit_title">
-                                <p><i class="fas fa-user-edit"></i>
-                                </p> 
-                            </div>
-                        </a>
-                <% } else { %>
-                        <a a href="/users/<%= userID %>/editUser" class="dashboard-profile-edit">
-                            <img id="avatar" a href="/users/<%= userID %>/editUser" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/default-icons/Screen%20Shot%202020-02-11%20at%2010.55.05%20PM.png">
-                            <div class="dashboard-profile-edit_title">
-                                <p><i class="fas fa-user-edit"></i>
-                                </p> 
-                            </div>
-                        </a>
+                <% } else if (g_userProfPic_URL == null || g_userProfPic_URL == "") { %>
+                        <div class="dashboard-profile-edit">
+                            <!-- <a a href="/users/<%= userID %>/editUser" > -->
+                                <img id="avatar" href="/users/<%= userID %>/editUser" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/default-icons/Screen%20Shot%202020-02-11%20at%2010.55.05%20PM.png">
+                                <div class="dashboard-profile-edit_title">
+                                    <p><i class="fas fa-user-edit"></i>
+                                    </p> 
+                                </div>
+                            <!-- </a> -->
+                        </div>
                 <% } %>
             </div>
             <h5><%= user.name %></h5>
 
-            <!-- <a href="/users/<%= userID %>/editUser" class="btn btn-secondary">update my data</a> -->
         </div>
       
         <div class="col-9">
@@ -55,27 +55,28 @@
             <% } %> -->
            
         </div>
-        <div class="col">
+            
+        <div class="col-12 text-center">
             <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
             <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
 
             <a href="/users/materials/new">
                 <span class="icon-style-new"">
-                    <i class="fas fa-cloud-upload-alt"></i>
+                    <i class="fas fa-plus-circle"></i>
                 </span>
-            </a>
+            </a> 
         </div>
     </div>
 </div>
 
-<% if (materialsByUser.length > 0) { %>
+
 <h6>我上传的资料</h6>
 <h6>Materials I posted</h6>
-
-<% materialsByUser.forEach(material => { %>
-    <a href="/users/materials/index/<%= material.id %>">
-        <img width="200" id="pictureCard" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
-    </a>
-    <% }) %>
-<% } %>
+<% if (materialsByUser.length > 0) { %>
+    <% materialsByUser.forEach(material => { %>
+        <a href="/users/materials/index/<%= material.id %>">
+            <img width="200" id="pictureCard" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
+        </a>
+        <% }) %>
+    <% } %>
 </div>

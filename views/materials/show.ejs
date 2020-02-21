@@ -2,63 +2,75 @@
     <%- include('../partials/header_private.ejs') %>
 </div>
 
-
 <div class="container">
     <div class="row">
       
       <div class="col">
       </div>
       
-      <div class="col-10">
+      <div class="col-12">
         <div class="card text-center">
-            <div class="card-header">
-              <ul class="nav nav-tabs card-header-tabs">
+            <!-- <div class="card-header">
+              <ul class="nav nav-pills card-header-pills">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">Active</a>
+                  <a class="nav-link active" href="#">Material</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+                  <a class="nav-link" href="#">Supplier</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Disabled</a>
+                  <a class="nav-link disabled" href="/users/materials/index/<%= material.id %>/edit">edit</a>
                 </li>
               </ul>
-            </div>
+            </div> -->
             <div class="card-body">
         
         
             <div class="container">
+              <h2 class="card-title"><%= material.title %></h2>                         
+              <% if ( material.userID == userID || userRole == 'special' || userRole == 'master') { %>
+                <div>
+                  <a href="/users/materials/index/<%= material.id %>/edit" >
+                    <span class="icon-style-alliance"><i class="fas fa-edit"></i></span>
+                  </a>
+                  <div class="websiteLogo" href="#" data-toggle="modal" data-target="#showModal">
+                    <i class="fas fa-minus-circle"></i>
+                  </div>
+                </div>
+              <% } else { %>
+                <div></div>
+              <% } %>
+              <br/>
                 <div class="row">
+
                 <div class="col">
-                    <img id="pictureCard-bg" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+
+                    <img id="pictureCard-bg" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
                     <div>
-                        <h2 class="card-title"><%= material.title %></h2>
-                        <h6 class="card-subtitle mb-2 text-muted"><%= material.tags_input %></h6>  
-                        <h5 class="card-title"><%= material.description %></h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                      <h4 class="card-text"><%= material.ossFileName %></h4>  
+                      <p6 class="card-subtitle mb-2 text-muted"><%= material.createdAt.toDateString() %> </p6>
+
+                        <h6 class="card-text"><%= material.tags_input %></h6>  
+                        <!-- <h5 class="card-title"></h5> -->
+
                     </div>
+                    
                 </div>
                 <div class="col text-left">
-                    <% if ( material.userID == userID ) { %>
-                      <div class="row" style="margin: auto;">
-                        <a class="btn btn-primary" style="margin: auto;" href="/users/materials/index/<%= material.id %>/edit" >Edit</a>
-                        <a class="btn btn-primary" style="margin: auto;" href="/users/suppliers/index/<%= material.supplier.id %>">View Supplier</a>
-                      </div>
-                    <% } else { %>
-                      <a class="btn btn-primary" style="margin: auto;" href="/users/suppliers/index/<%= material.supplier.id %>">View Supplier</a>
-                    <% } %>
-                    <p class="card-text-l">Supplier: <%= material.supplier.name %></p>
-                    <p class="card-text">Publish Date: <%= material.publishDate.toDateString() %> </p>
-                    <p class="card-text">User Name: <%= material.userName %></p>
-                    <p class="card-text">User ID: <%= material.userID %></p>
-                    <p class="card-text">Who can view this data: <%= material.isPublic %></p>
-                    <p class="card-text">Cost: <%= material.cost %> </p>
-                    <!-- <p class="card-text">Description:  </p> -->
                     <p class="card-text">Project Name: <%= material.projectName %> </p>
-                    <p class="card-text">Image Name: <%= material.ossFileName %> </p>
+                    <p class="card-text-l">Supplier:                         
+                      <a class="btn btn-primary"  href="/users/suppliers/index/<%= material.supplier.id %>"><%= material.supplier.name %></a>
+                    </p>
+                    <p class="card-text">User Name: <%= material.userName %></p>
+                    <p class="card-text">Cost: <%= material.cost %> </p>
+                    <p class="card-text">Who can view this data: <%= material.isPublic %></p>
+                    <p class="card-text">Company who posted this: <%= post_Company %> </p>
+                    <p class="card-text"><%= material.description %></p>
+
+                    <!-- <p class="card-text">Image Name: <%= material.ossFileName %> </p> -->
                     <!-- <p class="card-text">Tags: <%= material.tags_input %> </p> -->
                     <!-- <p class="card-text">File Type: </p> -->
-                    <p class="card-text">File URL: https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %> </p>
+                    <!-- <p class="card-text">File URL: https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %> </p> -->
                     
 
                   </div>      
@@ -75,3 +87,38 @@
 
 </div>
 
+
+
+
+
+
+
+
+<div class="container">
+  <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col">
+          <div class="modal fade" id="showModal">
+              <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                  <!-- <div class="modal-header">
+                  </div> -->
+                  <div class="modal-body text-center">
+                    <%- include('../partials/deleteform', { url: `/users/materials/index/${material.id}` }) %>
+                  <br/>
+                    <input class="btn btn-default" data-dismiss="modal" value="Close">
+
+                  <!-- <div class="modal-footer text-center">
+                      <input class="btn btn-default" data-dismiss="modal" value="Close">
+                  </div> -->
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col">
+        
+  </div>
+</div>

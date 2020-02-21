@@ -2,6 +2,13 @@
     <%- include('partials/header_public.ejs') %>
 </div>
 
+<a href="/users/login">
+
+<button type="button" class="btn btn-primary btn-lg btn-block">Log In</button>
+</a>
+
+
+
 <% if (publicMaterials.length > 0) { %>
 <% publicMaterials.forEach(material => { %>
     <a href="/users/materials/index/<%= material.id %>">

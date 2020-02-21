@@ -12,15 +12,37 @@
 
             
                         <div class="form-group">
-                            <label for="name">Company Name</label>
+                            <label for="name">Company Chinese Name</label>
                             <input
-                            type="name"
-                            id="dirname"
                             name="name"
+                            id="dirname"
                             class="form-control"
-                            placeholder="Enter Name"
-                            value="<%= typeof name != 'undefined' ? name : '' %>"
+                            placeholder="公司中文名称"
+                            value="<%= company.name %>"
                             />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name_eng">Company English Name</label>
+                            <input
+                            name="name_eng"
+                            class="form-control"
+                            placeholder="公司英文名称"
+                            value="<%= company.name_eng %>"
+                            />
+                        </div>
+
+                        <div class="hide">
+                            <input name="companyID" id='user_defined_name' value="<%= companyID %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Location</label>
+                            <select name="location" class="custom-select" placeholder="公司所在的城市">
+                                <option selected label="北京（Beijing）" value="Beijing">
+                                <option label="上海（Shanghai）" value="Shanghai">
+                                <option label="深圳（Shenzhen）" value="Shenzhen">
+                            </select>
                         </div>
                         
                         <div class="form-group">
@@ -30,8 +52,8 @@
                             id="description"
                             name="description"
                             class="form-control"
-                            placeholder="Describe your company in one sentence."
-                            value="<%= typeof description != 'undefined' ? description : '' %>"
+                            placeholder="用一句话描述您公司 Describe your company in one sentence."
+                            value="<%= company.description %>"
                             />
                         </div>
                     
@@ -54,7 +76,7 @@
                     </div>
                             
                 
-                    <input type="text" name="userID" id='user_defined_name' class="hide" placeholder="<%= userID %>" value="<%= userID %>">
+                    <input type="text" name="userID" class="hide" placeholder="<%= userID %>" value="<%= userID %>">
 
                     <div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
                 

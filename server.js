@@ -18,6 +18,8 @@ const OSS = require('ali-oss');
 
 
 
+
+
 let client = new OSS({
   bucket: 'material-image-list',
   region: 'oss-cn-beijing',

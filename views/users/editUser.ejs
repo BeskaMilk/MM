@@ -29,22 +29,25 @@
                     <div class="form-group" >
                         <div>
                         <label >Company</label>
-                            <select name="company" class="custom-select">
-                                <% companies.forEach(company => { %>
-                                    <% if (company.id === user.company) { %>
-                                        <option selected label="<%= company.name %>"  value="<%= company.id %>">
-                                    <% } else { %>
-                                        <option label="<%= company.name %>"  value="<%= company.id %>" >
-                                    <% } %>
-                                <% }) %>
-                            </select>
+                            <div >
+                                    <select name="company" class="custom-select">
+                                        <% companies.forEach(company => { %>
+                                            <% if (companyID == company.id) { %>
+                                                <option selected label="<%= companyName %>"  value="<%= user.company %>">
+                                            <% } else { %>
+                                                <option label="<%= company.name %>"  value="<%= company.id %>" >
+                                            <% } %>
+                                        <% }) %>
+                                    </select>
 
-                        <label >Role</label>
-                        <select name="role" class="custom-select">
-                            <option label="master" value="master">
-                            <option label="special" value="special">
-                            <option selected label="standard" value="standard">
-                        </select>
+                                <label >Role</label>
+                                <select name="role" class="custom-select">
+                                    <option label="standard" value="standard">
+                                    <option label="special" value="special">
+                                    <option label="master" value="master">
+                                    <option selected label="<%= user.role %>" value="<%= user.role %>">
+                                </select>
+                        </div>
                     </div>
                     
                     <h2>Your Company Data</h2>

@@ -1,19 +1,53 @@
 <div>
 <%- include('../partials/header_private.ejs') %>
 </div>
-<a href="/users/suppliers/new">
+<!-- <a href="/users/suppliers/new">
     <span style="font-size: 3em; color: Tomato;">
         <i class="fas fa-plus-circle"></i>
     </span>
-</a>
+</a> -->
 
-<h2>Search Suppliers</h2>
-    <form action="/users/suppliers/index" method="GET">
-        <label>Name</label>
-        <input type="text" name="name" value="<%= searchOptions.name %>" >
-        <button type="submit">Search</button>
-    </form>
-    <br>
+
+<div><h2><%= companyName %>的厂家<h2></div>
+
+
+<div class="container">
+  <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-8 text-center"> 
+        <form action="/users/suppliers/index" method="GET">
+            <!-- <label>Name</label>
+            <input type="text" name="name" value="<%= searchOptions.name %>" >
+            <button type="submit">Search</button> -->
+            <div class="form-group">
+              <div class="input-group mb-6">
+                      <input class="form-control" type="text" name="searchKeywords" placeholder="<%= g_companyName%> suppliers" value="<%= searchOptions.name %>" >
+                      <div class="input-group-append">
+                          <button type="submit" id="postfiles" href="javascript:void(0);" class="input-group-text">                    
+                              <i class="fas fa-search" id="search-icon"></i>
+                          </button>
+                      </div>
+              </div>
+            </div>
+        </form>
+        </div>
+        <div class="col">
+        <div class="col-12 text-center">
+          <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
+          <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
+          <a href="/users/materials/new">
+              <span class="icon-style-new"">
+                  <i class="fas fa-plus-circle"></i>
+              </span>
+          </a> 
+        </div>
+        </div>
+    </div>
+</div>
+
+
+    
 
 
     <table class="table table-hover">

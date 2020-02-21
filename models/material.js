@@ -22,10 +22,10 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
     description: {
         type: String,                        // - different columns for our schema (table), in JSON form.
     },
-    publishDate: {
-        type: Date,  
-        required: true
-    },
+    // publishDate: {
+    //     type: Date,  
+    //     required: true
+    // },
     cost: {
         type: Number,  
         required: true
@@ -60,9 +60,24 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
         required: true,
         ref: 'Supplier' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
     },
+    project: {
+        type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
+        required: true,
+        ref: 'Project' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
+    },
+    // user: {
+    //     type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
+    //     required: true,
+    //     ref: 'user' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
+    // },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
+        required: true,
+        ref: 'Company' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
+    },
     userID: {
         type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
-        required: false,
+        required: true,
         ref: 'User' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
     },
     userName: {

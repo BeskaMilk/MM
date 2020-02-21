@@ -8,6 +8,8 @@ const User = require('../models/User.js')
 const Material = require('../models/material')
 const Supplier = require('../models/supplier')
 const Company = require('../models/Company.js')
+const Project = require('../models/project.js')
+
 
 
 g_userID = '';
@@ -129,8 +131,8 @@ router.get('/:id', ensureAuthenticated, async(req, res) => {
               g_companyName = "You haven't registered your company yet."
             }
             
-            console.log(g_companyID);
-            console.log(g_companyName);
+            // console.log(g_companyID);
+            // console.log(g_companyName);
 
             res.render('users/dashboard', {
                 user: user,
@@ -144,9 +146,8 @@ router.get('/:id', ensureAuthenticated, async(req, res) => {
             })
             g_userID = req.user.id
             g_userName = req.user.name
-            g_userCompanyName = user.companyName
             g_userRole = user.role
-            console.log(g_userRole)
+            // console.log(g_userRole)
 
             // g_userProfilePicName = user.userProfilePicName
             
@@ -194,6 +195,8 @@ router.get('/:id/editUser', ensureAuthenticated, async (req,res) => {
     const companies = await Company.find({})
     try {
         user = await User.findById(g_userID).exec()
+
+        user.userProfilePicURL =  "https://material-image-list.oss-cn-beijing.aliyuncs.com/" + g_userID + "/" + g_userName
        
         res.render('users/editUser', {
             user: user,
@@ -201,7 +204,7 @@ router.get('/:id/editUser', ensureAuthenticated, async (req,res) => {
             companies: companies,
             userName: g_userName,
             userID: g_userID,
-            companyName: g_userCompanyName,
+            companyName: g_companyName,
             companyID: g_companyID,
             g_userProfPic_URL: "https://material-image-list.oss-cn-beijing.aliyuncs.com/" + g_userID + "/" + g_userName,
         })
@@ -216,7 +219,6 @@ router.get('/:id/editUser', ensureAuthenticated, async (req,res) => {
 router.put('/:id', ensureAuthenticated, async (req, res) => {
     let user 
     
-
     try {
         user = await User.findById(g_userID).exec()
         user.name = req.body.name
@@ -225,10 +227,12 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
         user.weChat = req.body.weChat
         user.description = req.body.description
         user.company = req.body.company
+        user.userProfilePicURL =  "https://material-image-list.oss-cn-beijing.aliyuncs.com/" + g_userID + "/" + g_userName
+
         await user.save()
 
         g_userRole = req.body.role
-        g_userCompany = req.body.company
+        g_companyName = req.body.company
 
         console.log(g_userRole)
         res.redirect('/users/dashboard')
@@ -246,14 +250,13 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
 
 // Materials Alliance (feed)
 router.get('/materials/feed', ensureAuthenticated, async(req, res) => {
-  
   try {
     res.render('materials/feed', {
       
       userID: g_userID, // just added
       userName: g_userName, // just added
       userRole: g_userRole,
-      companyName: g_userCompanyName,
+      companyName: g_companyName,
       companyID: g_companyID,
     })
   } catch {
@@ -263,10 +266,12 @@ router.get('/materials/feed', ensureAuthenticated, async(req, res) => {
 
 
 
-// Materials
+// All Materials
 router.get('/materials/index', ensureAuthenticated, async(req, res) => {
-    let query = Material.find()
+    let query = Material.find({ company: g_companyID })
+    // let query = Material.find({})
 
+    let user = await User.findById(g_userID).exec()
     
     if (req.query.searchKeywords != null && req.query.searchKeywords != '') {
       query = query.regex('searchKeywords', new RegExp(req.query.searchKeywords, 'i'))
@@ -281,16 +286,18 @@ router.get('/materials/index', ensureAuthenticated, async(req, res) => {
       const materials = await query.exec()
 
       res.render('materials/index', {
+        user: user,
         materials: materials,
         searchOptions: req.query,
-        userID: g_userID, // just added
-        userName: g_userName, // just added
+        userID: g_userID, 
+        userName: g_userName, 
         userRole: g_userRole,
-        companyName: g_userCompanyName,
+        companyName: g_companyName,
         companyID: g_companyID,
       })
-    } catch {
+    } catch(err) {
       res.redirect('/')
+      console.log(err)
     }
 }); //after adding ensureAuthenticated, the dashboard is protected from viewing without logging in
 
@@ -303,28 +310,29 @@ router.get('/materials/new', ensureAuthenticated, async (req,res) => {
 
 // Create New Material Route 1
 router.post('/materials/index', ensureAuthenticated, async (req, res) => { 
-      const material = new Material({
-
+  //  const tags_input_string =''
+   const material = new Material({
         title: req.body.title,
         supplier: req.body.supplier,
         userID: g_userID,
         userName: g_userName,
         ossFileName: req.body.ossFileName,
-        projectName: req.body.projectName,
+        tags_input : req.body.tags_input,
+        tags_input_string : req.body.tags_input_string,
+        project: req.body.project,
+        company: g_companyID,
         publishDate: new Date(req.body.publishDate),
         cost: req.body.cost,
-        tags_input: req.body.tags_input,
-        tags_input_string: tags_input.join(),
         description: req.body.description,
         isPublic: req.body.isPublic,
-        searchKeywords: title+userName+tags_input_string+description,
-
+        searchKeywords: req.body.title+req.body.userName+req.body.description,
     })
 
     try {
+        material.tags_input_string = material.tags_input.join() // this should be ahead of const newMaterial = await material.save
         const newMaterial = await material.save()
+
         console.log(material.searchKeywords)
-        // res.redirect(`/materials/${newMaterial.id}`)
                 res.redirect(`/users/materials/index`)
 
     } catch(err) {
@@ -340,20 +348,27 @@ router.get('/materials/index/:id', ensureAuthenticated, async (req, res) => {
     const material = await Material.findById(req.params.id)
                                    .populate('supplier')
                                    .exec()
-    console.log(g_userID)
+    let companyWhoPosted = ''
+    if (material.company != null  && material.company !== '') {
+        companyWhoPosted = await Company.findById(material.company).exec()
+        companyWhoPosted = companyWhoPosted.name
+      } else if (material.company == null) {
+        companyWhoPosted = ""
+      }
 
     res.render('materials/show', 
     {   material: material, 
+        post_Company: companyWhoPosted,
         userID: g_userID, 
         userName: g_userName,
         userRole: g_userRole,
         companyID: g_companyID,
-        companyName: g_userCompanyName
+        companyName: g_companyName
     })
-    // res.redirect(`/users/materials/index`)
-    }
- catch {
+}
+ catch (err) {
     res.redirect('/')
+    console.log(err)
   }
 })
 
@@ -371,24 +386,29 @@ router.get('/materials/index/:id/edit', ensureAuthenticated, async (req, res) =>
 // Update Material Route
 router.put('/materials/index/:id', ensureAuthenticated, async (req, res) => {
   let material
+  let company
 
   try {
     material = await Material.findById(req.params.id)
+    // company = await Company.findById(g_companyID).exec()
+
     material.title = req.body.title
     material.tags_input = req.body.tags_input
     material.tags_input_string = material.tags_input.join() 
     material.isPublic = req.body.isPublic
     material.supplier = req.body.supplier
+    material.project = req.body.project
+    material.company = g_companyID
     material.publishDate = new Date(req.body.publishDate)
     material.cost = req.body.cost
     material.description = req.body.description
-    material.searchKeywords = material.title+material.userName+material.tags_input_string+material.description,
+    material.searchKeywords = material.title + material.tags_input + material.userName + material.description,
 
 
     
     // let searchKeywords = [material.title, material.tags_input_string, material.description]
 
-    console.log(material.tags_input_string)
+    // console.log(material.tags_input_string)
     console.log(material.searchKeywords)
 
 
@@ -405,8 +425,9 @@ router.put('/materials/index/:id', ensureAuthenticated, async (req, res) => {
   }
 })
 
+
 // Delete Material Page
-router.delete('/materials/index/:id', ensureAuthenticated, async (req, res) => {
+router.delete('/materials/index/:id', async (req, res) => {
   let material
   try {
     material = await Material.findById(req.params.id)
@@ -416,15 +437,22 @@ router.delete('/materials/index/:id', ensureAuthenticated, async (req, res) => {
     res.redirect(`/users/materials/index`)
 
 } catch {
-    if (material != null) {
-      res.render('/materials/show', {
-        material: material,
-        userRole: g_userRole,
-        errorMessage: 'Could not remove material'
-      })
-    } else {
-      res.redirect('/')
-    }
+    // if (material != null) {
+    //   req.flash('error_msg', 'Cannot deleted the material data'); 
+
+    //   res.render('/materials/show', {
+    //     material: material,
+    //     userRole: g_userRole,
+    //     errorMessage: 'Could not remove material'
+    //   })
+    // } else {
+    //   res.redirect('/')
+    // }
+    if (material == null) {
+      res.redirect('/users/materials/index')
+  } else {
+      res.redirect(`/materials/index/${material.id}`)
+  }
   }
 })
 
@@ -444,20 +472,24 @@ async function renderEditPage(res, material, hasError = false) {
 async function renderFormPage(res, material, form, hasError = false) {
   try {
     const suppliers = await Supplier.find({})
+    const projects = await Project.find({})
+    const company = await Company.findById(g_companyID).exec()
+
     // const user = await User.findById(g_userID)
     console.log(g_userID)
     console.log(g_userName)
 
     const params = {
       suppliers: suppliers,
+      projects: projects,
+      company: company,
       material: material,
-      tags_input: material.tags_input,
       // user: user,
       userID: g_userID, // just added
       userName: g_userName, // just added
       userRole: g_userRole,
       // userProfilePicName: g_userProfilePicName,
-      companyName: g_userCompanyName,
+      companyName: g_companyName,
       companyID: g_companyID,
 
     }
@@ -475,32 +507,38 @@ async function renderFormPage(res, material, form, hasError = false) {
 }
 
 
-
-
-
-
-
-
-
-
+    // let query = Material.find({ company: g_companyID })
+    // if (req.query.searchKeywords != null && req.query.searchKeywords != '') {
+    //   query = query.regex('searchKeywords', new RegExp(req.query.searchKeywords, 'i'))
+    // }
+    // try {
+    //   const materials = await query.exec()
+    //   res.render('materials/index', {
 
 // *****---------- suppliers ROUTES ----------***** //
 // All Suppliers Route
 router.get('/suppliers/index', async (req, res) => {
-    let searchOptions = {}
+    // let searchOptions = {}
+    let query = Supplier.find({ company: g_companyID })
+    
     if (req.query.name != null && req.query.name !== '') {
-        searchOptions.name = new RegExp(req.query.name, 'i')
+        // searchOptions.name = new RegExp(req.query.name, 'i')
+        query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
+
     try {
-        const suppliers = await Supplier.find(searchOptions)
+        const suppliers = await query.exec()
+        // const materials = await query.exec()
+
         res.render('suppliers/index', { 
             suppliers: suppliers, 
+            // companyWhoPosted: companyWhoPosted,
             searchOptions: req.query,
             userID: g_userID, // just added
             userName: g_userName, // just added
             userRole: g_userRole,
             // userProfilePicName: g_userProfilePicName,
-            companyName: g_userCompanyName,
+            companyName: g_companyName,
             companyID: g_companyID,
 
 
@@ -511,19 +549,16 @@ router.get('/suppliers/index', async (req, res) => {
 })
 
 // New Supplier Route
-router.get('/suppliers/new', async(req,res) => { // - this is going to be a new route for suppliers
+router.get('/suppliers/new', async(req,res) => { 
     try {
         res.render('suppliers/new', 
             { supplier: new Supplier(), 
               userID: g_userID, 
               userName: g_userName,
               userRole: g_userRole,
-              // userProfilePicName: g_userProfilePicName,
-              companyName: g_userCompanyName,
+              companyName: g_companyName,
               companyID: g_companyID,
-
-  
-            }) // - this is just for displaying the form.
+            })
     } catch(err) {
     res.redirect('suppliers/index')
     console.log(err);
@@ -538,6 +573,7 @@ router.post('/suppliers/index', async (req, res) => { // - we use 'post' for cre
         name: req.body.name,
         phone: req.body.phone,
         weChat: req.body.weChat,
+        company: req.body.company,
         userName: g_userName, // just added
         companyID: g_companyID,
         errorMessage: 'Error creating Supplier'
@@ -561,7 +597,7 @@ router.post('/suppliers/index', async (req, res) => { // - we use 'post' for cre
         userRole: g_userRole,
         errorMessage: 'Error creating Supplier',
         // userProfilePicName: g_userProfilePicName,
-        companyName: g_userCompanyName,
+        companyName: g_companyName,
         companyID: g_companyID,
 
         })
@@ -585,7 +621,7 @@ router.get('/suppliers/index/:id', async (req, res) => {
             userName: g_userName, // just added
             userRole: g_userRole,
             // userProfilePicName: g_userProfilePicName,
-            companyName: g_userCompanyName,
+            companyName: g_companyName,
             companyID: g_companyID,
 
 
@@ -607,7 +643,7 @@ router.get('/suppliers/index/:id/edit', async (req, res) => {
             userName: g_userName,
             userRole: g_userRole,
             // userProfilePicName: g_userProfilePicName,
-            companyName: g_userCompanyName,
+            companyName: g_companyName,
             companyID: g_companyID,
 
 
@@ -642,13 +678,15 @@ router.put('/suppliers/index/:id', async (req, res) => {
     }
 })
 
-// Delete
+// Delete Supplier Route
 router.delete('/suppliers/index/:id', async (req, res) => {
     let supplier 
     try {
         supplier = await Supplier.findById(req.params.id)
         await supplier.remove()
         req.flash('success_msg', 'Successfully deleted the supplier data'); 
+        // req.flash('error_msg', 'failed to deleted the supplier data'); 
+
         res.redirect('/users/suppliers/index')
     } catch {
         if (supplier == null) {
@@ -664,23 +702,27 @@ router.delete('/suppliers/index/:id', async (req, res) => {
 
 // New Company Render Route
 router.get('/companies/new', (req, res) => res.render('companies/new', {
+  company: new Company(),
   userID: g_userID,
   userName: g_userName,
   userRole: g_userRole,
   companyID: g_companyID,
+  companyName: g_companyName,
   g_userProfPic_URL: "https://material-image-list.oss-cn-beijing.aliyuncs.com/" + g_userID + "/" + g_userName,
 }));
 
 // New Company Post Route
 router.post('/companies/index', (req, res) => {
     const { name, description } = req.body;
-    const  userID = g_userID
-    const  userName = g_userName
+    const userID = g_userID
+    const userName = g_userName
     const userRole = g_userRole
+    const companyID = g_companyID
+    const companyName = g_companyName
+    
 
-    
     let errors = [];
-    
+
     // Check required fields
     if(!name ) {
         errors.push({ msg: 'Please fill in all fields' });
@@ -692,7 +734,9 @@ router.post('/companies/index', (req, res) => {
             description,
             userID,
             userName,
-            userRole
+            userRole,
+            companyID,
+            companyName,
         });
     } else {
         // Validation passed
@@ -706,8 +750,11 @@ router.post('/companies/index', (req, res) => {
                         userID,
                         userName,
                         userRole,
+                        companyID,
+                        companyName,
                         name,
                         description,
+
                     });
                 } else {
                     const newCompany = new Company({
@@ -718,7 +765,7 @@ router.post('/companies/index', (req, res) => {
                         newCompany.save()
                         .then(company => {
                             req.flash('success_msg', 'Your company is now registered.');
-                            res.redirect(`/users/${user.id}`)
+                            res.redirect(`/users/${userID}`)
                         })
                         .catch(err => console.log(err));
                 }
@@ -728,24 +775,23 @@ router.post('/companies/index', (req, res) => {
 
 // All Companies Route
 router.get('/companies/index', async (req, res) => {
-  let searchOptions = {}
-  if (req.query.name != null && req.query.name !== '') {
-      searchOptions.name = new RegExp(req.query.name, 'i')
-  }
   try {
-      const companies = await Company.find(searchOptions)
+      const company = await Company.findById(g_companyID).exec();
+      const users = await User.find({ company: g_companyID});
+      const user = await User.findById(g_userID).exec();
       res.render('companies/index', { 
-          companies: companies, 
-          searchOptions: req.query,
-          userID: g_userID, // just added
-          userName: g_userName, // just added
+          peopleFromThisCompany: users, 
+          company: company,
+          user: user,
+          userID: g_userID, 
+          userName: g_userName,
           userRole: g_userRole,
           companyID: g_companyID,
-          // userProfilePicName: g_userProfilePicName,
-          companyName: g_userCompanyName
-      }) // - we're going to render suppliers/index, instead of rendering all the index for entire application.
-  } catch {
+          companyName: g_companyName,
+        }) 
+  } catch(err) {
       res.redirect('/companies/index')
+      console.log(err)
   }
 })
 
@@ -753,10 +799,10 @@ router.get('/companies/index', async (req, res) => {
 
 
 
-// Update Company Route
-router.get(updateCompanyRoute, async (req, res) => {
+// Edit Company Route
+router.get('/companies/index/:id/edit', async (req, res) => {
   try {
-      const company = await Company.findById(g_companyID)
+      const company = await Company.findById(g_companyID).exec()
       res.render('companies/edit', { 
           company: company, 
           searchOptions: req.query,
@@ -764,39 +810,52 @@ router.get(updateCompanyRoute, async (req, res) => {
           userName: g_userName, // just added
           userRole: g_userRole,
           companyID: g_companyID,
-          // userProfilePicName: g_userProfilePicName,
-          companyName: g_userCompanyName
-      }) // - we're going to render suppliers/index, instead of rendering all the index for entire application.
-  } catch {
+          companyName: g_companyName,
+        }) // - we're going to render suppliers/index, instead of rendering all the index for entire application.
+  } catch(err) {
       res.redirect('/companies/index')
+      console.log(err)
   }
 })
 
  
 // Update Company Route
-router.put('companies/index/:id', async (req, res) => {
+router.put('/companies/index/:id', async (req, res) => {
   let company
   let user 
   try {
-      user = await User.findById(g_userID)
-      console.log(g_userID)
-      company = await Company.findById(g_companyID)
-      console.log(g_companyID)
-      supplier.name = req.body.name
-      await supplier.save()
-      res.redirect(`/users/dashboard`)
-  } catch {
-      if (supplier == null) {
-          res.redirect('/')
-      } else {
-          // res.render('companies/index/edit', {
-          //     supplier: supplier,
-          //     userID: g_userID, // just added
-          //     userName: g_userName, // just added
-          //     userRole: g_userRole,
-          //     errorMessage: 'Error updating Supplier'
-          // })
-      }
+      user = await User.findById(g_userID).exec()
+      company = await Company.findById(g_companyID).exec()
+
+      company.name = req.body.name
+      company.name_eng = req.body.name_eng
+      company.description = req.body.description
+      company.location = req.body.location
+
+
+      await company.save()
+
+      // g_companyID = company.id
+      // g_companyName = company.name
+      req.flash('success_msg', 'Successfully updated your company data'); //but we want to send a flash message and redirect. 
+
+      res.redirect('/users/companies/index')
+
+  } catch (err) {
+    console.log(err)
+      // if (company == null) {
+      //     res.redirect('/companies/index')
+      // } else {
+      //     res.render('companies/edit', {
+      //         company: company,
+      //         userID: g_userID, // just added
+      //         userName: g_userName, // just added
+      //         userRole: g_userRole,
+      //         companyName: g_companyName,
+      //         companyID: g_companyID,
+      //         errorMessage: 'Error updating Supplier'
+      //     })
+      // }
   }
 })
 
@@ -816,7 +875,6 @@ router.delete('/companies/index/:id', async (req, res) => {
         userName: req.user.name,
         userID: g_userID,
         userRole: g_userRole,
-
         materialsByUser: materials,
         // companyID: g_companyID,
         // usersCompanyName: user.companyName,
@@ -836,10 +894,162 @@ router.delete('/companies/index/:id', async (req, res) => {
   }
 })
 
-// *****---------- constructionTeam ROUTES ----------***** //
 
-router.get('/constructionTeam/index', async (req, res) => {
-    res.render('constructionTeam/index')
+
+
+// *****---------- projects ROUTES ----------***** //
+// All Projects Route
+router.get('/projects/index', async (req, res) => {
+  let query = Project.find({ company: g_companyID })
+
+  if (req.query.name != null && req.query.name !== '') {
+    query = query.regex('name', new RegExp(req.query.name, 'i'))
+  }
+  try {
+      const projects = await query.exec()
+      res.render('projects/index', { 
+          projects: projects, 
+          searchOptions: req.query,
+          userID: g_userID, // just added
+          userName: g_userName, // just added
+          userRole: g_userRole,
+          companyName: g_companyName,
+          companyID: g_companyID,
+      }) // - we're going to render suppliers/index, instead of rendering all the index for entire application.
+  } catch {
+      res.redirect('/projects/index')
+  }
+})
+
+
+// New Project Route
+router.get('/projects/new', async(req,res) => { 
+  try {
+      res.render('projects/new', 
+          { project: new Project(), 
+            user: g_userID,
+            company: g_companyID,
+            userID: g_userID, 
+            userName: g_userName,
+            userRole: g_userRole,
+            companyName: g_companyName,
+            companyID: g_companyID,
+          }) 
+  } catch(err) {
+  res.redirect('/projects/index')
+  console.log(err);
+  }
+})
+
+// Post New Project 
+router.post('/projects/index', async (req, res) => {
+
+  const project = new Project({
+      name: req.body.name,
+      user: g_userID,
+      company: g_companyID,
+      userName: g_userName, 
+      userRole: g_userRole,
+      companyID: g_companyID,
+      companyName: g_companyName,
+      errorMessage: 'Error creating Project'
+  })
+  try {
+     const newProject = await project.save()
+         res.redirect(`/users/projects/index`)
+  } catch {
+      res.render('projects/new', {
+      project: project,
+      userID: g_userID, 
+      userName: g_userName, 
+      userRole: g_userRole,
+      errorMessage: 'Error creating Project',
+      companyName: g_companyName,
+      companyID: g_companyID,
+
+      })
+  }
+})
+
+// Show Project Page 
+router.get('/projects/index/:id', async (req, res) => {
+  try {
+      const project = await Project.findById(req.params.id)
+      const materials = await Material.find({ project: project.id }).limit(6).exec() 
+      res.render('projects/show', {
+          supplier: supplier,
+          materialsByProject: materials,
+          userID: g_userID, 
+          userName: g_userName, 
+          userRole: g_userRole,
+          companyName: g_companyName,
+          companyID: g_companyID,
+      })
+
+  } catch (err) {
+      console.log(err)
+      res.redirect('/')
+  }
+})
+
+// Edit Project Route
+router.get('/projects/index/:id/edit', async (req, res) => {
+  try {
+      const project = await Project.findById(req.params.id)
+      res.render('projects/edit', 
+      { project: project, 
+        userID: g_userID, 
+        userName: g_userName,
+        userRole: g_userRole,
+        companyName: g_companyName,
+        companyID: g_companyID,
+        
+      }) 
+  } catch {
+      res.redirect('/users/projects')
+  }
+})
+
+// Update Project Route
+router.put('/projects/index/:id', async (req, res) => {
+  let project 
+  try {
+      project = await Project.findById(req.params.id)
+      project.name = req.body.name
+      await project.save()
+      res.redirect(`/projects/index/${project.id}`)
+  } catch {
+      if (project == null) {
+          res.redirect('/')
+      } else {
+          res.render('projects/index/edit', {
+              project: project,
+              userID: g_userID, 
+              userName: g_userName, 
+              userRole: g_userRole,
+              companyID: g_companyID,
+              companyName: g_companyName,
+              errorMessage: 'Error updating Supplier'
+      })
+    }
+  }
+})
+
+// Delete Project Route
+router.delete('/projects/index/:id', async (req, res) => {
+  let project 
+  try {
+      project = await Project.findById(req.params.id)
+      await project.remove()
+      req.flash('success_msg', 'Successfully deleted the project data'); 
+      res.redirect('/users/projects/index')
+  } catch {
+      if (project == null) {
+          res.redirect('/users/projects/index')
+      } else {
+          res.redirect(`/projects/index/${project.id}`)
+      }
+  }
 })
 
 module.exports = router;

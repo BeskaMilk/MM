@@ -1,0 +1,12 @@
+<div>
+    <%- include('../partials/header_private.ejs') %>
+</div>
+
+    
+<h2>Edit Project</h2>
+<form action="/projects/<%= project.id %>?_method=PUT" method="POST">
+    <%- include('_form_fields') %>
+    <a href="/projects/<%= project.id %>">Cancel</a>
+    <button type="submit">Update</button>
+</form>
+

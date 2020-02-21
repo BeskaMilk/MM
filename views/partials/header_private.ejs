@@ -5,11 +5,13 @@
 <div class="container col-md-12">
 <div class="row">
     
-    <div class="col-4 text-left">
-        <a href="/">
+    <div class="col-4 text-left" >
+        <a href="/users/materials/index">
             <img height="30" class="websiteLogo" width="20" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
             <img height="30" class="websiteLogo" width="20" src="https://maxcdn.icons8.com/Share/icon/Alphabet/m1600.png">
+            <img height="30" width="30" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= companyName %>/<%= companyID %>">
         </a>
+        <%= companyName %>
     </div>
 
     
@@ -35,6 +37,8 @@
                             <i class="fas fa-industry"></i>
                     </span>
                     </a>
+
+                    
                 </div>
                 <!-- <div class="col-4"> -->
 
@@ -45,6 +49,13 @@
                     </a> -->
                 <!-- </div> -->
                 <div class="col text-center">
+                    <a href="/users/projects/index">
+                        <span class="icon-style-project">
+                            <i class="fas fa-sitemap"></i>
+                        </span>
+                    </a>
+                </div>
+                <div class="col text-center">
                     <a href="/users/companies/index">
                         <span class="icon-style-company">
                             <i class="fas fa-users"></i>
@@ -52,30 +63,16 @@
 
                     </a>
                 </div>
-                <% if (userRole === 'master') { %>
-                <div class="col text-center">
-                    <a href="/users/constructionTeam/index">
-                        <span class="icon-style4">
-                            <i class="fas fa-sitemap"></i>
-                        </span>
-                    </a>
-                </div>
-                <% } else if (userRole === 'standard') { %>
-                <div>    
-                </div>
-                <% } else if (userRole === 'special') { %>
-                <div>    
-                </div>
-                <% } %>
+                
+                
 
             </div>
         </div>
         
         <div class="col-4">
             <div class="col-12 text-right">
-
                 <div class="websiteLogo" href="#" data-toggle="modal" data-target="#myModal">
-                    <%= companyName %>
+                    <%= userName %>
                     <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>">
                     <!-- <a href="#" data-toggle="modal" data-target="#myModal">Open Modal</a> -->
                 </div>
@@ -100,33 +97,24 @@
     <div class="row">
         <div class="col-md-12">
             <div class="modal fade" id="myModal">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h3><%= userName %></h3>
-                        <h3><%= companyName %></h1>
                     </div>
                     <div class="modal-body">
                         <a href="/users/dashboard">
-                            my board
-                            <!-- <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>"> -->
+                            <h5><%= userName %></h5>
                         </a>
+                        <div><%= companyName %></div>
                     </div>
-                    <div class="modal-body">
-                    <a href="/users/company/index/<%= companyID %>">
-                        my company
-                        <!-- <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>"> -->
-                    </a>
-                    </div>
-                    <div class="modal-footer">
+                    
+                    <div class="modal-footer text-center">
                         <a href="/users/dashboard/logout" class="btn btn-secondary">Logout</a>
 
                         <input class="btn btn-default" data-dismiss="modal" value="Close">
                     </div>
                 </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
-

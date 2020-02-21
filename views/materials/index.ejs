@@ -9,9 +9,9 @@
     <div class="col-12 text-left">                     
         <form action="/users/materials/index" method="GET">
             <div>                
-                <div class="form-group" >
+                <div class="form-group">
                     <div class="input-group mb-6">
-                            <input class="form-control" type="text" name="searchKeywords" placeholder="<%= g_companyName%>'s Shared Material Library " value="<%= searchOptions.searchKeywords %>" >
+                            <input class="form-control" type="text" name="searchKeywords" placeholder="<%= g_companyName%>的共享材料剪贴簿" value="<%= searchOptions.searchKeywords %>" >
                             <div class="input-group-append">
                                 <button type="submit" id="postfiles" href="javascript:void(0);" class="input-group-text">                    
                                     <i class="fas fa-search" id="search-icon"></i>
@@ -19,6 +19,23 @@
                             </div>
                     </div>
                 </div>
+
+
+                <!-- 
+                <div class="container">
+                    <select name="products-b" id="products-b" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                    <br />
+                    <select name="products-m" id="products-m"  class="form-control input-lg">
+                        <option value="">2</option>
+                    </select>
+                    <br />
+                    <select name="products-s" id="products-s"  class="form-control input-lg">
+                        <option value="">3</option>
+                    </select>
+                </div> -->
+                
 
                 <!--                 
                 <label>from</label>
@@ -30,17 +47,14 @@
         </form>
     </div>
 
-    <div class="col-12 text-right">
-
+    <div class="col-12 text-center">
         <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
         <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
-
         <a href="/users/materials/new">
             <span class="icon-style-new"">
-                <i class="fas fa-cloud-upload-alt"></i>
+                <i class="fas fa-plus-circle"></i>
             </span>
         </a> 
-
     </div>
 
 </div>
@@ -56,13 +70,9 @@
     <div class="custom-cards-list">
 
             <% materials.forEach(material => { %>
-
-                <!-- <div class="card 3">     -->
-
-                    <!-- <p3 class="pictureCard-title" value="<%= material.title %>"><%= material.title %> -->
                     <a href="/users/materials/index/<%= material.id %>" class="custom-card 3">
                         <div class="custom-card_image">    
-                            <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+                            <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
                         </div>
                     <div class="custom-card_title">
                             
@@ -72,12 +82,9 @@
                         </div>
                         <div class="custom-card_index">
                             <h5 class="custom-card_title_h"><%= material.title %></h5> 
-                            <h6 class="custom-card_title_t"><%= material.tags_input %></h6> 
+                            <h6 class="custom-card_title_t"><%= material.tags_input_string %></h6> 
                         </div>
-
                     </div>
-                    <!-- <div > -->
-                    <!-- </div> -->
                     </a>
             <% }) %>
     </div>
@@ -88,6 +95,14 @@
 </div>
 
 </div>
+<!-- 
 
 
+<script>
+$(document).ready(function(){
+    function load_json_data(id, parent_id)
+    {
 
+    }
+})
+</script> -->

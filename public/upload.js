@@ -123,15 +123,13 @@ function set_upload_param(up, filename, ret)
     up.start();
 }
 
-// function getIsPublic() {
-//     document.getElementById('isThisPublic').appendChild(document.createTextNode(isThisPublic));
 
-// }
+
 
 var uploader = new plupload.Uploader({
 	runtimes : 'html5,flash,silverlight,html4',
 	browse_button : 'selectfiles', 
-    //multi_selection: false,
+    multi_selection: false,
 	container: document.getElementById('container'),
 	flash_swf_url : 'lib/plupload-2.1.2/js/Moxie.swf',
 	silverlight_xap_url : 'lib/plupload-2.1.2/js/Moxie.xap',
@@ -173,6 +171,7 @@ var uploader = new plupload.Uploader({
             if (info.status == 200)
             {
                 document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = 'upload to oss success, object name:' + get_uploaded_object_name(file.name);
+                // document.getElementById('user_defined_name').setAttribute('value', get_uploaded_object_name(file.name));
             }
             else
             {
@@ -184,8 +183,6 @@ var uploader = new plupload.Uploader({
 			document.getElementById('console').appendChild(document.createTextNode("\nError xml:" + err.response));
 		}
     }
-    
-    
 });
 
 uploader.init();

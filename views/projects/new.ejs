@@ -1,0 +1,10 @@
+<div>
+    <%- include('../partials/header_private.ejs') %>
+</div>
+
+<form action="/users/projects/index" method="POST">
+    <%- include('_form_fields') %>
+    <a href="/users/projects/index">Cancel</a>
+    <button type="submit">Create</button>
+</form>
+

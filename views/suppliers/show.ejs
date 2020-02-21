@@ -9,14 +9,35 @@
 <h2><%= supplier.phone %></h2>
 <h2><%= supplier.weChat %></h2>
 
+    
 <a href="/users/suppliers/index/<%= supplier.id %>/edit">Edit</a>
 <%- include('../partials/deleteform', 
             { url: `/users/suppliers/index/${supplier.id}` }) %>
-<% if (materialsBySupplier.length > 0) { %>
-<h2>Materials By Supplier</h2>
-<% materialsBySupplier.forEach(material => { %>
-    <a href="/users/materials/index/<%= material.id %>">
-        <img width="200" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
-    </a>
-    <% }) %>
-<% } %>
+
+
+<div>
+    <h2>Materials By Supplier</h2>
+</div>
+
+<div class="container">
+<div class="row">
+    <div class="col">     
+    </div>
+    <div class="col-8">
+        <div class="custom-cards-list">                    
+                <% if (materialsBySupplier.length > 0) { %>
+                <% materialsBySupplier.forEach(material => { %>
+                    <a href="/users/materials/index/<%= material.id %>" class="custom-card 3">
+                        <div class="custom-card_image">    
+                            <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+                        </div>
+                    </a>
+                    <% }) %>
+                <% } %>
+        </div>
+    </div>
+    <div class="col">     
+    </div>
+</div>
+</div>
+

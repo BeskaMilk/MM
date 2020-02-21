@@ -1,17 +1,10 @@
-
 [].forEach.call(document.getElementsByClassName('tags_input'), function (el) {
     let hiddenInput = document.createElement('input'),
         mainInput = document.createElement('input'),
         tags = [];
     
-        // console.log;
-
     hiddenInput.setAttribute('type', 'hidden');
-    // hiddenInput.setAttribute('id', 'tags-output');
     hiddenInput.setAttribute('name', el.getAttribute('data-name'));
-
-    // document.formName.elements[tags_input].value;
-
 
     mainInput.setAttribute('type', 'text');
     mainInput.classList.add('main-input');
@@ -37,8 +30,7 @@
     el.appendChild(mainInput);
     el.appendChild(hiddenInput);
 
-
-    addTag('material!');
+    addTag('hello!');
 
     function addTag (text) {
         let tag = {
@@ -57,6 +49,7 @@
         tag.element.appendChild(closeBtn);
 
         tags.push(tag);
+
         el.insertBefore(tag.element, mainInput);
 
         refreshTags();

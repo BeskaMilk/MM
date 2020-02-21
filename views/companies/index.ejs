@@ -2,17 +2,39 @@
     <%- include('../partials/header_private.ejs') %>
 </div>
 
+    
+<h2><%= company.name %></h2>
+<h5><%= company.name_eng %></h5>
+
+<!-- <h4><%= company.date %></h4> -->
+<h6><%= company.description %></h6>
+
+
+<% if (user.role == 'special' || user.role == 'master') { %>    
+<a href="/users/companies/index/<%= company.id %>/edit">
+    <button type="button" class="btn btn-primary btn-lg">update company data</button>
+</a>
+<% } %>
+
 <div class="container">
-    <div class="col text-center" >
-    <div>companies index (company name, logo) </div>
-
-    <div>
-    company people:
-    master users
-    standard users
+<div class="row">
+    <div class="col">     
     </div>
-
-    <div>
-    alliance companies:
+    <div class="col-8">
+        <div class="custom-profiles-list">                    
+                <% if (peopleFromThisCompany.length > 0) { %>
+                <% peopleFromThisCompany.forEach(user => { %>
+                    <a href="/users/<%= user.id %>" class="custom-profile 3">
+                        <div class="custom-profile_image">    
+                            <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= user.id %>/<%= user.name %>">
+                        </div>
+                    </a>
+                    <% }) %>
+                <% } %>
+        </div>
+    </div>
+    <div class="col">     
     </div>
 </div>
+</div>
+

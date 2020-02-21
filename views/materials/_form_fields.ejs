@@ -2,21 +2,55 @@
 
 
 <div class="form-group">    
-    <label class="col-form-label" for="inputDefault">Project name</label>
-    <input type="text" id='dirname' placeholder="Project Name" name="projectName" value="<%= material.projectName %>" class="form-control" placeholder="put your architectural/construction project name here" id="inputDefault">
+    <!-- <label class="col-form-label" for="inputDefault">Project name</label>
+    <input type="text" id='dirname' placeholder="Project Name" name="projectName" value="<%= material.projectName %>" class="form-control" placeholder="put your architectural/construction project name here" id="inputDefault"> -->
 
+
+    <div class="form-group">
+    <label>Project</label>
+            <select name="project" class="custom-select" placeholder="项目">
+                <option selected label="选择项目">
+                <option label="如果没有项目，请先添加项目信息 if you don't see the project, please first create a new project">
+
+
+                <% projects.forEach(project => { %>
+                    <% if (project.id === material.project) { %>
+                        <option label="<%= project.name %>" id='dirname' value="<%= project.id %>">
+                    <% } else { %>
+                        <option label="<%= project.name %>" id='dirname' value="<%= project.id %>">
+                    <% } %>
+                <% }) %>
+            </select>
+    </div>
     <label class="col-form-label" for="inputDefault">Title</label>
-    <input type="text" name="title" value="<%= material.title %>" class="form-control" placeholder="put your post title here" id="inputDefault">
+    <input type="text" name="title" value="<%= material.title %>" class="form-control" placeholder="标题" id="inputDefault">
 </div>
 
 <div class="form-group">
-    <label class="col-form-label" for="inputDefault">Add tags</label>
-    <div class="tags_input" name="tags_input" data-name="tags_input"></div>
+    <label class="control-label">sub title</label>
+    <input type="text" id='user_defined_name'  class="form-control" placeholder="副标题" name="ossFileName" value="<%= material.ossFileName %>">
+</div>
 
+
+<div class="form-group">
+<label>Supplier</label>
+<select name="supplier" class="custom-select" placeholder="厂家">
+    <option selected label="选择厂家">
+
+    <option label="如果没有厂家，请先添加厂家信息 if you don't see the supplier, please first create a new supplier">
+
+    <% suppliers.forEach(supplier => { %>
+        <% if (supplier.id === material.supplier) { %>
+            <option label="<%= supplier.name %>" value="<%= supplier.id %>">
+        <% } else { %>
+            <option label="<%= supplier.name %>" value="<%= supplier.id %>">
+        <% } %>
+    <% }) %>
+</select>
 </div>
 
 <div class="form-group">
-    <label class="control-label">Cost</label>
+    <label class="control-label">价格 Cost</label>
         <div class="form-group">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -30,39 +64,17 @@
         </div>
 </div >
 
-
 <div class="form-group">
-<label>Supplier</label>
-<select name="supplier" class="custom-select">
-    <% suppliers.forEach(supplier => { %>
-        <% if (supplier.id === material.supplier) { %>
-            <option selected label="<%= supplier.name %>" value="<%= supplier.id %>">
-        <% } else { %>
-            <option label="<%= supplier.name %>" value="<%= supplier.id %>">
-        <% } %>
-    <% }) %>
-</select>
-</div>
-
-<div class="form-group">
-    <label>built when</label>
-    <input type="date" name="publishDate" 
-            value="<%= material.publishDate == null ? '' :
-            material.publishDate.toISOString().split('T')[0] %>">
-</div>
-
-
-<div class="form-group">
-    <label for="exampleTextarea">Description</label>
+    <label for="exampleTextarea">说明 Description</label>
     <textarea name="description" class="form-control" id="exampleTextarea" rows="3"> <% material.description %> </textarea>
 </div>
 
-<br/>
-
-     
-
-	<br/>
-	<div>Image Name<input type="text" id='user_defined_name' placeholder="what name" size=50 name="ossFileName" value="<%= material.ossFileName %>"></div>
+<div class="form-group">
+    <label class="col-form-label" for="inputDefault">Add tags</label>
+    <div class="tags_input" name="tags_input" data-name="tags_input"></div>
+    <input name="tags_input_string" value="<%= material.tags_input_string %>" class="hide">
+</div>
+         
 
 	<div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
 
@@ -73,11 +85,11 @@
             <div id="container">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="selectfiles" >
-                    <lable href="javascript:void(0);" class="custom-file-label" for="selectedfiles">choose</lable>
+                    <lable href="javascript:void(0);" class="custom-file-label" for="selectedfiles">选择文件 choose a file</lable>
                 </div>
             </div>
                 <div class="input-group-append">
-                    <span id="postfiles" href="javascript:void(0);" class="input-group-text">upload</span>
+                    <span id="postfiles" href="javascript:void(0);" class="input-group-text">上传 upload</span>
                 </div>
         </div>
     </div>
@@ -89,7 +101,7 @@
 
     <div class="form-group">
         <div class="form-group">
-            <label>Who can view this data</label>
+            <label>预览权限 Who can view this data</label>
             <select name="isPublic" class="custom-select">
                         <option selected label="private" value="private">
                         <option label="public" value="public">
@@ -99,14 +111,15 @@
     </div>
 
 
+
     <div class="form-group">
-        <div class="hide">
+        <div>
             <div class="custom-control custom-radio">
-            <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled=""/> 
+            <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" /> 
             <label class="custom-control-label" for="customRadio1">keep the local file name</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled="" /> 
+                <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name"  /> 
                 <label class="custom-control-label" for="customRadio2">give the file a random name</label>
             </div>
             <div class="custom-control custom-radio">
@@ -116,6 +129,9 @@
             <div name="searchKeywords" value=""></div>
         </div>
     </div>
+
+
+
 
     <p>&nbsp;</p>
     

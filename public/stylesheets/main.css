@@ -256,22 +256,22 @@ width: 266.188px;
 }
 
 
-.icon-style4 {
+.icon-style-project {
   font-size: 2em;
-  color: darkgray;
+  color: purple;
   cursor: pointer;
   transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 
 }
-.icon-style4:hover {
-  scale:1.1;
+.icon-style-project:hover {
+  scale:1.2;
   color: purple;
 }
 
 
 .icon-style-new {
-  font-size: 3em;
-  color: darkgray;
+  font-size: 2em;
+  color: tomato;
   cursor: pointer;
   transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
@@ -292,6 +292,66 @@ width: 266.188px;
 .title-black {
   color: black;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.custom-profiles-list {
+  z-index: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.custom-profile {
+  margin: 30px auto;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.15), -5px -5px 30px 7px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.custom-profile .custom-profile_image {
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+}
+
+.custom-profile .custom-profile_image img {
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+
+
+
+
+
+
+
+
 
 @media all and (max-width: 500px) {
   .card-list {
@@ -361,11 +421,7 @@ width: 266.188px;
   opacity: 0%;
 
 }
-/* 
-.dashboard-profile-edit_title {
-  width: inherit;
-  height: inherit;
-} */
+
 
 .dashboard-profile-edit_title:hover {
   width: inherit;
@@ -373,32 +429,12 @@ width: 266.188px;
   opacity: 100%;
   transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
-/* 
-.card {
-  margin: 30px auto;
-  width: 300px;
-  height: 300px;
-  border-radius: 40px;
-  background-image: url('https://i.redd.it/b3esnz5ra34y.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-repeat: no-repeat;
-box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
-  transition: 0.4s;
-} */
-
-
-
 
 
 #pictureCard {
   width: 300px;
   margin: 20px;
   border-radius: 5%;
-
-  /* background-image: attr(url); */
-  /* padding: 10px; */
 } 
 
 #pictureCard-bg {
@@ -413,8 +449,6 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
   width: 350px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
   transition: 0.2s;
-  /* background-size: 110%; */
-  /* content:attr("data-text"); */
 } 
 
 #pictureCard:hover:after {
@@ -448,17 +482,17 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 
 
 .gallery-view-icon {
-  width:40px;
-  height:40px;
+  width:30px;
+  height:30px;
   opacity: 0.7;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .list-view-icon {
-  width:35px;
-  height:35px;
+  width:25px;
+  height:25px;
   opacity: 0.5;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 /* ----------from now on it's about tags---------- */

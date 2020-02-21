@@ -3,17 +3,26 @@ const material = require('./material')
 
 const supplierSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in a normal SQL database. 
     name: {
-        type: String,                        // - different columns for our schema (table), in JSON form.
-        required: true                       // - there are tons of different configurations you can add. 
+        type: String,                
+        required: true                       
     },
     phone: {
-        type: Number,                        // - different columns for our schema (table), in JSON form.
-        required: true                       // - there are tons of different configurations you can add. 
+        type: Number,                        
+        required: true                       
     },
     weChat: {
-        type: String,                        // - different columns for our schema (table), in JSON form.
-        required: true                       // - there are tons of different configurations you can add. 
-    }
+        type: String,                        
+        required: true                       
+    },
+    company: { //company who posted about this supplier
+        type: mongoose.Schema.Types.ObjectId,  
+        required: true,
+        ref: 'Company'         
+    },
+    // searchKeywords: {
+    //     type: String,
+    //     required: true,
+    // }
 })
 
 supplierSchema.pre('remove', function(next) {
