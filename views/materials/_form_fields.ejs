@@ -9,13 +9,9 @@
     <div class="form-group">
     <label>Project</label>
             <select name="project" class="custom-select" placeholder="项目">
-                <option selected label="选择项目">
-                <option label="如果没有项目，请先添加项目信息 if you don't see the project, please first create a new project">
-
-
                 <% projects.forEach(project => { %>
                     <% if (project.id === material.project) { %>
-                        <option label="<%= project.name %>" id='dirname' value="<%= project.id %>">
+                        <option selected label="<%= project.name %>" id='dirname' value="<%= project.id %>">
                     <% } else { %>
                         <option label="<%= project.name %>" id='dirname' value="<%= project.id %>">
                     <% } %>
@@ -35,13 +31,9 @@
 <div class="form-group">
 <label>Supplier</label>
 <select name="supplier" class="custom-select" placeholder="厂家">
-    <option selected label="选择厂家">
-
-    <option label="如果没有厂家，请先添加厂家信息 if you don't see the supplier, please first create a new supplier">
-
     <% suppliers.forEach(supplier => { %>
         <% if (supplier.id === material.supplier) { %>
-            <option label="<%= supplier.name %>" value="<%= supplier.id %>">
+            <option selected label="<%= supplier.name %>" value="<%= supplier.id %>">
         <% } else { %>
             <option label="<%= supplier.name %>" value="<%= supplier.id %>">
         <% } %>

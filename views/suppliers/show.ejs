@@ -6,15 +6,16 @@
 
     
 <h2><%= supplier.name %></h2>
-<h2><%= supplier.phone %></h2>
-<h2><%= supplier.weChat %></h2>
+<h6>phone: <%= supplier.phone %></h2>
+<h6>WeChat: <%= supplier.weChat %></h2>
 
-    
-<a href="/users/suppliers/index/<%= supplier.id %>/edit">Edit</a>
-<%- include('../partials/deleteform', 
-            { url: `/users/suppliers/index/${supplier.id}` }) %>
-
-
+<a href="/users/suppliers/index/<%= supplier.id %>/edit">
+<span class="icon-style-alliance"><i class="fas fa-edit"></i></span>
+</a>
+<div class="websiteLogo" href="#" data-toggle="modal" data-target="#supplierModal">
+    <i class="fas fa-minus-circle"></i>
+</div>
+  
 <div>
     <h2>Materials By Supplier</h2>
 </div>
@@ -29,7 +30,7 @@
                 <% materialsBySupplier.forEach(material => { %>
                     <a href="/users/materials/index/<%= material.id %>" class="custom-card 3">
                         <div class="custom-card_image">    
-                            <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %>">
+                            <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
                         </div>
                     </a>
                     <% }) %>
@@ -41,3 +42,35 @@
 </div>
 </div>
 
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+  
+        </div>
+        <div class="col">
+            <div class="modal fade" id="supplierModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                    <!-- <div class="modal-header">
+                    </div> -->
+                    <div class="modal-body text-center">
+
+                        <%- include('../partials/deleteform', 
+                        { url: `/users/suppliers/index/${supplier.id}` }) %>
+                                            <br/>
+                      <input class="btn btn-default" data-dismiss="modal" value="Close">
+  
+                    <!-- <div class="modal-footer text-center">
+                        <input class="btn btn-default" data-dismiss="modal" value="Close">
+                    </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+          
+    </div>
+  </div>
+  
