@@ -4,9 +4,9 @@
 
     
 <h2>Edit Project</h2>
-<form action="/projects/<%= project.id %>?_method=PUT" method="POST">
+<form action="/users/projects/index/<%= project.id %>?_method=PUT" method="POST">
     <%- include('_form_fields') %>
-    <a href="/projects/<%= project.id %>">Cancel</a>
+    <a href="/users/projects/index/<%= project.id %>">Cancel</a>
     <button type="submit">Update</button>
 </form>
 

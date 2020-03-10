@@ -21,6 +21,8 @@
     "express-ejs-layouts": "^2.5.0",
     "express-fileupload": "^1.1.6",
     "express-session": "^1.17.0",
+    "filepond": "^4.12.0",
+    "filepond-plugin-image-preview": "^4.6.1",
     "fs": "0.0.1-security",
     "method-override": "^3.0.0",
     "mongoose": "^5.8.11",

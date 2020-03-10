@@ -10,10 +10,10 @@
     <label>Project</label>
             <select name="project" class="custom-select" placeholder="项目">
                 <% projects.forEach(project => { %>
-                    <% if (project.id === material.project) { %>
+                    <% if (project.id == material.project) { %>
                         <option selected label="<%= project.name %>" id='dirname' value="<%= project.id %>">
                     <% } else { %>
-                        <option label="<%= project.name %>" id='dirname' value="<%= project.id %>">
+                        <option label="<%= project.name %>" value="<%= project.id %>">
                     <% } %>
                 <% }) %>
             </select>
@@ -32,7 +32,7 @@
 <label>Supplier</label>
 <select name="supplier" class="custom-select" placeholder="厂家">
     <% suppliers.forEach(supplier => { %>
-        <% if (supplier.id === material.supplier) { %>
+        <% if (supplier.id == material.supplier) { %>
             <option selected label="<%= supplier.name %>" value="<%= supplier.id %>">
         <% } else { %>
             <option label="<%= supplier.name %>" value="<%= supplier.id %>">
@@ -105,13 +105,13 @@
 
 
     <div class="form-group">
-        <div>
+        <div class="hide">
             <div class="custom-control custom-radio">
-            <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" /> 
+            <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled="" /> 
             <label class="custom-control-label" for="customRadio1">keep the local file name</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name"  /> 
+                <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled=""  /> 
                 <label class="custom-control-label" for="customRadio2">give the file a random name</label>
             </div>
             <div class="custom-control custom-radio">

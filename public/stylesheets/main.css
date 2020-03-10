@@ -204,7 +204,7 @@ width: 266.188px;
 
 .icon-style-alliance {
   font-size: 2em;
-  color: darkgray;
+  color: rgb(245, 52, 213);
   cursor: pointer;
   transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 

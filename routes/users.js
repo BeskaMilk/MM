@@ -393,6 +393,7 @@ router.put('/materials/index/:id', ensureAuthenticated, async (req, res) => {
     // company = await Company.findById(g_companyID).exec()
 
     material.title = req.body.title
+    material.ossFileName = req.body.ossFileName
     material.tags_input = req.body.tags_input
     material.tags_input_string = material.tags_input.join() 
     material.isPublic = req.body.isPublic
@@ -403,11 +404,7 @@ router.put('/materials/index/:id', ensureAuthenticated, async (req, res) => {
     material.cost = req.body.cost
     material.description = req.body.description
     material.searchKeywords = material.title + material.tags_input + material.userName + material.description,
-
-
-    
     // let searchKeywords = [material.title, material.tags_input_string, material.description]
-
     // console.log(material.tags_input_string)
     console.log(material.searchKeywords)
 
@@ -975,6 +972,12 @@ router.post('/projects/index', async (req, res) => {
 // Show Project Page 
 router.get('/projects/index/:id', async (req, res) => {
   try {
+      // const projects = await Project.find({})
+
+      // const params = {
+      //   projects: projects,
+      // }
+
       const project = await Project.findById(req.params.id)
       const materials = await Material.find({ project: project.id }).limit(6).exec() 
       res.render('projects/show', {
@@ -994,7 +997,7 @@ router.get('/projects/index/:id', async (req, res) => {
 })
 
 // Edit Project Route
-router.get('/projects/index/:id/edit', async (req, res) => {
+router.get('/projects/index/:id/edit', ensureAuthenticated, async (req, res) => {
   try {
       const project = await Project.findById(req.params.id)
       res.render('projects/edit', 
@@ -1012,14 +1015,19 @@ router.get('/projects/index/:id/edit', async (req, res) => {
 })
 
 // Update Project Route
-router.put('/projects/index/:id', async (req, res) => {
+router.put('/projects/index/:id', ensureAuthenticated, async (req, res) => {
   let project 
   try {
       project = await Project.findById(req.params.id)
       project.name = req.body.name
-      await project.save()
-      res.redirect(`/projects/index/${project.id}`)
-  } catch {
+      project.user = req.body.user
+      project.company = req.body.company
+      await project.save();
+      res.redirect('/users/projects/index')
+  } catch (err) {
+
+    console.log(err);
+
       if (project == null) {
           res.redirect('/')
       } else {

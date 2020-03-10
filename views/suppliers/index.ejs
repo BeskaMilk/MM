@@ -36,7 +36,7 @@
         <div class="col-12 text-center">
           <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
           <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
-          <a href="/users/materials/new">
+          <a href="/users/suppliers/new">
               <span class="icon-style-new"">
                   <i class="fas fa-plus-circle"></i>
               </span>
@@ -54,23 +54,23 @@
         <thead>
           <tr>
             <th scope="col">Supplier Name</th>
+            <th scope="col">Speciality</th>
             <th scope="col">Phone Number</th>
             <th scope="col">WeChat ID</th>
             <th scope="col">Taobao link</th>
             <th scope="col"> </th>
             <th scope="col"> </th>
             <th scope="col"> </th>
-
-
           </tr>
         </thead>
         <% suppliers.forEach(supplier => { %>
         <tbody>
           <tr class="table-secondary">
             <th scope="row"><%= supplier.name %></th>
+            <td>木工，定制</td>
             <td><%= supplier.phone %></td>
             <td><%= supplier.weChat %></td>
-            <td>Supplier's taobao link</td>
+            <td> </td>
             <td><a href="/users/suppliers/index/<%= supplier.id %>">View</a></td>
             <td><a href="/users/suppliers/index/<%= supplier.id %>/edit">Edit</a></td>
             <td><%- include('../partials/deleteform', { url: `/users/suppliers/index/${supplier.id}` }) %></td>

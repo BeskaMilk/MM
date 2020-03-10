@@ -123,9 +123,6 @@ function set_upload_param(up, filename, ret)
     up.start();
 }
 
-
-
-
 var uploader = new plupload.Uploader({
 	runtimes : 'html5,flash,silverlight,html4',
 	browse_button : 'selectfiles', 
@@ -134,6 +131,11 @@ var uploader = new plupload.Uploader({
 	flash_swf_url : 'lib/plupload-2.1.2/js/Moxie.swf',
 	silverlight_xap_url : 'lib/plupload-2.1.2/js/Moxie.xap',
     url : 'http://oss.aliyuncs.com',
+    resize: {
+        width: 500,
+    },
+
+
 
 	init: {
 		PostInit: function() {
@@ -142,15 +144,51 @@ var uploader = new plupload.Uploader({
             set_upload_param(uploader, '', false);
             return false;
 			};
-		},
+        },
+        
 
-		FilesAdded: function(up, files) {
-			plupload.each(files, function(file) {
-				document.getElementById('ossfile').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')<b></b>'
-				+'<div class="progress"><div class="progress-bar" style="width: 0%"></div></div>'
-				+'</div>';
-			});
-		},
+		FilesAdded: function(up, files) {   
+            plupload.each(files, function(file) {
+                document.getElementById('ossfile').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')<b></b>'
+                +'<div class="progress"><div class="progress-bar" style="width: 0%"></div></div>'
+                +'</div>';
+            });
+        },
+
+        //     uploader.bind('FilesAdded', function (up, files) {
+        //         var fileCount = up.files.length,
+        //             i = 0,
+        //             ids = $.map(up.files, function (item) { return item.id; });
+
+        //         for (i = 0; i < fileCount; i++) {
+        //             uploader.removeFile(uploader.getFile(ids[i]));
+        //             const selectfiles = document.getElementById("selectfiles");
+        //             document.getElementById("selectfiles").style("opacity: 0%");
+        //         }
+        //         // Do something with file details
+        //     });   
+
+        //     uploader.bind('FilesAdded', function(up, files) {
+        //         var i = 0;
+        //         while (i++ < up.files.length) {
+        //             var ii = i;
+        //             while (ii < up.files.length) {
+        //                 if (up.files[i - 1].name == up.files[ii].name) {
+        //                     uploader.removeFile(up.files[ii]);   
+        //                 } else {
+        //                     ii++;
+        //                 }
+        //             }
+        //         }
+        //     });
+
+      
+
+       
+
+        // removeFile : function(files) {
+			
+		// },
 
 		BeforeUpload: function(up, file) {
             check_object_radio();
@@ -159,12 +197,13 @@ var uploader = new plupload.Uploader({
         },
 
 		UploadProgress: function(up, file) {
+            
 			var d = document.getElementById(file.id);
 			d.getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
             var prog = d.getElementsByTagName('div')[0];
 			var progBar = prog.getElementsByTagName('div')[0]
 			progBar.style.width= 2*file.percent+'px';
-			progBar.setAttribute('aria-valuenow', file.percent);
+            progBar.setAttribute('aria-valuenow', file.percent);
 		},
 
 		FileUploaded: function(up, file, info) {
@@ -186,3 +225,5 @@ var uploader = new plupload.Uploader({
 });
 
 uploader.init();
+
+
