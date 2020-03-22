@@ -48,8 +48,8 @@
     </div>
 
     <div class="col-12 text-center">
-        <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
-        <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
+        <!-- <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
+        <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view"> -->
         <a href="/users/materials/new">
             <span class="icon-style-new"">
                 <i class="fas fa-plus-circle"></i>
@@ -71,8 +71,8 @@
 
             <% materials.forEach(material => { %>
                     <a href="/users/materials/index/<%= material.id %>" class="custom-card 3">
-                        <div class="custom-card_image">    
-                            <img src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
+                        <div class="custom-card_image">   
+                            <img class="lazy" data-src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
                         </div>
                     <div class="custom-card_title">
                             
@@ -95,14 +95,56 @@
 </div>
 
 </div>
-<!-- 
 
 
 <script>
-$(document).ready(function(){
-    function load_json_data(id, parent_id)
-    {
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyloadImages;    
 
+  if ("IntersectionObserver" in window) {
+    lazyloadImages = document.querySelectorAll(".lazy");
+    var imageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var image = entry.target;
+          image.src = image.dataset.src;
+          image.classList.remove("lazy");
+          imageObserver.unobserve(image);
+        }
+      });
+    });
+
+    lazyloadImages.forEach(function(image) {
+      imageObserver.observe(image);
+    });
+  } else {  
+    var lazyloadThrottleTimeout;
+    lazyloadImages = document.querySelectorAll(".lazy");
+    
+    function lazyload () {
+      if(lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+      }    
+
+      lazyloadThrottleTimeout = setTimeout(function() {
+        var scrollTop = window.pageYOffset;
+        lazyloadImages.forEach(function(img) {
+            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+            }
+        });
+        if(lazyloadImages.length == 0) { 
+          document.removeEventListener("scroll", lazyload);
+          window.removeEventListener("resize", lazyload);
+          window.removeEventListener("orientationChange", lazyload);
+        }
+      }, 20);
     }
+
+    document.addEventListener("scroll", lazyload);
+    window.addEventListener("resize", lazyload);
+    window.addEventListener("orientationChange", lazyload);
+  }
 })
-</script> -->
+</script>

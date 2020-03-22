@@ -16,7 +16,7 @@
         <form action="/users/projects/index" method="GET">
             <div class="form-group">
               <div class="input-group mb-6">
-                      <input class="form-control" type="text" name="searchKeywords" placeholder="<%= g_companyName%> projects" value="<%= searchOptions.name %>" >
+                      <input class="form-control" type="text" name="name" placeholder="<%= g_companyName%> projects" value="<%= searchOptions.name %>" >
                       <div class="input-group-append">
                           <button type="submit" id="postfiles" href="javascript:void(0);" class="input-group-text">                    
                               <i class="fas fa-search" id="search-icon"></i>
@@ -28,8 +28,8 @@
         </div>
         <div class="col">
           <div class="col-12 text-center">
-            <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
-            <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
+            <!-- <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
+            <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view"> -->
             <a href="/users/projects/new">
                 <span class="icon-style-new"">
                     <i class="fas fa-plus-circle"></i>

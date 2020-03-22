@@ -18,27 +18,31 @@
     <div class="col-4 text-center">
         <div class="row">
                 <div class="col text-center">
-                    <a href="/users/materials/feed">
-                        <span class="icon-style-alliance">
-                            <i class="fas fa-people-carry"></i>
-                        </span>
-                    </a>
+                    <div data-toggle="tooltip" data-placement="bottom" title="联盟 Alliances Feed">
+                        <a href="/users/materials/feed">
+                            <span class="icon-style-alliance">
+                                <i class="fas fa-people-carry"></i>
+                            </span>
+                        </a>
+                    </div>
                 </div>
                 <div class="col text-center">
-                    <a href="/users/materials/index">
-                        <span class="icon-style-library">
-                            <i class="fas fa-cubes"></i>
-                        </span>
-                    </a>
+                    <div data-toggle="tooltip" data-placement="bottom" title="材料库 Materials">
+                        <a href="/users/materials/index">
+                            <span class="icon-style-library">
+                                <i class="fas fa-cubes"></i>
+                            </span>
+                        </a>
+                    </div>
                 </div>
                 <div class="col text-center">
-                    <a href="/users/suppliers/index">
-                        <span class="icon-style-supplier">
-                            <i class="fas fa-industry"></i>
-                    </span>
-                    </a>
-
-                    
+                    <div data-toggle="tooltip" data-placement="bottom" title="厂家 Suppliers">
+                        <a href="/users/suppliers/index">
+                            <span class="icon-style-supplier">
+                                <i class="fas fa-industry"></i>
+                        </span>
+                        </a>
+                    </div>
                 </div>
                 <!-- <div class="col-4"> -->
 
@@ -49,32 +53,42 @@
                     </a> -->
                 <!-- </div> -->
                 <div class="col text-center">
-                    <a href="/users/projects/index">
-                        <span class="icon-style-project">
-                            <i class="fas fa-sitemap"></i>
-                        </span>
-                    </a>
+                    <div data-toggle="tooltip" data-placement="bottom" title="项目 Projects">
+                        <a href="/users/projects/index" >
+                            <span class="icon-style-project">
+                                <i class="fas fa-sitemap"></i>
+                            </span>
+                        </a>
+                    </div>
                 </div>
                 <div class="col text-center">
-                    <a href="/users/companies/index">
-                        <span class="icon-style-company">
-                            <i class="fas fa-users"></i>
-                        </span>
-
-                    </a>
+                    <div data-toggle="tooltip" data-placement="bottom" title="<%= companyName %>">
+                        <a href="/users/companies/index">
+                            <span class="icon-style-company">
+                                <i class="fas fa-users"></i>
+                            </span>
+                        </a>
+                    </div>
                 </div>
                 
                 
 
             </div>
         </div>
-        
+
+
         <div class="col-4">
-            <div class="col-12 text-right">
-                <div class="websiteLogo" href="#" data-toggle="modal" data-target="#myModal">
-                    <%= userName %>
-                    <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>">
-                    <!-- <a href="#" data-toggle="modal" data-target="#myModal">Open Modal</a> -->
+            <div class="row">
+                <div class="col-11 text-right">
+                    <div class="websiteLogo" href="#" data-toggle="modal" data-target="#myModal">
+                        <%= userName %>
+                        <img id="avatar-small" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= userID %>/<%= userName %>">
+                    </div>
+                </div>
+                <div class="col-1 text-left">
+                    <span class="icon-style-notification">
+                        <i class="far fa-bell"></i>
+                    </span>
                 </div>
             </div>
         </div>
@@ -101,7 +115,7 @@
                     <div class="modal-content">
                     <div class="modal-header">
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" >
                         <a href="/users/dashboard">
                             <h5><%= userName %></h5>
                         </a>
@@ -118,3 +132,9 @@
         </div>
     </div>
 </div>
+<!-- 
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script> -->

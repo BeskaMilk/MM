@@ -44,7 +44,7 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
         requried: true,
     },
     isPublic: {
-        type: String,
+        type: String, // public, private, alliances
         required: true,
     },
     tags_input: {
@@ -74,6 +74,10 @@ const materialSchema = new mongoose.Schema({ // - in mongoDB, Schema = table, in
         type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 
         required: true,
         ref: 'Company' // This name inside ' ' must match inside the suppliers.js inside the models folder. (model name)
+    },
+    companyName: {
+        type: String,
+        required: true,
     },
     userID: {
         type: mongoose.Schema.Types.ObjectId,  // - referencing another object inside of our collections. 

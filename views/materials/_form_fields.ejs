@@ -1,128 +1,121 @@
 <fieldset>
 
+    <div class="form-group">    
+        <div class="form-group">
+        <label>项目</label>
+                <select name="project" id='dirname' class="custom-select" placeholder="项目">
+                    <% projects.forEach(project => { %>
+                        <% if (project.id == material.project) { %>
+                            <option selected label="<%= project.name %>" value="<%= project.id %>">
+                        <% } else { %>
+                            <option label="<%= project.name %>" value="<%= project.id %>">
+                        <% } %>
+                    <% }) %>
+                </select>
+        </div>
+        <label class="col-form-label" for="inputDefault">材料的中文标题</label>
+        <input type="text" name="title" value="<%= material.title %>" class="form-control" placeholder="Chinese title for this material" id="inputDefault">
+    </div>
 
-<div class="form-group">    
-    <!-- <label class="col-form-label" for="inputDefault">Project name</label>
-    <input type="text" id='dirname' placeholder="Project Name" name="projectName" value="<%= material.projectName %>" class="form-control" placeholder="put your architectural/construction project name here" id="inputDefault"> -->
+    <div class="form-group">
+        <label class="control-label">材料的英文标题</label>
+        <input type="text" id='user_defined_name'  class="form-control" placeholder="English Title for this material" name="ossFileName" value="<%= material.ossFileName %>">
+    </div>
 
 
     <div class="form-group">
-    <label>Project</label>
-            <select name="project" class="custom-select" placeholder="项目">
-                <% projects.forEach(project => { %>
-                    <% if (project.id == material.project) { %>
-                        <option selected label="<%= project.name %>" id='dirname' value="<%= project.id %>">
-                    <% } else { %>
-                        <option label="<%= project.name %>" value="<%= project.id %>">
-                    <% } %>
-                <% }) %>
-            </select>
+    <label>厂家</label>
+    <select name="supplier" class="custom-select" placeholder="厂家">
+        <% suppliers.forEach(supplier => { %>
+            <% if (supplier.id == material.supplier) { %>
+                <option selected label="<%= supplier.name %>" value="<%= supplier.id %>">
+            <% } else { %>
+                <option label="<%= supplier.name %>" value="<%= supplier.id %>">
+            <% } %>
+        <% }) %>
+    </select>
     </div>
-    <label class="col-form-label" for="inputDefault">Title</label>
-    <input type="text" name="title" value="<%= material.title %>" class="form-control" placeholder="标题" id="inputDefault">
-</div>
 
-<div class="form-group">
-    <label class="control-label">sub title</label>
-    <input type="text" id='user_defined_name'  class="form-control" placeholder="副标题" name="ossFileName" value="<%= material.ossFileName %>">
-</div>
-
-
-<div class="form-group">
-<label>Supplier</label>
-<select name="supplier" class="custom-select" placeholder="厂家">
-    <% suppliers.forEach(supplier => { %>
-        <% if (supplier.id == material.supplier) { %>
-            <option selected label="<%= supplier.name %>" value="<%= supplier.id %>">
-        <% } else { %>
-            <option label="<%= supplier.name %>" value="<%= supplier.id %>">
-        <% } %>
-    <% }) %>
-</select>
-</div>
-
-<div class="form-group">
-    <label class="control-label">价格 Cost</label>
-        <div class="form-group">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">元</span>
-            </div>
-            <input type="text" name="cost" class="form-control" min="1" value="<%= material.cost %>" aria-label="Amount (to the nearest dollar)">
-            <div class="input-group-append">
-              <span class="input-group-text"></span>
-            </div>
-          </div>
-        </div>
-</div >
-
-<div class="form-group">
-    <label for="exampleTextarea">说明 Description</label>
-    <textarea name="description" class="form-control" id="exampleTextarea" rows="3"> <% material.description %> </textarea>
-</div>
-
-<div class="form-group">
-    <label class="col-form-label" for="inputDefault">Add tags</label>
-    <div class="tags_input" name="tags_input" data-name="tags_input"></div>
-    <input name="tags_input_string" value="<%= material.tags_input_string %>" class="hide">
-</div>
-         
-
-	<div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
-
-	<br/>
-
-    <div class="form-group" >
-        <div class="input-group mb-3">
-            <div id="container">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="selectfiles" >
-                    <lable href="javascript:void(0);" class="custom-file-label" for="selectedfiles">选择文件 choose a file</lable>
+    <div class="form-group">
+        <label class="control-label">价格 Cost</label>
+            <div class="form-group">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <span class="input-group-text">元</span>
                 </div>
-            </div>
+                <input type="text" name="cost" class="form-control" min="1" value="<%= material.cost %>" aria-label="Amount (to the nearest dollar)">
                 <div class="input-group-append">
-                    <span id="postfiles" href="javascript:void(0);" class="input-group-text">上传 upload</span>
+                <span class="input-group-text"></span>
+                </div>
+            </div>
+            </div>
+    </div >
+
+    <div class="form-group">
+        <label for="exampleTextarea">说明 Description</label>
+        <textarea name="description" class="form-control" id="exampleTextarea" rows="3"> <% material.description %> </textarea>
+    </div>
+
+    <div class="form-group">
+        <label class="col-form-label" for="inputDefault">Add tags</label>
+        <div class="tags_input" name="tags_input" data-name="tags_input"></div>
+        <input name="tags_input_string" value="<%= material.tags_input_string %>" class="hide">
+    </div>
+            
+
+        <div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+
+        <br/>
+
+        <div class="form-group" >
+            <div class="input-group mb-3">
+                <div id="container">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="selectfiles" >
+                        <lable href="javascript:void(0);" class="custom-file-label" for="selectedfiles">选择文件 choose a file</lable>
+                    </div>
+                </div>
+                    <div class="input-group-append">
+                        <span id="postfiles" href="javascript:void(0);" class="input-group-text">上传 upload</span>
+                    </div>
+            </div>
+        </div>
+
+
+        <pre id="console"></pre>
+        
+
+
+        <div class="form-group">
+            <div class="form-group">
+                <label>预览权限 Who can view this data</label>
+                <select name="isPublic" class="custom-select">
+                            <option selected label="private" value="private">
+                            <option label="public" value="public">
+                            <option label="alliances" value="alliances">
+                </select>
                 </div>
         </div>
-    </div>
 
 
-    <pre id="console"></pre>
-    
 
-
-    <div class="form-group">
         <div class="form-group">
-            <label>预览权限 Who can view this data</label>
-            <select name="isPublic" class="custom-select">
-                        <option selected label="private" value="private">
-                        <option label="public" value="public">
-                        <option label="alliances" value="alliances">
-            </select>
+            <div class="hide">
+                <div class="custom-control custom-radio">
+                <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled="" /> 
+                <label class="custom-control-label" for="customRadio1">keep the local file name</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled=""  /> 
+                    <label class="custom-control-label" for="customRadio2">give the file a random name</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio3" name="myradio" value="user_defined" class="custom-control-input" checked=true/> 
+                    <label class="custom-control-label" for="customRadio3">give a image name</label>
+                </div>
+                <div name="searchKeywords" value=""></div>
             </div>
-    </div>
-
-
-
-    <div class="form-group">
-        <div class="hide">
-            <div class="custom-control custom-radio">
-            <input type="radio"  id="customRadio1" name="myradio" value="local_name" class="custom-control-input" disabled="" /> 
-            <label class="custom-control-label" for="customRadio1">keep the local file name</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio2" name="myradio" class="custom-control-input" value="random_name" disabled=""  /> 
-                <label class="custom-control-label" for="customRadio2">give the file a random name</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio3" name="myradio" value="user_defined" class="custom-control-input" checked=true/> 
-                <label class="custom-control-label" for="customRadio3">give a image name</label>
-            </div>
-            <div name="searchKeywords" value=""></div>
         </div>
-    </div>
-
-
 
 
     <p>&nbsp;</p>

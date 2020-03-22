@@ -1,14 +1,180 @@
 <div>
     <%- include('../partials/header_private.ejs') %>
 </div>
+
+<!-- <div class="container">
+  <div class="row">
+    <% companies.forEach(company => { %>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text" style="size: 1em;">  
+                <div>
+                  <img height="80" width="80" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= company.name %>/<%= company.id %>">
+                </div>
+                  <%= company.name %>
+              </p>
+              <a href="#" class="btn btn-primary">follow</a>
+            </div>
+          </div>
+        </div>
+    <% }) %>
+  </div>
+</div> -->
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-0">
+        
+        </div>
+        <div class="col-12 text-left">                     
+            <form action="/users/materials/index" method="GET">
+                <div>                
+                    <div class="form-group">
+                        <div class="input-group mb-6">
+                                <input class="form-control" type="text" name="searchKeywords" placeholder="<%= g_companyName%>的共享材料剪贴簿" value="<%= searchOptions.searchKeywords %>" >
+                                <div class="input-group-append">
+                                    <button type="submit" id="postfiles" href="javascript:void(0);" class="input-group-text">                    
+                                        <i class="fas fa-search" id="search-icon"></i>
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </form>
+        </div>
+    
+        <div class="col-12 text-center">
+            <!-- <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
+            <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view"> -->
+            <a href="/users/materials/new">
+                <span class="icon-style-new"">
+                    <i class="fas fa-plus-circle"></i>
+                </span>
+            </a> 
+        </div>
+    
+    </div>
+    </div>
+    
+    
+    <div class="row">
+    <div class="col-sm-2">
+      <div class="container">
+        <div>申请联盟</div>
+        <div>Request to become alliance</div>
+        <% companies.forEach(company => { %>
+          <!-- <div class="col-sm-2"> -->
+            <div class="card">
+              <div class="card-body">
+                <div>
+                  <img height="50" width="50" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= company.name %>/<%= company.id %>">
+                </div>
+                <div style="size: 1em;">  
+                    <%= company.name %>
+                </div>
+                <a href="#" class="btn btn-primary">+</a>
+              </div>
+            </div>
+          <!-- </div> -->
+          <div class="hide" style="height: 8px;">*</div>
+      <% }) %>
+    </div>
+    </div>
+        
+    <div class="col-8">
+        <div class="custom-cards-list">
+
+                
+                <% materials.forEach(material => { %>
+                  <% if (material.isPublic == 'public') { %>
+
+                        <a href="/users/materials/index/<%= material.id %>" class="custom-card 3">
+                            <div class="custom-card_image">   
+                                <img class="lazy" data-src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
+                            </div>
+                        <div class="custom-card_title">
+                                
+                            <div class="custom-card_avatar">
+                                <!-- <img id="avatar-on-card" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.userID %>/<%= material.userName %>"> -->
+                                <img height="45" width="45" style="border-radius: 10%;"
+                                src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.companyName %>/<%= material.company %>">
+                                <div class="custom-card_n">
+                                  <%= material.companyName %>
+                                  <div class="hide" style="height: 3px;">*</div>
+                                  <%= material.userName %>
+                                </div>
+                            </div>
+                            <div class="custom-card_index">
+                                <h5 class="custom-card_title_h"><%= material.title %></h5> 
+                                <h6 class="custom-card_title_t"><%= material.tags_input_string %></h6> 
+                            </div>
+                        </div>
+                        </a>
+                        <% } %>
+                <% }) %>
+        </div>
+    </div>
+    
+    
+    <div class="col">              
+    </div>
+    
+    </div>
     
 
 
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                
-            </div>
-        </div>  
-    </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var lazyloadImages;    
+    
+      if ("IntersectionObserver" in window) {
+        lazyloadImages = document.querySelectorAll(".lazy");
+        var imageObserver = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var image = entry.target;
+              image.src = image.dataset.src;
+              image.classList.remove("lazy");
+              imageObserver.unobserve(image);
+            }
+          });
+        });
+    
+        lazyloadImages.forEach(function(image) {
+          imageObserver.observe(image);
+        });
+      } else {  
+        var lazyloadThrottleTimeout;
+        lazyloadImages = document.querySelectorAll(".lazy");
+        
+        function lazyload () {
+          if(lazyloadThrottleTimeout) {
+            clearTimeout(lazyloadThrottleTimeout);
+          }    
+    
+          lazyloadThrottleTimeout = setTimeout(function() {
+            var scrollTop = window.pageYOffset;
+            lazyloadImages.forEach(function(img) {
+                if(img.offsetTop < (window.innerHeight + scrollTop)) {
+                  img.src = img.dataset.src;
+                  img.classList.remove('lazy');
+                }
+            });
+            if(lazyloadImages.length == 0) { 
+              document.removeEventListener("scroll", lazyload);
+              window.removeEventListener("resize", lazyload);
+              window.removeEventListener("orientationChange", lazyload);
+            }
+          }, 20);
+        }
+    
+        document.addEventListener("scroll", lazyload);
+        window.addEventListener("resize", lazyload);
+        window.addEventListener("orientationChange", lazyload);
+      }
+    })
+    </script>

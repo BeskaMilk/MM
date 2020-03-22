@@ -22,7 +22,7 @@
             <button type="submit">Search</button> -->
             <div class="form-group">
               <div class="input-group mb-6">
-                      <input class="form-control" type="text" name="searchKeywords" placeholder="<%= g_companyName%> suppliers" value="<%= searchOptions.name %>" >
+                      <input class="form-control" type="text" name="name" placeholder="<%= g_companyName%> suppliers" value="<%= searchOptions.name %>" >
                       <div class="input-group-append">
                           <button type="submit" id="postfiles" href="javascript:void(0);" class="input-group-text">                    
                               <i class="fas fa-search" id="search-icon"></i>
@@ -34,8 +34,7 @@
         </div>
         <div class="col">
         <div class="col-12 text-center">
-          <img class="gallery-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/gallery%20view">
-          <img class="list-view-icon" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/icons/list%20view">
+        
           <a href="/users/suppliers/new">
               <span class="icon-style-new"">
                   <i class="fas fa-plus-circle"></i>
@@ -53,12 +52,28 @@
     <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">Supplier Name</th>
-            <th scope="col">Speciality</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">WeChat ID</th>
-            <th scope="col">Taobao link</th>
+            <th scope="col">厂家名字</th>
+            <th scope="col">公司名称</th>
+            <th scope="col">公司职位</th>
+            <th scope="col">公司位置</th>
+            <th scope="col">专业</th>
+            <th scope="col">电话</th>
+            <th scope="col">微信</th>
+            <th scope="col">淘宝</th>
             <th scope="col"> </th>
+            <th scope="col"> </th>
+          </tr>
+        </thead>
+        <thead>
+          <tr>
+            <th scope="col">Supplier Name</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Company Location</th>
+            <th scope="col">Speciality</th>
+            <th scope="col">Phone</th>
+            <th scope="col">WeChat</th>
+            <th scope="col">Taobao</th>
             <th scope="col"> </th>
             <th scope="col"> </th>
           </tr>
@@ -67,12 +82,14 @@
         <tbody>
           <tr class="table-secondary">
             <th scope="row"><%= supplier.name %></th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
             <td>木工，定制</td>
             <td><%= supplier.phone %></td>
             <td><%= supplier.weChat %></td>
             <td> </td>
             <td><a href="/users/suppliers/index/<%= supplier.id %>">View</a></td>
-            <td><a href="/users/suppliers/index/<%= supplier.id %>/edit">Edit</a></td>
             <td><%- include('../partials/deleteform', { url: `/users/suppliers/index/${supplier.id}` }) %></td>
           </tr>
         </tbody>

@@ -155,41 +155,6 @@ var uploader = new plupload.Uploader({
             });
         },
 
-        //     uploader.bind('FilesAdded', function (up, files) {
-        //         var fileCount = up.files.length,
-        //             i = 0,
-        //             ids = $.map(up.files, function (item) { return item.id; });
-
-        //         for (i = 0; i < fileCount; i++) {
-        //             uploader.removeFile(uploader.getFile(ids[i]));
-        //             const selectfiles = document.getElementById("selectfiles");
-        //             document.getElementById("selectfiles").style("opacity: 0%");
-        //         }
-        //         // Do something with file details
-        //     });   
-
-        //     uploader.bind('FilesAdded', function(up, files) {
-        //         var i = 0;
-        //         while (i++ < up.files.length) {
-        //             var ii = i;
-        //             while (ii < up.files.length) {
-        //                 if (up.files[i - 1].name == up.files[ii].name) {
-        //                     uploader.removeFile(up.files[ii]);   
-        //                 } else {
-        //                     ii++;
-        //                 }
-        //             }
-        //         }
-        //     });
-
-      
-
-       
-
-        // removeFile : function(files) {
-			
-		// },
-
 		BeforeUpload: function(up, file) {
             check_object_radio();
             get_dirname();
@@ -210,7 +175,6 @@ var uploader = new plupload.Uploader({
             if (info.status == 200)
             {
                 document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = 'upload to oss success, object name:' + get_uploaded_object_name(file.name);
-                // document.getElementById('user_defined_name').setAttribute('value', get_uploaded_object_name(file.name));
             }
             else
             {

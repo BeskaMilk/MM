@@ -10,22 +10,7 @@
       
       <div class="col-12">
         <div class="card text-center">
-            <!-- <div class="card-header">
-              <ul class="nav nav-pills card-header-pills">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Material</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Supplier</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="/users/materials/index/<%= material.id %>/edit">edit</a>
-                </li>
-              </ul>
-            </div> -->
-            <div class="card-body">
-        
-        
+            <div class="card-body">     
             <div class="container">
               <h2 class="card-title"><%= material.title %></h2>                         
               <% if ( material.userID == userID || userRole == 'special' || userRole == 'master') { %>
@@ -43,37 +28,26 @@
               <br/>
                 <div class="row">
 
-                <div class="col">
-
-                    <img id="pictureCard-bg" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
-                    <div>
-                      <h4 class="card-text"><%= material.ossFileName %></h4>  
-                      <p6 class="card-subtitle mb-2 text-muted"><%= material.createdAt.toDateString() %> </p6>
-
+                  <div class="col">
+                      <img id="pictureCard-bg" src="https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.project %>/<%= material.ossFileName %>">
+                      <div>
+                        <h4 class="card-text"><%= material.ossFileName %></h4>  
+                        <p6 class="card-subtitle mb-2 text-muted"><%= material.createdAt.toDateString() %> </p6>
                         <h6 class="card-text"><%= material.tags_input %></h6>  
-                        <!-- <h5 class="card-title"></h5> -->
+                      </div>
+                  </div>
 
-                    </div>
-                    
-                </div>
-                <div class="col text-left">
-                    <p class="card-text">Project Name: <%= material.project %> </p>
-                    <p class="card-text-l">Supplier:                         
+                  <div class="col text-left">
+                    <p class="card-text-l">厂家 Supplier:                         
                       <a class="btn btn-primary"  href="/users/suppliers/index/<%= material.supplier.id %>"><%= material.supplier.name %></a>
                     </p>
-                    <p class="card-text">User Name: <%= material.userName %></p>
-                    <p class="card-text">Cost: <%= material.cost %> </p>
-                    <p class="card-text">Who can view this data: <%= material.isPublic %></p>
-                    <p class="card-text">Company who posted this: <%= post_Company %> </p>
-                    <p class="card-text"><%= material.description %></p>
+                    <p class="card-text">单价 Cost: <%= material.cost %> </p>
+                    <p class="card-text">材料说明 description: <%= material.description %></p>
+                      <p class="card-text">项目名称 Project: <%= projectName %> </p>
+                      <p class="card-text">上传的人 Who posted: <%= material.userName %> from <%= post_Company %> </p>
+                      <p class="card-text">Who can view this data: <%= material.isPublic %></p>
+                    </div>  
 
-                    <!-- <p class="card-text">Image Name: <%= material.ossFileName %> </p> -->
-                    <!-- <p class="card-text">Tags: <%= material.tags_input %> </p> -->
-                    <!-- <p class="card-text">File Type: </p> -->
-                    <!-- <p class="card-text">File URL: https://material-image-list.oss-cn-beijing.aliyuncs.com/<%= material.projectName %>/<%= material.ossFileName %> </p> -->
-                    
-
-                  </div>      
                 </div>
             </div>
             </div>
@@ -122,3 +96,60 @@
         
   </div>
 </div>
+
+
+<!-- 
+<script>
+  let OSS = require('ali-oss');
+  let client = new OSS({
+    bucket: 'material-image-list',
+    region: 'oss-cn-beijing',
+    accessKeyId: 'LTAI4FcLp7H4hkBF6RamDeJU',
+    accessKeySecret: 'LC27jB4IfOfrsBwkxw2bo5iv07ugkY'
+  });
+
+  async function list () {
+    try {
+      // 不带任何参数，默认最多返回1000个文件。
+      let result = await client.list();
+      console.log(result);
+      // 根据nextMarker继续列出文件。
+      if (result.isTruncated) {
+        let result = await client.list({
+          marker: result.nextMarker
+        });
+      }
+    // 列举前缀为'my-'的文件。
+    result = await client.list({
+      prefix: 'my-'
+    });
+    console.log(result);
+    // 列举前缀为'my-'且在'my-object'之后的文件。
+    result = await client.list({
+      prefix: 'my-',
+      marker: 'my-object'
+    });
+    console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  list();
+
+
+
+  async function listDir(dir) {
+  let result = await client.list({
+    prefix: dir,
+    delimiter: '/'
+  });
+
+  result.prefixes.forEach(function (subDir) {
+    console.log('SubDir: %s', subDir);
+  });
+  result.objects.forEach(function (obj) {
+    console.log('Object: %s', obj.name); 
+  });
+  }
+
+</script> -->

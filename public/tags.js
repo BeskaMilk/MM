@@ -30,7 +30,7 @@
     el.appendChild(mainInput);
     el.appendChild(hiddenInput);
 
-    addTag('hello!');
+    addTag('# ');
 
     function addTag (text) {
         let tag = {

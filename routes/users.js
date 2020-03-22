@@ -250,18 +250,47 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
 
 // Materials Alliance (feed)
 router.get('/materials/feed', ensureAuthenticated, async(req, res) => {
-  try {
-    res.render('materials/feed', {
-      
-      userID: g_userID, // just added
-      userName: g_userName, // just added
-      userRole: g_userRole,
-      companyName: g_companyName,
-      companyID: g_companyID,
-    })
-  } catch {
-    res.redirect('/')
-  }
+    let query = Material.find({ company: g_companyID })
+
+    // let query = Material.find({})
+
+    let user = await User.findById(g_userID).exec()
+    
+    if (req.query.searchKeywords != null && req.query.searchKeywords != '') {
+      query = query.regex('searchKeywords', new RegExp(req.query.searchKeywords, 'i'))
+    }
+    if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
+      query = query.lte('publishDate', req.query.publishedBefore)
+    }
+    if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
+      query = query.gte('publishDate', req.query.publishedAfter)
+    }
+    try {
+      const materials = await query.exec()
+      const companies = await Company.find({}).limit(10)
+      var index = companies.map(x => {
+        return x.id;
+      }).indexOf(g_companyID);
+      // console.log(index);
+      if (index > -1) {
+        companies.splice(index, 1);
+      }
+      // console.log(companies);
+      res.render('materials/feed', {
+        companies: companies,
+        user: user,
+        materials: materials,
+        searchOptions: req.query,
+        userID: g_userID, 
+        userName: g_userName, 
+        userRole: g_userRole,
+        companyName: g_companyName,
+        companyID: g_companyID,
+      })
+    } catch(err) {
+      res.redirect('/')
+      console.log(err)
+    }
 }); //after adding ensureAuthenticated, the dashboard is protected from viewing without logging in
 
 
@@ -344,10 +373,13 @@ router.post('/materials/index', ensureAuthenticated, async (req, res) => {
 
 // Show Material Route
 router.get('/materials/index/:id', ensureAuthenticated, async (req, res) => {
+
   try {
     const material = await Material.findById(req.params.id)
                                    .populate('supplier')
                                    .exec()
+    const project = await Project.findById(material.project)
+
     let companyWhoPosted = ''
     if (material.company != null  && material.company !== '') {
         companyWhoPosted = await Company.findById(material.company).exec()
@@ -358,6 +390,7 @@ router.get('/materials/index/:id', ensureAuthenticated, async (req, res) => {
 
     res.render('materials/show', 
     {   material: material, 
+        projectName: project.name,
         post_Company: companyWhoPosted,
         userID: g_userID, 
         userName: g_userName,
@@ -371,6 +404,9 @@ router.get('/materials/index/:id', ensureAuthenticated, async (req, res) => {
     console.log(err)
   }
 })
+
+
+
 
 // Edit Material Route
 router.get('/materials/index/:id/edit', ensureAuthenticated, async (req, res) => {
@@ -390,8 +426,8 @@ router.put('/materials/index/:id', ensureAuthenticated, async (req, res) => {
 
   try {
     material = await Material.findById(req.params.id)
-    // company = await Company.findById(g_companyID).exec()
-
+    company = await Company.findById(material.company).exec()
+    material.companyName = company.name
     material.title = req.body.title
     material.ossFileName = req.body.ossFileName
     material.tags_input = req.body.tags_input

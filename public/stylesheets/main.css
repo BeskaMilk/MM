@@ -158,10 +158,9 @@ width: 266.188px;
   font-family: Helvetica;
   font-weight: normal;
   font-size: 12px;
-  margin-top: -29px;
-  margin-left: 50px;
+  margin-top: -42px;
+  margin-left: 55px;
 }
-
 
 .custom-card .custom-card_title .custom-card_avatar{
   text-align: left;
@@ -214,8 +213,6 @@ width: 266.188px;
   color: rgb(245, 52, 213);
 }
 
-
-
 .icon-style-library {
   font-size: 2em;
   color:rgb(255, 183, 0);
@@ -228,46 +225,41 @@ width: 266.188px;
   color: rgb(255, 178, 95);
 }
 
-
-
 .icon-style-supplier {
   font-size: 2em;
   color: rgb(128, 255, 0);
   cursor: pointer;
   transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-
 }
+
 .icon-style-supplier:hover {
   scale:1.1;
   color: rgb(194, 255, 102);
 }
-
 
 .icon-style-company {
   font-size: 2em;
   color: rgb(56, 193, 247);
   cursor: pointer;
   transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-
 }
+
 .icon-style-company:hover {
   scale:1.2;
   color: rgb(161, 228, 255);
 }
-
 
 .icon-style-project {
   font-size: 2em;
   color: purple;
   cursor: pointer;
   transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-
 }
+
 .icon-style-project:hover {
   scale:1.2;
   color: purple;
 }
-
 
 .icon-style-new {
   font-size: 2em;
@@ -278,6 +270,14 @@ width: 266.188px;
 .icon-style-new:hover {
   scale:1.1;
   color: rgb(255, 132, 0);
+}
+
+.icon-style-notification {
+  font-size: 2em;
+  color:gray;
+  cursor: pointer;
+  margin-left: -15px;
+  transition: 0.1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
 
@@ -471,8 +471,8 @@ width: 266.188px;
 }
 
 .websiteLogo {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 
